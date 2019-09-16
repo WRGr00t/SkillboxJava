@@ -49,18 +49,29 @@ public class Loader {
         for (int i = 0; i < history.size(); i++) {
             String fragments[] = Arrays.toString(history.get(i)).split(",");
             int INDEX_DATE = 3;
+            int INDEX_CHAR_CENTURY = 7;
+            String COUNT_CENTURY = "20";
             StringBuffer dateForParse = new StringBuffer(fragments[INDEX_DATE]);
-            dateForParse.insert(7, "20"); //переходим на полный формат года
+            dateForParse.insert(INDEX_CHAR_CENTURY, COUNT_CENTURY); //переходим на полный формат года
             String data = String.valueOf(dateForParse).trim();
             double credit = 0.0;
             double debit = 0.0;
-            if (fragments[7].charAt(fragments[7].length() - 1) != ']') { //борьба с дробной частью, отделенной запятой
-                fragments[7] = (fragments[7] + "." + fragments[8]); //путем склеивания двух фрагментов
+            int INDEX_CREDIT = 6;
+            int INDEX_DEBIT = 7;
+            int INDEX_DEBIT_LAST_PART = 8;
+            if (fragments[INDEX_DEBIT].charAt(fragments[INDEX_DEBIT].length() - 1) != ']') { //борьба с дробной частью, отделенной запятой
+                fragments[7] = (fragments[INDEX_DEBIT] + "." + fragments[INDEX_DEBIT_LAST_PART]); //путем склеивания двух фрагментов
             }
-            credit = Double.parseDouble(fragments[6]);
-            debit = Double.parseDouble(removeCharAt(fragments[7], fragments[7].length() - 1));
-            Operation operation = new Operation(fragments[0], fragments[1], fragments[2],
-                    LocalDate.parse(data, formatter), fragments[4], fragments[5],
+            credit = Double.parseDouble(fragments[INDEX_CREDIT]);
+            debit = Double.parseDouble(removeCharAt(fragments[INDEX_DEBIT], fragments[INDEX_DEBIT].length() - 1));
+            int INDEX_TYPE = 0;
+            int INDEX_NUMBER = 1;
+            int INDEX_CURRENCY = 2;
+            int INDEX_REFERENCE = 4;
+            int INDEX_DESCRIPTION = 5;
+
+            Operation operation = new Operation(fragments[INDEX_TYPE], fragments[INDEX_NUMBER], fragments[INDEX_CURRENCY],
+                    LocalDate.parse(data, formatter), fragments[INDEX_REFERENCE], fragments[INDEX_DESCRIPTION],
                     credit, debit);
 
             if (operation != null) {
