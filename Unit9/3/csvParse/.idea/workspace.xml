@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="bb862722-a623-4e91-b04f-3d048f4486b4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../1/ClassFiles" beforeDir="false" afterPath="$PROJECT_DIR$/../../1/ClassFiles" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Loader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Loader.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,6 +74,14 @@
       <option name="presentableId" value="Default" />
       <updated>1568168922834</updated>
     </task>
+    <task id="LOCAL-00001" summary="remove magic numbers">
+      <created>1568615949011</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1568615949011</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -85,5 +94,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="remove magic numbers" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove magic numbers" />
   </component>
 </project>

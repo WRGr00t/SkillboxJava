@@ -73,10 +73,7 @@ public class Loader {
             Operation operation = new Operation(fragments[INDEX_TYPE], fragments[INDEX_NUMBER], fragments[INDEX_CURRENCY],
                     LocalDate.parse(data, formatter), fragments[INDEX_REFERENCE], fragments[INDEX_DESCRIPTION],
                     credit, debit);
-
-            if (operation != null) {
-                operations.add(operation);
-            }
+            operations.add(operation);
         }
         return operations;
     }
