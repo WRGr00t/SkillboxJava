@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="02bd2aa5-3457-4623-b251-9b2a553f5ec8" name="Default Changelist" comment="" />
+    <list default="true" id="bb862722-a623-4e91-b04f-3d048f4486b4" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,10 +15,16 @@
       </list>
     </option>
   </component>
-  <component name="ProjectId" id="1PKTwSJAZOiai1Ta7dOacNeGPqh" />
+  <component name="ProjectId" id="1QfkE0MGWwjYIgcBELEgULzRyDv" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../NIOCopy" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.14965986" />
+    <property name="project.structure.side.proportion" value="0.34712642" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -34,8 +40,10 @@
   </component>
   <component name="RunManager">
     <configuration name="Loader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="11.0.3" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="Loader" />
-      <module name="ClassFiles" />
+      <module name="csvParse" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -51,11 +59,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="02bd2aa5-3457-4623-b251-9b2a553f5ec8" name="Default Changelist" comment="" />
-      <created>1565622027178</created>
+      <changelist id="bb862722-a623-4e91-b04f-3d048f4486b4" name="Default Changelist" comment="" />
+      <created>1568168922834</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1565622027178</updated>
+      <updated>1568168922834</updated>
     </task>
     <servers />
   </component>
