@@ -23,11 +23,11 @@ public class Loader {
         System.out.println("Сумма расходов перебором - " + sumDebit);
         System.out.println("Сумма расходов через стрим - "
                 + operations.stream()
-                            .mapToLong(operation -> (long) operation.getDebit()).sum());
+                            .mapToDouble(operation -> operation.getDebit()).sum());
         System.out.println("Сумма поступлений перебором - " + sumCredit);
         System.out.println("Сумма поступлений через стрим - "
                 + operations.stream()
-                .mapToLong(operation -> (long) operation.getCredit()).sum());
+                .mapToDouble(operation -> operation.getCredit()).sum());
         System.out.println("Список расходов:");
         for (Operation operation : operations){
             if (operation.getDebit() > 0.0){
