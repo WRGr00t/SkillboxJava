@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <appenders>
+        <Console
+                name="Console"
+                target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <File name="MyFile"
+              fileName="logs/app.log">
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <RollingFile name="ErrorFile"
+              fileName="logs/err.log"
+            filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval = "1" />
+                <SizeBasedTriggeringPolicy
+                        size="250 MB" />
+            </Policies>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <Logger name="ERROR_LOGGER" level="error" additivity="true">
+            <appender-ref
+                    ref="ErrorFile"
+                    level="error"/>
+        </Logger>
+        <!-- Root Logger -->
+        <root level="debug">
+            <appender-ref
+                    ref="MyFile"
+                    level="info"/>
+        </root>
+    </loggers>
+</configuration>
