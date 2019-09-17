@@ -10,8 +10,8 @@ import java.util.List;
 import au.com.bytecode.opencsv.CSVReader;
 
 public class Loader {
-    @SuppressWarnings("resource")
     public static void main(String[] args) throws Exception {
+        ArrayList <Alias> aliases;
         Path pathToCSV = Paths.get("src/movementList.csv");
         ArrayList<Operation> operations = parseCSV(pathToCSV);
         double sumDebit = 0;
@@ -76,5 +76,17 @@ public class Loader {
             operations.add(operation);
         }
         return operations;
+    }
+    private void initAlias(){
+        Alias alfaC2C = new Alias("CARD2CARD ALFA_MOBILE", "Перевод с карты на карту Альфа-банк");
+        Alias kuschavel = new Alias("KUSCHAVEL", "Кафе Кушавель");
+        Alias alfaIss = new Alias("Alfa Iss", "Альфа-чек");
+        Alias yandexTaxi = new Alias("YANDEX TAXI", "Яндекс-такси");
+        Alias subway = new Alias("SUBWAY", "Кафе Сабвэй");
+        Alias ryabin = new Alias("RYABINOVAYA 5", "Рябиновая, 5");
+        Alias amazon = new Alias("AWS EMEA", "Amazon");
+        Alias delivery = new Alias("delivery club", "Delivery Club");
+        Alias zoo = new Alias("ZOOMAGAZIN 4", "Зоомагазин");
+
     }
 }

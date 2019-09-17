@@ -87,5 +87,12 @@ public class Operation {
         this.debit = debit;
     }
 
+    public String getOrigin(){
+        String origin = "";
+        if (!operationDescription.equals("")){
+
+        }
+        return origin;
+    }
 
 }
