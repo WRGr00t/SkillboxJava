@@ -1,9 +1,9 @@
 public class Alias {
-    public String alias;
+    public String description;
     public String nameForUser;
 
-    public Alias(String alias, String nameForUser){
-        this.alias = alias;
+    public Alias(String description, String nameForUser){
+        this.description = description;
         this.nameForUser = nameForUser;
     }
     public String getNameForUser() {
