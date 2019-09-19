@@ -9,12 +9,14 @@ import java.util.Arrays;
 import java.util.List;
 import au.com.bytecode.opencsv.CSVReader;
 public class Loader {
-    public static ArrayList<Alias> aliases;
+    public static ArrayList<String> aliases;
     public static void main(String[] args) throws Exception {
 
         Path pathToCSV = Paths.get("src/movementList.csv");
         ArrayList<Operation> operations = parseCSV(pathToCSV);
-        initAlias();
+        for (Operation operation : operations){
+            System.out.println(operation.getOperationDescription());
+        }
         double sumDebit = 0;
         double sumCredit = 0;
         for (int i = 0; i < operations.size(); i++) {
@@ -29,19 +31,24 @@ public class Loader {
         System.out.println("Сумма поступлений через стрим - "
                 + operations.stream()
                 .mapToDouble(operation -> operation.getCredit()).sum());
+        //перевод контрагентов из описания
         System.out.println("Список расходов:");
-        for (Alias alias : aliases){
-            double result = 0;
-            for (Operation operation : operations){
-                if (operation.getDebit() > 0.0 && operation.getOperationDescription().equals(alias.description)){
-                    result =+ (operation.getCredit() - operation.getDebit());
+        try {
+            for (String alias : aliases){
+                double result = 0;
+                for (Operation operation : operations){
+                    if (operation.getDebit() > 0.0 && operation.getOperationDescription().equals(alias)){
+                        result =+ (operation.getCredit() - operation.getDebit());
+                    }
+                }
+                if (result > 0){
+                    System.out.println(alias + " - поступления на сумму - " + result);
+                } else if (result < 0){
+                    System.out.println(alias + " - расходы на сумму - " + Math.abs(result));
                 }
             }
-            if (result > 0){
-                System.out.println(alias.getNameForUser() + " - поступления на сумму - " + result);
-            } else if (result < 0){
-                System.out.println(alias.getNameForUser() + " - расходы на сумму - " + Math.abs(result));
-            }
+        } catch (NullPointerException ex){
+            System.out.println("Поле псевдонимов не сформировано");
         }
     }
 
@@ -85,47 +92,5 @@ public class Loader {
             operations.add(operation);
         }
         return operations;
-    }
-    private static void initAlias(){
-        Alias alfaC2C = new Alias("CARD2CARD ALFA_MOBILE", "Перевод с карты на карту Альфа-банк");
-        Alias kuschavel = new Alias("KUSCHAVEL", "Кафе Кушавель");
-        Alias alfaIss = new Alias("Alfa Iss", "Альфа-чек");
-        Alias yandexTaxi = new Alias("YANDEX TAXI", "Яндекс-такси");
-        Alias subway = new Alias("SUBWAY", "Кафе Сабвэй");
-        Alias ryabin = new Alias("RYABINOVAYA 5", "Рябиновая, 5");
-        Alias amazon = new Alias("AWS EMEA", "Amazon");
-        Alias delivery = new Alias("delivery club", "Delivery Club");
-        Alias zoo = new Alias("ZOOMAGAZIN 4", "Зоомагазин");
-        Alias hetzner = new Alias("WWW HETZNER D", "Hetzner Online");
-        Alias yandexEda = new Alias("YANDEX EDA", "Яндекс Еда");
-        Alias dixi = new Alias("DIXY", "ГК Дикси");
-        Alias google = new Alias("GOOGLE GOOGLE", "Google");
-        Alias l_etoilel = new Alias("L ETOILE", "Л'Этуаль");
-        Alias raikhona = new Alias("RAIKHONA", "Ресторан Райхона");
-        Alias fastSpring = new Alias("FSPRG UK", "FastSpring");
-        Alias kfc = new Alias("KFC ASHAN MAR", "KFC в Ашане");
-        Alias zotman = new Alias("ZOTMAN", "ресторан Zotman Pizza Pie");
-        Alias vpsnet = new Alias("VPS NET", "vps.net");
-        Alias loveRepublic = new Alias("LOVE REPUBLIC", "магазин Love Republic");
-        aliases.add(alfaC2C);
-        aliases.add(kuschavel);
-        aliases.add(alfaIss);
-        aliases.add(yandexTaxi);
-        aliases.add(subway);
-        aliases.add(ryabin);
-        aliases.add(amazon);
-        aliases.add(delivery);
-        aliases.add(zoo);
-        aliases.add(hetzner);
-        aliases.add(yandexEda);
-        aliases.add(dixi);
-        aliases.add(google);
-        aliases.add(l_etoilel);
-        aliases.add(raikhona);
-        aliases.add(fastSpring);
-        aliases.add(kfc);
-        aliases.add(zotman);
-        aliases.add(vpsnet);
-        aliases.add(loveRepublic);
     }
 }

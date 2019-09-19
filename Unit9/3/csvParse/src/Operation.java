@@ -79,6 +79,14 @@ public class Operation {
         this.operationDescription = operationDescription;
     }
 
+    public String getAliasFromDescription(){
+        String alias = "";
+        if (operationDescription.indexOf('/') != 0){
+            alias = this.operationDescription.substring(operationDescription.lastIndexOf('/'));
+        }
+        return alias;
+    }
+
     public void setCredit(double credit) {
         this.credit = credit;
     }
