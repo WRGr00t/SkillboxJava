@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Loader {
@@ -21,9 +22,24 @@ public class Loader {
         System.out.println("Сумма поступлений - "
                 + operations.stream()
                 .mapToDouble(Operation::getCredit).sum());
-        int i = 1;
-        double sum = 0;
-        //operations.stream().collect(Collectors.groupingBy(Operation::getCounteragent), Collectors.reducing(operations));
+        Map<String, Double> newOp = operations
+                .stream().collect(
+                        Collectors.groupingBy(Operation::getCounteragent,
+                                Collectors.summingDouble(Operation::getCredit)));
+        for (Map.Entry<String, Double> entry : newOp.entrySet()) {
+            if (entry.getValue() > 0 ){
+                System.out.println(entry.getKey() + "\t поступило \t" + entry.getValue());
+            }
+        }
+        newOp = operations
+                .stream().collect(
+                        Collectors.groupingBy(Operation::getCounteragent,
+                                Collectors.summingDouble(Operation::getDebit)));
+        for (Map.Entry<String, Double> entry : newOp.entrySet()) {
+            if (entry.getValue() > 0 ){
+                System.out.println(entry.getKey() + "\t потрачено \t" + entry.getValue());
+            }
+        }
     }
 
     public static List<String> readFromCsvFile(String separator, String fileName) {
