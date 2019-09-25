@@ -17,14 +17,20 @@ public class Loader {
         ArrayList<Operation> operations = convertToOperation(historyList);
         System.out.println("Всего " + operations.size() + " записей");
         System.out.println("Сумма расходов - "
-                + operations.stream()
-                .mapToDouble(Operation::getDebit).sum());
+                + operations
+                .stream()
+                .mapToDouble(Operation::getDebit)
+                .sum());
         System.out.println("Сумма поступлений - "
-                + operations.stream()
-                .mapToDouble(Operation::getCredit).sum());
+                + operations
+                .stream()
+                .mapToDouble(Operation::getCredit)
+                .sum());
         Map<String, Double> newOp = operations
-                .stream().collect(
-                        Collectors.groupingBy(Operation::getCounteragent,
+                .stream()
+                .collect(
+                        Collectors
+                                .groupingBy(Operation::getCounteragent,
                                 Collectors.summingDouble(Operation::getCredit)));
         for (Map.Entry<String, Double> entry : newOp.entrySet()) {
             if (entry.getValue() > 0 ){
@@ -32,7 +38,8 @@ public class Loader {
             }
         }
         newOp = operations
-                .stream().collect(
+                .stream()
+                .collect(
                         Collectors.groupingBy(Operation::getCounteragent,
                                 Collectors.summingDouble(Operation::getDebit)));
         for (Map.Entry<String, Double> entry : newOp.entrySet()) {
@@ -60,6 +67,7 @@ public class Loader {
     public static ArrayList<Operation> convertToOperation(List<String> arrayStringFromCSV) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         ArrayList<Operation> operations = new ArrayList<>();
+
         for (int recNo = 0; recNo < arrayStringFromCSV.size(); recNo++) {
             String stringForEdit = arrayStringFromCSV.get(recNo);
             if (stringForEdit.contains("\"")) { //избавляемся от подстрок вида "123,5"
@@ -72,20 +80,29 @@ public class Loader {
                                 stringForEdit.length()-1);
             }
             String[] strings = stringForEdit.split(",");
-            String typeAccount = strings[0];
-            String numberAccount = strings[1];
-            String currency = strings[2];
+            int INDEX_TYPE = 0;
+            int INDEX_NUMBER = 1;
+            int INDEX_CURRENCY = 2;
             int INDEX_DATE = 3;
             int INDEX_CHAR_CENTURY = 7;
             String COUNT_CENTURY = "20";
+            int INDEX_REFERENCE = 4;
+            int INDEX_DESCRIPTION = 5;
+            int INDEX_CREDIT = 6;
+            int INDEX_DEBIT = 7;
+
+            String typeAccount = strings[INDEX_TYPE];
+            String numberAccount = strings[INDEX_NUMBER];
+            String currency = strings[INDEX_CURRENCY];
             StringBuffer dateForParse = new StringBuffer(strings[INDEX_DATE]);
             dateForParse.insert(INDEX_CHAR_CENTURY, COUNT_CENTURY); //переходим на полный формат года
             String data = String.valueOf(dateForParse).trim();
             LocalDate transactionDate = LocalDate.parse(data, formatter);
-            String referenceTransactions = strings [4];
-            String operationDescription = strings[5];
-            double credit = Double.valueOf(strings[6]);
-            double debit = Double.valueOf(strings[7]);
+            String referenceTransactions = strings [INDEX_REFERENCE];
+            String operationDescription = strings[INDEX_DESCRIPTION];
+            double credit = Double.valueOf(strings[INDEX_CREDIT]);
+            double debit = Double.valueOf(strings[INDEX_DEBIT]);
+
             operations.add(new Operation(typeAccount, numberAccount, currency, transactionDate, referenceTransactions,
                     operationDescription, credit, debit));
         }
