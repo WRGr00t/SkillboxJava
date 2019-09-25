@@ -59,8 +59,7 @@ public class Loader {
             list.remove(0); //удаление шапки
             return list;
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -70,15 +69,7 @@ public class Loader {
 
         for (int recNo = 0; recNo < arrayStringFromCSV.size(); recNo++) {
             String stringForEdit = arrayStringFromCSV.get(recNo);
-            if (stringForEdit.contains("\"")) { //избавляемся от подстрок вида "123,5"
-                String numberWithQuotes = stringForEdit.substring((stringForEdit.indexOf("\"") + 1),
-                        stringForEdit.lastIndexOf("\""));
-                String[] parts = numberWithQuotes.split(",");
-                String numberAfterEdit = parts[0] + "." + parts[1];
-                stringForEdit = stringForEdit.substring(0, stringForEdit.indexOf("\"")) + numberAfterEdit +
-                        stringForEdit.substring(stringForEdit.lastIndexOf("\""),
-                                stringForEdit.length()-1);
-            }
+            stringForEdit = stringForEdit.replaceAll("\"(\\d+),(\\d+)\"", "$1.$2");
             String[] strings = stringForEdit.split(",");
             int INDEX_TYPE = 0;
             int INDEX_NUMBER = 1;
