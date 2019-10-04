@@ -20,22 +20,18 @@ public class Loader {
             System.out.println(e.getMessage());
         }
         for (Element category : links) {
-            download(category.select("img").attr("abs:src"),target.toString());
+            download(category.select("img").attr("abs:src"), target);
         }
     }
-    private static void download(String sourceURL, String targetDirectory) throws IOException
-    {
+
+    private static void download(String sourceURL, Path targetDirectory) {
         try {
             URL url = new URL(sourceURL);
             String fileName = sourceURL.substring(sourceURL.lastIndexOf('/') + 1);
-            Path targetPath = Paths.get(targetDirectory, fileName);
+            Path targetPath = Paths.get(String.valueOf(targetDirectory), fileName);
             System.out.println("Скачан файл " + targetPath.getFileName());
-            try {
-                Files.copy(url.openStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        } catch (Exception ex){
+            Files.copy(url.openStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
