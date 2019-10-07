@@ -15,7 +15,8 @@ public class Loader {
                 "BE%D0%B3%D0%BE_%D0%BC%D0%B5%D1%82%D1%80%D0%BE%D0%BF%D0%BE%D0%BB%D0%B8%" +
                 "D1%82%D0%B5%D0%BD%D0%B0";
         Document doc = null;
-        ArrayList<String> stations = new ArrayList<>();
+        ArrayList<Station> stations = new ArrayList<>();
+        ArrayList<String> stationsFirstLine = new ArrayList<>();
         int INDEX_OF_STATIONS_LIST = 3;
         int INDEX_OF_COLS_WITH_NAME = 1;
         try {
@@ -29,10 +30,11 @@ public class Loader {
         for (int i = 1; i < rows.size(); i++) {
             Element row = rows.get(i);
             Elements cols = row.select("td");
-            //cols.get(0).text();// первый столбец нужен для парсинга по линиям метро
-            stations.add(cols.get(INDEX_OF_COLS_WITH_NAME).text());
+            String name = cols.get(INDEX_OF_COLS_WITH_NAME).text();
+            String numberLine = cols.get(0).text().substring(0,2);
+            stations.add(new Station(name, numberLine));
         }
-        for (String station : stations) {
+        for (Station station : stations) {
             System.out.println(station);
         }
     }
