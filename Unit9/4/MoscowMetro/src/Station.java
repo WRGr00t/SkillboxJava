@@ -1,7 +1,9 @@
 public class Station {
 
     public String name;
-    public String numberLine;
+    public String lineNumber;
+
+    public String lineName;
 
     public String getName() {
         return name;
@@ -11,26 +13,30 @@ public class Station {
         this.name = name;
     }
 
-    public String getNumberLine() {
-        return numberLine;
+    public String getLineNumber() {
+        return lineNumber;
     }
 
-    public void setNumberLine(String numberLine) {
-        this.numberLine = numberLine;
+    public void setLineNumber(String lineNumber) {
+        this.lineNumber = lineNumber;
     }
 
-    Station(){
-        name = "";
-        numberLine = "";
+    public String getLineName() {
+        return lineName;
     }
 
-    Station(String name, String numberLine){
+    public void setLineName(String lineName) {
+        this.lineName = lineName;
+    }
+
+    Station(String name, String lineNumber, String lineName){
         this.name = name;
-        this.numberLine = numberLine;
+        this.lineNumber = lineNumber;
+        this.lineName = lineName;
     }
 
     @Override
     public String toString() {
-        return "Станция метро " + name + " линии №" + numberLine;
+        return "Станция метро " + name + " (" + lineName + ")";
     }
 }

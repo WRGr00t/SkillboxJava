@@ -30,8 +30,9 @@ public class Loader {
             Element row = rows.get(i);
             Elements cols = row.select("td");
             String name = cols.get(INDEX_OF_COLS_WITH_NAME).text();
-            String numberLine = cols.get(0).text().substring(0,2);
-            stations.add(new Station(name, numberLine));
+            String lineName = cols.get(0).select("a").attr("title");
+            String lineNumber = cols.get(0).text().substring(0,2);
+            stations.add(new Station(name, lineNumber, lineName));
         }
         for (Station station : stations) {
             System.out.println(station);
