@@ -9,7 +9,7 @@ import java.nio.file.*;
 public class Loader {
     private static Path target = Paths.get("src", "folderForImg");
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Document doc;
         Elements links = new Elements();
         try {
