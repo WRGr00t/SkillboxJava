@@ -20,8 +20,7 @@ public class Loader {
         int INDEX_OF_STATIONS_LIST = 3;
         int INDEX_OF_COLS_WITH_NAME = 1;
         try {
-            doc = Jsoup.connect(url).get();
-            Jsoup.connect(url).maxBodySize(0);
+            doc = Jsoup.connect(url).maxBodySize(0).get();
         } catch (IOException e) {
             e.printStackTrace();
         }

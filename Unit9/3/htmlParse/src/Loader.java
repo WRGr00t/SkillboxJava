@@ -13,8 +13,7 @@ public class Loader {
         Document doc;
         Elements links = new Elements();
         try {
-            doc = Jsoup.connect("https://lenta.ru/").get();
-            Jsoup.connect("https://lenta.ru/").maxBodySize(0);
+            doc = Jsoup.connect("https://lenta.ru/").maxBodySize(0).get();
             links = doc.select("img");
         } catch (IOException e) {
             System.out.println(e.getMessage());
