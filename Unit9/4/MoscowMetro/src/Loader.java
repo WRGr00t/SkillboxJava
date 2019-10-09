@@ -3,7 +3,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -16,9 +15,9 @@ public class Loader {
                 "D1%82%D0%B5%D0%BD%D0%B0";
         Document doc = null;
         ArrayList<Station> stations = new ArrayList<>();
-        ArrayList<String> stationsFirstLine = new ArrayList<>();
         int INDEX_OF_STATIONS_LIST = 3;
         int INDEX_OF_COLS_WITH_NAME = 1;
+        int INDEX_OF_COLS_CONNECTIONS = 3;
         try {
             doc = Jsoup.connect(url).maxBodySize(0).get();
         } catch (IOException e) {
@@ -33,6 +32,10 @@ public class Loader {
             String lineName = cols.get(0).select("a").attr("title");
             String lineNumber = cols.get(0).text().substring(0,2);
             stations.add(new Station(name, lineNumber, lineName));
+            String connect = cols.get(INDEX_OF_COLS_CONNECTIONS).text();
+            if (!connect.equals("")){
+                System.out.println(cols.get(INDEX_OF_COLS_WITH_NAME).text() + " переход на " + cols.get(INDEX_OF_COLS_CONNECTIONS).text());
+            }
         }
         for (Station station : stations) {
             System.out.println(station);
