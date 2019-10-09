@@ -2,8 +2,8 @@ public class Station {
 
     public String name;
     public String lineNumber;
-
     public String lineName;
+    public String transit;
 
     public String getName() {
         return name;
@@ -29,10 +29,23 @@ public class Station {
         this.lineName = lineName;
     }
 
-    Station(String name, String lineNumber, String lineName){
+    public String getTransit() {
+        return transit;
+    }
+
+    public void setTransit(String transit) {
+        this.transit = transit;
+    }
+
+    Station(String name, String lineNumber, String lineName, String transit){
         this.name = name;
         this.lineNumber = lineNumber;
         this.lineName = lineName;
+        this.transit = transit;
+    }
+
+    Station(String name, String lineNumber, String lineName){
+        this(name, lineNumber, lineName, "");
     }
 
     @Override
