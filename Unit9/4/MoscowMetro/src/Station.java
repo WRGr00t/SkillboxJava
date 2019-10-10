@@ -4,6 +4,7 @@ public class Station {
     public String lineNumber;
     public String lineName;
     public String transit;
+    public String[] connections;
 
     public String getName() {
         return name;
@@ -37,15 +38,31 @@ public class Station {
         this.transit = transit;
     }
 
-    Station(String name, String lineNumber, String lineName, String transit){
+    public String[] getConnections() {
+        return connections;
+    }
+
+    public String ConnectionToString() {
+        String result = "";
+        String[] connects = getConnections();
+        if (connects.length > 0) {
+            for (String string : connects) {
+                result = result + " " + string;
+            }
+        }
+        return result;
+    }
+
+    Station(String name, String lineNumber, String lineName, String transit, String[] connections) {
         this.name = name;
         this.lineNumber = lineNumber;
         this.lineName = lineName;
         this.transit = transit;
+        this.connections = connections;
     }
 
-    Station(String name, String lineNumber, String lineName){
-        this(name, lineNumber, lineName, "");
+    Station(String name, String lineNumber, String lineName) {
+        this(name, lineNumber, lineName, "", new String[0]);
     }
 
     @Override

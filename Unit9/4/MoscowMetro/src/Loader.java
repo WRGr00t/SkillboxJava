@@ -19,8 +19,8 @@ public class Loader {
         stations = parseStations(url, doc);
         for (Station station : stations) {
             System.out.println(station);
-            if (station.getTransit() != ""){
-                System.out.println(station.getTransit());
+            if (!station.getTransit().isEmpty()){
+                System.out.println("Переход на линию -" + station.ConnectionToString());
             }
         }
     }
@@ -47,11 +47,12 @@ public class Loader {
             String lineName = cols.get(0).select("a").attr("title");
             String lineNumber = cols.get(0).text().substring(0, 2);
             String connect = cols.get(INDEX_OF_COLS_CONNECTIONS).text();
+            String[] subConnect = connect.split(" ");
             if (!connect.equals("")) {
                 connect = cols.get(INDEX_OF_COLS_CONNECTIONS).select("span").attr("title") +
                         " (" + cols.get(INDEX_OF_COLS_CONNECTIONS).text() + ")";
             }
-            stations.add(new Station(name, lineNumber, lineName, connect));
+            stations.add(new Station(name, lineNumber, lineName, connect, subConnect));
         }
         return stations;
     }
