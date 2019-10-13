@@ -1,10 +1,13 @@
+import java.util.ArrayList;
+
 public class Station {
 
-    public String name;
-    public String lineNumber;
-    public String lineName;
-    public String transit;
-    public String[] connections;
+    private String name;
+    private String lineNumber;
+    private String lineName;
+    private String transit;
+    private String[] numberConnectLines;
+    private ArrayList<String> connectLines;
 
     public String getName() {
         return name;
@@ -38,31 +41,36 @@ public class Station {
         this.transit = transit;
     }
 
-    public String[] getConnections() {
-        return connections;
+    public String[] getNumberConnectLines() {
+        return numberConnectLines;
+    }
+
+    public ArrayList<String> getConnectLines() {
+        return connectLines;
     }
 
     public String ConnectionToString() {
         String result = "";
-        String[] connects = getConnections();
-        if (connects.length > 0) {
+        ArrayList<String> connects = getConnectLines();
+        if (connects.size() > 0) {
             for (String string : connects) {
-                result = result + " " + string;
+                result = result + "\n" + string;
             }
         }
         return result;
     }
 
-    Station(String name, String lineNumber, String lineName, String transit, String[] connections) {
+    Station(String name, String lineNumber, String lineName, String transit, String[] connections, ArrayList<String> connectLines) {
         this.name = name;
         this.lineNumber = lineNumber;
         this.lineName = lineName;
         this.transit = transit;
-        this.connections = connections;
+        this.numberConnectLines = connections;
+        this.connectLines = connectLines;
     }
 
     Station(String name, String lineNumber, String lineName) {
-        this(name, lineNumber, lineName, "", new String[0]);
+        this(name, lineNumber, lineName, "", new String[0], new ArrayList<String>());
     }
 
     @Override
