@@ -3,7 +3,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -29,10 +28,11 @@ public class Loader {
         }
         parseMetro(doc, 3); //Станции Московского метрополитена
         parseMetro(doc, 4); //Станции Московского монорельса
-        parseMetro(doc, 9);
+        parseMetro(doc, 5);
         //printStationWithConnection();
         //printStation("Каховская линия");
-        printLine();
+        //printLine();
+        printStation();
         parseConnections();
     }
 
@@ -59,6 +59,12 @@ public class Loader {
         }
     }
 
+    private static void printStation(){
+        for (Station station : stations) {
+            System.out.println(station + " " + station.getTransit());
+        }
+    }
+
     private static void parseMetro(Document doc, int INDEX_OF_STATIONS_LIST){
         int INDEX_OF_COLS_WITH_NUMBER = 0;
         int INDEX_OF_COLS_WITH_NAME = 1;
@@ -67,8 +73,9 @@ public class Loader {
         Element table = doc.select("table").get(INDEX_OF_STATIONS_LIST);
         Elements rows = table.select("tr");
         for (int i = 1; i < rows.size(); i++) {
-            if(table.select("tr").text().contains("Московский монорельс")){
-                break;
+            if(i == 1 && (table.select("tr").text().contains("Московский монорельс") ||
+                    table.select("tr").text().contains("Московское центральное кольцо"))){
+                continue;
             }
             Element row = rows.get(i);
             Elements cols = row.select("td");
@@ -86,13 +93,17 @@ public class Loader {
             if (numberConnectLine.length > 0) {
                 for (int j = 1; j < elements.size(); j++){
                     String conStation = elements.get(j).attr("title");
-                    connects.add(conStation);
+                    if (!conStation.equals("")){
+                        connects.add(conStation);
+                        System.out.println(conStation);
+                    }
                 }
                 connect = cols.get(INDEX_OF_COLS_CONNECTIONS).select("span").attr("title") +
                         " (" + cols.get(INDEX_OF_COLS_CONNECTIONS).text() + ")";
+                //System.out.println(connect);
             }
             stations.add(new Station(name, lineNumber, lineName, connect, numberConnectLine, connects));
-            System.out.println("Добавлена станция " + name);
+            //System.out.println("Добавлена станция " + name);
         }
     }
 
@@ -120,7 +131,8 @@ public class Loader {
                 if (!station.equals(station1)){
                     for (String s : strings){
                         if (s.contains(station1.getName())){
-                            System.out.println(station + " <=> " + station1);
+                            //System.out.println(station + " <=> " + station1);
+                            //System.out.println(station1.getConnectLines());
                         }
                     }
                 }

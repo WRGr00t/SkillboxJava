@@ -75,6 +75,14 @@ public class Station {
 
     @Override
     public String toString() {
-        return "Станция метро " + name + " (" + lineName + ")";
+        return "Станция метро " + name + " (" + lineName + ")" + " # " + lineNumber + "\n" + "Пересадки: " + transit + "\n" + printNumberConnectLines();
+    }
+
+    private String printNumberConnectLines() {
+        String result = "";
+        for (String string : numberConnectLines) {
+            result = result + string + "\n";
+        }
+        return result;
     }
 }
