@@ -9,10 +9,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class Loader {
     private static ArrayList<Station> stations = new ArrayList<>();
+    private static TreeMap<String, String> lines = new TreeMap<>();
     private static HashMap<Station, Station[]> connections = new HashMap<>();
+    private static final int INDEX_MOSCOW_METRO_LIST = 3;
+    private static final int INDEX_MOSCOW_MONORAIL_LIST = 4;
+    private static final int INDEX_MOSCOW_CENTRAL_RING_LIST = 5;
 
     public static void main(String[] args) {
         String url = "https://ru.wikipedia.org/wiki/" +
@@ -20,20 +25,26 @@ public class Loader {
                 "%86%D0%B8%D0%B9_%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%" +
                 "BE%D0%B3%D0%BE_%D0%BC%D0%B5%D1%82%D1%80%D0%BE%D0%BF%D0%BE%D0%BB%D0%B8%" +
                 "D1%82%D0%B5%D0%BD%D0%B0";
+
+
         Document doc = null;
         try {
             doc = Jsoup.connect(url).maxBodySize(0).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        parseMetro(doc, 3); //Станции Московского метрополитена
-        parseMetro(doc, 4); //Станции Московского монорельса
-        parseMetro(doc, 5);
+        parseMetro(doc, INDEX_MOSCOW_METRO_LIST);
+        parseMetro(doc, INDEX_MOSCOW_MONORAIL_LIST);
+        parseMetro(doc, INDEX_MOSCOW_CENTRAL_RING_LIST);
         //printStationWithConnection();
         //printStation("Каховская линия");
         //printLine();
-        printStation();
+        //printStation();
+        parseLines();
+        //printLines();
         parseConnections();
+        StringBuffer stringBuffer = craftMap();
+        System.out.println(stringBuffer);
     }
 
     private static void printStationWithConnection(){
@@ -73,8 +84,8 @@ public class Loader {
         Element table = doc.select("table").get(INDEX_OF_STATIONS_LIST);
         Elements rows = table.select("tr");
         for (int i = 1; i < rows.size(); i++) {
-            if(i == 1 && (table.select("tr").text().contains("Московский монорельс") ||
-                    table.select("tr").text().contains("Московское центральное кольцо"))){
+            if(i == 1 && (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_MONORAIL_LIST) ||
+                    (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_CENTRAL_RING_LIST)){
                 continue;
             }
             Element row = rows.get(i);
@@ -95,7 +106,7 @@ public class Loader {
                     String conStation = elements.get(j).attr("title");
                     if (!conStation.equals("")){
                         connects.add(conStation);
-                        System.out.println(conStation);
+                        //System.out.println(conStation);
                     }
                 }
                 connect = cols.get(INDEX_OF_COLS_CONNECTIONS).select("span").attr("title") +
@@ -140,5 +151,36 @@ public class Loader {
         }
     }
 
+    private static void parseLines(){
+        for (Station station : stations){
+            String lineName = station.getLineName();
+            String lineNumber = station.getLineNumber();
+            lines.put(lineNumber, lineName);
+        }
+    }
 
+    private static void printLines(){
+        for (HashMap.Entry<String, String> entry : lines.entrySet()) {
+            System.out.println("Линия №" + entry.getKey() + " - " + entry.getValue());
+        }
+    }
+
+    private static StringBuffer craftMap(){
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("{\n")
+                .append("\t\"stations\" : {\n");
+        for (HashMap.Entry<String, String> entry : lines.entrySet()) {
+            stringBuffer.append("\t\t\"" + entry.getKey() + "\" : [\n");
+            for (Station station : stations){
+                if (station.getLineNumber().equals(entry.getKey())){
+                    stringBuffer.append("\t\t\t\"" + station.getName() + "\"\n");
+                }
+            }
+            stringBuffer.append("\t\t],\n");
+        }
+        stringBuffer.delete(stringBuffer.length()-2, stringBuffer.length()-1)
+                .append("\t},\n")
+                .append("\t\"connections\": [");
+        return stringBuffer;
+    }
 }
