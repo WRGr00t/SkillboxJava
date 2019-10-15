@@ -142,7 +142,7 @@ public class Loader {
                 if (!station.equals(station1)){
                     for (String s : strings){
                         if (s.contains(station1.getName())){
-                            //System.out.println(station + " <=> " + station1);
+                            System.out.println(station.getName() + " линия #" + station.getLineNumber() + " <=> " + station1.getName() + " линия #" + station1.getLineNumber());
                             //System.out.println(station1.getConnectLines());
                         }
                     }
@@ -183,4 +183,9 @@ public class Loader {
                 .append("\t\"connections\": [");
         return stringBuffer;
     }
+
+    private static void findConnection(){
+
+    }
+
 }
