@@ -14,7 +14,6 @@ import java.util.TreeMap;
 public class Loader {
     private static ArrayList<Station> stations = new ArrayList<>();
     private static TreeMap<String, String> lines = new TreeMap<>();
-    private static HashMap<Station, Station[]> connections = new HashMap<>();
     private static final int INDEX_MOSCOW_METRO_LIST = 3;
     private static final int INDEX_MOSCOW_MONORAIL_LIST = 4;
     private static final int INDEX_MOSCOW_CENTRAL_RING_LIST = 5;
@@ -98,7 +97,6 @@ public class Loader {
             String lineNumber = cols.get(INDEX_OF_COLS_WITH_NUMBER).select("span").first().text();
             String connect = cols.get(INDEX_OF_COLS_CONNECTIONS).text();
             Elements elements = cols.get(INDEX_OF_COLS_CONNECTIONS).select("span");
-
             String[] numberConnectLine = connect.split(" ");
             ArrayList<String> connects = new ArrayList<>();
             if (numberConnectLine.length > 0) {
@@ -106,7 +104,7 @@ public class Loader {
                     String conStation = elements.get(j).attr("title");
                     if (!conStation.equals("")){
                         connects.add(conStation);
-                        //System.out.println(conStation);
+                        //System.out.println(name + " " + lineNumber + " <=> " + conStation + cols.get(INDEX_OF_COLS_CONNECTIONS).text());
                     }
                 }
                 connect = cols.get(INDEX_OF_COLS_CONNECTIONS).select("span").attr("title") +
@@ -141,14 +139,23 @@ public class Loader {
             for (Station station1: stations){
                 if (!station.equals(station1)){
                     for (String s : strings){
-                        if (s.contains(station1.getName())){
-                            //System.out.println(station + " <=> " + station1);
-                            //System.out.println(station1.getConnectLines());
+                        if (s.contains(station1.getName()) && checkNumberLine(station1.getLineNumber(), station.getNumberConnectLines())){
+                            System.out.println(station + " <=> " + station1);
                         }
                     }
                 }
             }
         }
+    }
+
+    private static boolean checkNumberLine(String numberLine, String[] strings){
+        boolean result = false;
+        for (String s : strings){
+            if (numberLine.equals(s)){
+                result = true;
+            }
+        }
+        return result;
     }
 
     private static void parseLines(){
