@@ -11,9 +11,13 @@ import java.util.TreeMap;
 public class Loader {
     private static ArrayList<Station> stations = new ArrayList<>();
     private static TreeMap<String, String> lines = new TreeMap<>();
+    private static TreeMap<Station, ArrayList<Station>> connections = new TreeMap<>();
     private static final int INDEX_MOSCOW_METRO_LIST = 3;
     private static final int INDEX_MOSCOW_MONORAIL_LIST = 4;
     private static final int INDEX_MOSCOW_CENTRAL_RING_LIST = 5;
+    private static final int INDEX_OF_COLS_WITH_NUMBER = 0;
+    private static final int INDEX_OF_COLS_WITH_NAME = 1;
+    private static final int INDEX_OF_COLS_CONNECTIONS = 3;
 
     public static void main(String[] args) {
         String url = "https://ru.wikipedia.org/wiki/" +
@@ -31,7 +35,9 @@ public class Loader {
         parseStation(doc, INDEX_MOSCOW_MONORAIL_LIST);
         parseStation(doc, INDEX_MOSCOW_CENTRAL_RING_LIST);
         parseLines();
-        System.out.println(craftMap());
+        //System.out.println(craftMap());
+        getConnections(doc);
+        printConnections();
     }
 
     private static void parseStation(Document doc, int INDEX_OF_STATIONS_LIST) {
@@ -41,9 +47,9 @@ public class Loader {
         Element table = doc.select("table").get(INDEX_OF_STATIONS_LIST);
         Elements rows = table.select("tr");
         for (int i = 1; i < rows.size(); i++) {
-            if(i == 1 &&
+            if (i == 1 &&
                     ((INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_MONORAIL_LIST) ||
-                    (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_CENTRAL_RING_LIST))){
+                            (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_CENTRAL_RING_LIST))) {
                 continue;
             }
             Element row = rows.get(i);
@@ -58,30 +64,78 @@ public class Loader {
         }
     }
 
-    private static StringBuffer craftMap(){
+    private static StringBuffer craftMap() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("{\n")
                 .append("\t\"stations\" : {\n");
         for (HashMap.Entry<String, String> entry : lines.entrySet()) {
             stringBuffer.append("\t\t\"" + entry.getKey() + "\" : [\n");
-            for (Station station : stations){
-                if (station.getLineNumber().equals(entry.getKey())){
+            for (Station station : stations) {
+                if (station.getLineNumber().equals(entry.getKey())) {
                     stringBuffer.append("\t\t\t\"" + station.getName() + "\"\n");
                 }
             }
             stringBuffer.append("\t\t],\n");
         }
-        stringBuffer.delete(stringBuffer.length()-2, stringBuffer.length()-1)
+        stringBuffer.delete(stringBuffer.length() - 2, stringBuffer.length() - 1)
                 .append("\t},\n")
                 .append("\t\"connections\": [");
         return stringBuffer;
     }
 
-    private static void parseLines(){
-        for (Station station : stations){
+    private static void parseLines() {
+        for (Station station : stations) {
             String lineName = station.getLineName();
             String lineNumber = station.getLineNumber();
             lines.put(lineNumber, lineName);
+        }
+    }
+
+    private static void getConnections(Document doc) {
+        ArrayList<Station> connects = new ArrayList<>();
+        for (int INDEX_OF_STATIONS_LIST = INDEX_MOSCOW_METRO_LIST;
+             INDEX_OF_STATIONS_LIST < INDEX_MOSCOW_CENTRAL_RING_LIST + 1; INDEX_OF_STATIONS_LIST++) {
+            Element table = doc.select("table").get(INDEX_OF_STATIONS_LIST);
+            Elements rows = table.select("tr");
+            for (int i = 1; i < rows.size(); i++) {
+                if (i == 1 && (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_MONORAIL_LIST) ||
+                        (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_CENTRAL_RING_LIST)) {
+                    continue;
+                }
+                Element row = rows.get(i);
+                Elements cols = row.select("td");
+                String name = cols.get(INDEX_OF_COLS_WITH_NAME).select("a").attr("title");
+                String lineNumber = cols.get(INDEX_OF_COLS_WITH_NUMBER).select("span").first().text();
+                String connect = cols.get(INDEX_OF_COLS_CONNECTIONS).text();
+                Elements elements = cols.get(INDEX_OF_COLS_CONNECTIONS).select("span");
+                System.out.println(elements.size()/2);
+                ArrayList<Station> connectStation = new ArrayList<>();
+                for (int j = 1; j < elements.size(); j++) {
+                    String conStation = elements.get(j).attr("title");
+                    if (!conStation.equals("")){
+                        connectStation.add(findStation(conStation, connect));
+                    }
+                }
+                Station station = findStation(name, lineNumber);
+                if (station != null){
+                    connections.put(findStation(name, lineNumber), connectStation);
+                }
+            }
+        }
+    }
+
+    private static Station findStation (String string, String lineNumber){
+        for (Station station : stations){
+            if (station.getName().contains(string) && station.getLineNumber() == lineNumber){
+                return station;
+            }
+        }
+        return null;
+    }
+
+    private static void printConnections(){
+        for (HashMap.Entry<Station, ArrayList<Station>> entry : connections.entrySet()) {
+            System.out.println("Линия №" + entry.getKey() + " - " + entry.getValue());
         }
     }
 }
