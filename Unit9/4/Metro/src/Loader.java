@@ -42,8 +42,8 @@ public class Loader {
         Elements rows = table.select("tr");
         for (int i = 1; i < rows.size(); i++) {
             if(i == 1 &&
-                    (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_MONORAIL_LIST) ||
-                    (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_CENTRAL_RING_LIST)){
+                    ((INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_MONORAIL_LIST) ||
+                    (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_CENTRAL_RING_LIST))){
                 continue;
             }
             Element row = rows.get(i);
