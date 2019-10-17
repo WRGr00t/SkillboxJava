@@ -107,18 +107,28 @@ public class Loader {
                 String name = cols.get(INDEX_OF_COLS_WITH_NAME).select("a").attr("title");
                 String lineNumber = cols.get(INDEX_OF_COLS_WITH_NUMBER).select("span").first().text();
                 String connect = cols.get(INDEX_OF_COLS_CONNECTIONS).text();
+                String[] numberConnectLine = connect.split(" ");
                 Elements elements = cols.get(INDEX_OF_COLS_CONNECTIONS).select("span");
-                System.out.println(elements.size()/2);
                 ArrayList<Station> connectStation = new ArrayList<>();
-                for (int j = 1; j < elements.size(); j++) {
+                ArrayList<String> descriptions = new ArrayList<>();
+                for (int j = 1; j < elements.size(); j++){
                     String conStation = elements.get(j).attr("title");
-                    if (!conStation.equals("")){
-                        connectStation.add(findStation(conStation, connect));
+                    if (!conStation.isEmpty()){
+                        descriptions.add(conStation);
+                    }
+                }
+                for (int j = 0; j < descriptions.size(); j++) {
+                    if (!descriptions.get(j).isEmpty()){
+                        connectStation.add(findStation(descriptions.get(j), numberConnectLine[j]));
                     }
                 }
                 Station station = findStation(name, lineNumber);
+                if (station.getName().equals("Белорусская")){
+                    System.out.println(station);
+                    System.out.println(connectStation);
+                }
                 if (station != null){
-                    connections.put(findStation(name, lineNumber), connectStation);
+                    connections.put(station, connectStation);
                 }
             }
         }
@@ -126,7 +136,7 @@ public class Loader {
 
     private static Station findStation (String string, String lineNumber){
         for (Station station : stations){
-            if (station.getName().contains(string) && station.getLineNumber() == lineNumber){
+            if (string.contains(station.getName()) && station.getLineNumber().equals(lineNumber)){
                 return station;
             }
         }
@@ -134,8 +144,13 @@ public class Loader {
     }
 
     private static void printConnections(){
-        for (HashMap.Entry<Station, ArrayList<Station>> entry : connections.entrySet()) {
-            System.out.println("Линия №" + entry.getKey() + " - " + entry.getValue());
+        /*for (HashMap.Entry<Station, ArrayList<Station>> entry : connections.entrySet()) {
+            if (!entry.getValue().isEmpty()){
+                System.out.println("Станция - " + entry.getKey() + " с переходами: " + entry.getValue());
+            }
+        }*/
+        for (Station key : connections.keySet()) {
+            System.out.println("Станция = " + key + ", переходы = " +  connections.get(key));
         }
     }
 }

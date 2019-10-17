@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Station {
+public class Station implements Comparable<Station> {
     private String name;
     private String lineNumber;
     private String lineName;
@@ -45,5 +45,10 @@ public class Station {
     @Override
     public int hashCode() {
         return Objects.hash(name, lineNumber, lineName);
+    }
+
+    @Override
+    public int compareTo(Station s) {
+        return name.compareTo(s.getName());
     }
 }
