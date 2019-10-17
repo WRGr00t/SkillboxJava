@@ -37,9 +37,9 @@ public class Station implements Comparable<Station> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Station station = (Station) o;
-        return name.equals(station.name) &&
-                lineNumber.equals(station.lineNumber) &&
-                lineName.equals(station.lineName);
+        return name.equals(station.getName()) &&
+                lineNumber.equals(station.getLineNumber()) &&
+                lineName.equals(station.getLineName());
     }
 
     @Override
@@ -49,6 +49,9 @@ public class Station implements Comparable<Station> {
 
     @Override
     public int compareTo(Station s) {
+        if (name.compareTo(s.getName()) == 0){
+            return lineNumber.compareTo(s.getLineNumber());
+        }
         return name.compareTo(s.getName());
     }
 }

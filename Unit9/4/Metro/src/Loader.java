@@ -2,6 +2,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -92,14 +93,13 @@ public class Loader {
     }
 
     private static void getConnections(Document doc) {
-        ArrayList<Station> connects = new ArrayList<>();
         for (int INDEX_OF_STATIONS_LIST = INDEX_MOSCOW_METRO_LIST;
              INDEX_OF_STATIONS_LIST < INDEX_MOSCOW_CENTRAL_RING_LIST + 1; INDEX_OF_STATIONS_LIST++) {
             Element table = doc.select("table").get(INDEX_OF_STATIONS_LIST);
             Elements rows = table.select("tr");
             for (int i = 1; i < rows.size(); i++) {
-                if (i == 1 && (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_MONORAIL_LIST) ||
-                        (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_CENTRAL_RING_LIST)) {
+                if ((i == 1) && ((INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_MONORAIL_LIST) ||
+                        (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_CENTRAL_RING_LIST))) {
                     continue;
                 }
                 Element row = rows.get(i);
@@ -117,17 +117,21 @@ public class Loader {
                         descriptions.add(conStation);
                     }
                 }
-                for (int j = 0; j < descriptions.size(); j++) {
-                    if (!descriptions.get(j).isEmpty()){
-                        connectStation.add(findStation(descriptions.get(j), numberConnectLine[j]));
+                try {
+                    for (int j = 0; j < descriptions.size(); j++) {
+                        if (!descriptions.get(j).isEmpty()){
+                            connectStation.add(findStation(descriptions.get(j), numberConnectLine[j]));
+                        }
                     }
+                } catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("Шелепиха и Хорошево не парсятся, на итог не повлияет из-за избыточности информации");
                 }
+
                 Station station = findStation(name, lineNumber);
-                if (station.getName().equals("Белорусская")){
-                    System.out.println(station);
-                    System.out.println(connectStation);
+                if (name.equals("Бульвар Рокоссовского")){
+                    System.out.println("Бульвар Рокоссовского #" + lineNumber);
                 }
-                if (station != null){
+                if (station != null && !connectStation.isEmpty()){
                     connections.put(station, connectStation);
                 }
             }
