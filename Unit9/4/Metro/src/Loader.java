@@ -7,12 +7,14 @@ import org.w3c.dom.ls.LSOutput;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.TreeMap;
 
 public class Loader {
     private static ArrayList<Station> stations = new ArrayList<>();
     private static TreeMap<String, String> lines = new TreeMap<>();
     private static TreeMap<Station, ArrayList<Station>> connections = new TreeMap<>();
+    private static ArrayList<HashSet<Station>> list = new ArrayList<>();
     private static final int INDEX_MOSCOW_METRO_LIST = 3;
     private static final int INDEX_MOSCOW_MONORAIL_LIST = 4;
     private static final int INDEX_MOSCOW_CENTRAL_RING_LIST = 5;
@@ -126,14 +128,28 @@ public class Loader {
                 } catch (ArrayIndexOutOfBoundsException e){
                     System.out.println("Шелепиха и Хорошево не парсятся, на итог не повлияет из-за избыточности информации");
                 }
-
                 Station station = findStation(name, lineNumber);
-                if (name.equals("Бульвар Рокоссовского")){
-                    System.out.println("Бульвар Рокоссовского #" + lineNumber);
-                }
                 if (station != null && !connectStation.isEmpty()){
                     connections.put(station, connectStation);
                 }
+            }
+        }
+        HashSet<Station> connectSet = new HashSet<>();
+        for (Station key : connections.keySet()) {
+            connectSet.clear();
+            System.out.print("[");
+            connectSet.add(key);
+            System.out.println("Добавлена " + key);
+            for (Station station : connections.get(key)){
+                connectSet.add(station);
+                System.out.println("Добавлена " + station);
+            }
+            list.add(connectSet);
+            System.out.println("]");
+        }
+        for (HashSet<Station> station : list){
+            for (Station station1 : station){
+                System.out.println(station1);
             }
         }
     }
@@ -148,13 +164,8 @@ public class Loader {
     }
 
     private static void printConnections(){
-        /*for (HashMap.Entry<Station, ArrayList<Station>> entry : connections.entrySet()) {
-            if (!entry.getValue().isEmpty()){
-                System.out.println("Станция - " + entry.getKey() + " с переходами: " + entry.getValue());
-            }
-        }*/
-        for (Station key : connections.keySet()) {
-            System.out.println("Станция = " + key + ", переходы = " +  connections.get(key));
+        for (HashSet<Station> station : list) {
+            System.out.println(station);
         }
     }
 }
