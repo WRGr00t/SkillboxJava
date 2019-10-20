@@ -2,19 +2,17 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Loader {
     private static ArrayList<Station> stations = new ArrayList<>();
     private static TreeMap<String, String> lines = new TreeMap<>();
     private static TreeMap<Station, ArrayList<Station>> connections = new TreeMap<>();
-    private static ArrayList<HashSet<Station>> list = new ArrayList<>();
+    private static ArrayList<ArrayList<Station>> list = new ArrayList<>();
+    private static HashSet<ArrayList<Station>> connects = new HashSet<>();
+    private static StringBuffer stringBuffer = new StringBuffer();
     private static final int INDEX_MOSCOW_METRO_LIST = 3;
     private static final int INDEX_MOSCOW_MONORAIL_LIST = 4;
     private static final int INDEX_MOSCOW_CENTRAL_RING_LIST = 5;
@@ -40,7 +38,9 @@ public class Loader {
         parseLines();
         //System.out.println(craftMap());
         getConnections(doc);
+        printStationOnMap();
         printConnections();
+        System.out.println(stringBuffer);
     }
 
     private static void parseStation(Document doc, int INDEX_OF_STATIONS_LIST) {
@@ -67,8 +67,7 @@ public class Loader {
         }
     }
 
-    private static StringBuffer craftMap() {
-        StringBuffer stringBuffer = new StringBuffer();
+    private static StringBuffer printStationOnMap() {
         stringBuffer.append("{\n")
                 .append("\t\"stations\" : {\n");
         for (HashMap.Entry<String, String> entry : lines.entrySet()) {
@@ -113,59 +112,103 @@ public class Loader {
                 Elements elements = cols.get(INDEX_OF_COLS_CONNECTIONS).select("span");
                 ArrayList<Station> connectStation = new ArrayList<>();
                 ArrayList<String> descriptions = new ArrayList<>();
-                for (int j = 1; j < elements.size(); j++){
+                for (int j = 1; j < elements.size(); j++) {
                     String conStation = elements.get(j).attr("title");
-                    if (!conStation.isEmpty()){
+                    if (!conStation.isEmpty()) {
                         descriptions.add(conStation);
                     }
                 }
                 try {
                     for (int j = 0; j < descriptions.size(); j++) {
-                        if (!descriptions.get(j).isEmpty()){
+                        if (!descriptions.get(j).isEmpty()) {
                             connectStation.add(findStation(descriptions.get(j), numberConnectLine[j]));
                         }
                     }
-                } catch (ArrayIndexOutOfBoundsException e){
+                } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("Шелепиха и Хорошево не парсятся, на итог не повлияет из-за избыточности информации");
                 }
                 Station station = findStation(name, lineNumber);
-                if (station != null && !connectStation.isEmpty()){
+                if (!station.equals(new Station("Станция", " не", " найдена")) &&
+                        !connectStation.contains(new Station("Станция", " не", " найдена"))&&
+                !connectStation.isEmpty()) {
                     connections.put(station, connectStation);
                 }
             }
-        }
-        HashSet<Station> connectSet = new HashSet<>();
-        for (Station key : connections.keySet()) {
-            connectSet.clear();
-            System.out.print("[");
-            connectSet.add(key);
-            System.out.println("Добавлена " + key);
-            for (Station station : connections.get(key)){
-                connectSet.add(station);
-                System.out.println("Добавлена " + station);
+
+            for (Station key : connections.keySet()) {
+                System.out.println("Станция " + key + ", переходы = " +  connections.get(key));
             }
-            list.add(connectSet);
-            System.out.println("]");
         }
-        for (HashSet<Station> station : list){
-            for (Station station1 : station){
+        for (Station key : connections.keySet()) {
+            ArrayList<Station> connect = new ArrayList<>();
+            connect.add(key);
+            connect.addAll(connections.get(key));
+            list.add(connect);
+        }
+
+        /*HashSet<Station> connectSet = new HashSet<>();
+        stringBuffer.append("\"connection\": [\n");
+        try {
+            for (Station key : connections.keySet()) {
+                connectSet.clear();
+                connectSet.add(key);
+                stringBuffer.append("\t\t[\n\t\t\t{\n")
+                        .append("\t\t\t\t\"line\": " + key.getLineNumber() + ",\n")
+                        .append("\t\t\t\t\"station\": " + key.getName() + ",\n");
+                //System.out.println("Добавлена " + key);
+                for (Station station : connections.get(key)) {
+                    connectSet.add(station);
+                    System.out.println("Добавлена " + station);
+                    if (station != null){
+                        stringBuffer.append("\t\t[\n\t\t\t{\n")
+                                .append("\t\t\t\t\"line\": " + station.getLineNumber() + ",\n")
+                                .append("\t\t\t\t\"station\": " + station.getName() + ",\n")
+                                .append("\t\t\t},");
+                    }
+                }
+                stringBuffer.delete(stringBuffer.length() - 2, stringBuffer.length() - 1);
+                stringBuffer.append("\n\t\t]\n");
+                list.add(connectSet);
+            }
+            stringBuffer.delete(stringBuffer.length() - 2, stringBuffer.length() - 1);
+            stringBuffer.append("\n\t\t],");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (HashSet<Station> station : connectSet) {
+            for (Station station1 : station) {
                 System.out.println(station1);
             }
-        }
+        }*/
     }
 
-    private static Station findStation (String string, String lineNumber){
-        for (Station station : stations){
-            if (string.contains(station.getName()) && station.getLineNumber().equals(lineNumber)){
+    private static Station findStation(String string, String lineNumber) {
+        for (Station station : stations) {
+            if (string.contains(station.getName()) && station.getLineNumber().equals(lineNumber)) {
                 return station;
             }
         }
-        return null;
+        return new Station("Станция", " не", " найдена");
     }
 
-    private static void printConnections(){
-        for (HashSet<Station> station : list) {
-            System.out.println(station);
+    private static void printConnections() {
+        Comparator<Station> comparator = Comparator.comparing(obj -> obj.getName());
+        comparator = comparator.thenComparing(obj -> obj.getLineNumber());
+        for (ArrayList<Station> stations : list) {
+            stations.sort(comparator);
+            connects.add(stations);
+        }
+        stringBuffer.append("\t\n\t\t[");
+        for (ArrayList<Station> stations : connects){
+            for (Station station : stations){
+                stringBuffer.append("\n\t\t\t{\n")
+                        .append("\t\t\t\t\"line\": " + station.getLineNumber() + ",\n")
+                        .append("\t\t\t\t\"station\": " + station.getName() + "\n")
+                        .append("\t\t\t},");
+            }
+            stringBuffer.delete(stringBuffer.length() - 1, stringBuffer.length());
+            stringBuffer.append("\n\t\t]");
         }
     }
 }
