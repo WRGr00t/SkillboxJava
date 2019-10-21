@@ -3,6 +3,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -36,11 +37,21 @@ public class Loader {
         parseStation(doc, INDEX_MOSCOW_MONORAIL_LIST);
         parseStation(doc, INDEX_MOSCOW_CENTRAL_RING_LIST);
         parseLines();
-        //System.out.println(craftMap());
         getConnections(doc);
         printStationOnMap();
         printConnections();
+        printLines();
         System.out.println(stringBuffer);
+        FileWriter nFile = null;
+        try {
+            nFile = new FileWriter("src/map.json");
+            nFile.write(String.valueOf(stringBuffer));
+            nFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private static void parseStation(Document doc, int INDEX_OF_STATIONS_LIST) {
@@ -74,14 +85,14 @@ public class Loader {
             stringBuffer.append("\t\t\"" + entry.getKey() + "\" : [\n");
             for (Station station : stations) {
                 if (station.getLineNumber().equals(entry.getKey())) {
-                    stringBuffer.append("\t\t\t\"" + station.getName() + "\"\n");
+                    stringBuffer.append("\t\t\t\"" + station.getName() + "\",\n");
                 }
             }
-            stringBuffer.append("\t\t],\n");
+            stringBuffer.delete(stringBuffer.length() - 2, stringBuffer.length() - 1)
+                    .append("\t\t],\n");
         }
         stringBuffer.delete(stringBuffer.length() - 2, stringBuffer.length() - 1)
-                .append("\t},\n")
-                .append("\t\"connections\": [");
+                .append("\t},\n");
         return stringBuffer;
     }
 
@@ -134,57 +145,24 @@ public class Loader {
                     connections.put(station, connectStation);
                 }
             }
-
-            for (Station key : connections.keySet()) {
-                System.out.println("Станция " + key + ", переходы = " +  connections.get(key));
-            }
         }
+        /*for (Station key : connections.keySet()) {
+            System.out.println("Станция " + key + ", переходы = " +  connections.get(key));
+        }*/
         for (Station key : connections.keySet()) {
             ArrayList<Station> connect = new ArrayList<>();
             connect.add(key);
             connect.addAll(connections.get(key));
             list.add(connect);
         }
-
-        /*HashSet<Station> connectSet = new HashSet<>();
-        stringBuffer.append("\"connection\": [\n");
-        try {
-            for (Station key : connections.keySet()) {
-                connectSet.clear();
-                connectSet.add(key);
-                stringBuffer.append("\t\t[\n\t\t\t{\n")
-                        .append("\t\t\t\t\"line\": " + key.getLineNumber() + ",\n")
-                        .append("\t\t\t\t\"station\": " + key.getName() + ",\n");
-                //System.out.println("Добавлена " + key);
-                for (Station station : connections.get(key)) {
-                    connectSet.add(station);
-                    System.out.println("Добавлена " + station);
-                    if (station != null){
-                        stringBuffer.append("\t\t[\n\t\t\t{\n")
-                                .append("\t\t\t\t\"line\": " + station.getLineNumber() + ",\n")
-                                .append("\t\t\t\t\"station\": " + station.getName() + ",\n")
-                                .append("\t\t\t},");
-                    }
-                }
-                stringBuffer.delete(stringBuffer.length() - 2, stringBuffer.length() - 1);
-                stringBuffer.append("\n\t\t]\n");
-                list.add(connectSet);
-            }
-            stringBuffer.delete(stringBuffer.length() - 2, stringBuffer.length() - 1);
-            stringBuffer.append("\n\t\t],");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        for (HashSet<Station> station : connectSet) {
-            for (Station station1 : station) {
-                System.out.println(station1);
-            }
-        }*/
     }
 
     private static Station findStation(String string, String lineNumber) {
+        String crutch = "Рижская линия"; //из-за этой строки в переходах станция Рижская
         for (Station station : stations) {
+            if (string.contains(crutch)){
+                string = string.substring(0, (string.length() - crutch.length()));
+            }
             if (string.contains(station.getName()) && station.getLineNumber().equals(lineNumber)) {
                 return station;
             }
@@ -193,22 +171,36 @@ public class Loader {
     }
 
     private static void printConnections() {
+        stringBuffer.append("\t\"connections\": [");
         Comparator<Station> comparator = Comparator.comparing(obj -> obj.getName());
         comparator = comparator.thenComparing(obj -> obj.getLineNumber());
         for (ArrayList<Station> stations : list) {
             stations.sort(comparator);
             connects.add(stations);
         }
-        stringBuffer.append("\t\n\t\t[");
+        stringBuffer.append("\t\n");
         for (ArrayList<Station> stations : connects){
+            stringBuffer.append("\t[");
             for (Station station : stations){
-                stringBuffer.append("\n\t\t\t{\n")
-                        .append("\t\t\t\t\"line\": " + station.getLineNumber() + ",\n")
-                        .append("\t\t\t\t\"station\": " + station.getName() + "\n")
+                stringBuffer.append("\t\t\n\t\t\t{\n")
+                        .append("\t\t\t\t\"line\": \"" + station.getLineNumber() + "\",\n")
+                        .append("\t\t\t\t\"station\": \"" + station.getName() + "\"\n")
                         .append("\t\t\t},");
             }
             stringBuffer.delete(stringBuffer.length() - 1, stringBuffer.length());
-            stringBuffer.append("\n\t\t]");
+            stringBuffer.append("\n\t\t],\n\t");
         }
+        stringBuffer.delete(stringBuffer.length() - 3, stringBuffer.length()-1);
+        stringBuffer.append("\n\t],\n");
+
+    }
+    private static void printLines() {
+        stringBuffer.append("\t\"lines\" : [");
+        for (HashMap.Entry<String, String> entry : lines.entrySet()) {
+            stringBuffer.append("\n\t\t{\n\t\t\t\"number\" : \"" + entry.getKey() + "\",\n")
+                    .append("\t\t\t\"name\" : \"" + entry.getValue() + "\"\n\t\t},");
+        }
+        stringBuffer.delete(stringBuffer.length() - 1, stringBuffer.length());
+        stringBuffer.append("\n\t]\n}");
     }
 }
