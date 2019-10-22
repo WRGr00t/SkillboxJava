@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8a5e1234-1100-4917-9bdf-687150e205e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/.idea/libraries/com_googlecode_json_simple_json_simple_1_1_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/JsonReader.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/lib/hamcrest-core-1.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/lib/json-simple-1.1.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/lib/junit-4.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/src/Line.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/src/Loader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/src/Station.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/src/StationIndex.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Unit9/4/JsonReader/src/map.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Unit9/4/Metro/map.json" beforeDir="false" />
-    </list>
+    <list default="true" id="8a5e1234-1100-4917-9bdf-687150e205e8" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

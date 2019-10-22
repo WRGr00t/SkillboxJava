@@ -1,10 +1,17 @@
+import com.google.gson.Gson;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class Loader {
@@ -30,23 +37,18 @@ public class Loader {
         Document doc = null;
         try {
             doc = Jsoup.connect(url).maxBodySize(0).get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        parseStation(doc, INDEX_MOSCOW_METRO_LIST);
-        parseStation(doc, INDEX_MOSCOW_MONORAIL_LIST);
-        parseStation(doc, INDEX_MOSCOW_CENTRAL_RING_LIST);
-        parseLines();
-        getConnections(doc);
-        printStationOnMap();
-        printConnections();
-        printLines();
-        System.out.println(stringBuffer);
-        FileWriter nFile = null;
-        try {
-            nFile = new FileWriter("src/map.json");
-            nFile.write(String.valueOf(stringBuffer));
-            nFile.close();
+
+            parseStation(doc, INDEX_MOSCOW_METRO_LIST);
+            parseStation(doc, INDEX_MOSCOW_MONORAIL_LIST);
+            parseStation(doc, INDEX_MOSCOW_CENTRAL_RING_LIST);
+            parseLines();
+            getConnections(doc);
+            printStationOnMap();
+            printConnections();
+            printLines();
+            Path filePath = Paths.get("src", "map.json");
+            Files.writeString(filePath, stringBuffer, StandardCharsets.UTF_16, StandardOpenOption.CREATE);
+            saveToJSON();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,16 +56,16 @@ public class Loader {
 
     }
 
-    private static void parseStation(Document doc, int INDEX_OF_STATIONS_LIST) {
+    private static void parseStation(Document doc, int indexOfStationsList) {
         int INDEX_OF_COLS_WITH_NUMBER = 0;
         int INDEX_OF_COLS_WITH_NAME = 1;
 
-        Element table = doc.select("table").get(INDEX_OF_STATIONS_LIST);
+        Element table = doc.select("table").get(indexOfStationsList);
         Elements rows = table.select("tr");
         for (int i = 1; i < rows.size(); i++) {
             if (i == 1 &&
-                    ((INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_MONORAIL_LIST) ||
-                            (INDEX_OF_STATIONS_LIST == INDEX_MOSCOW_CENTRAL_RING_LIST))) {
+                    ((indexOfStationsList == INDEX_MOSCOW_MONORAIL_LIST) ||
+                            (indexOfStationsList == INDEX_MOSCOW_CENTRAL_RING_LIST))) {
                 continue;
             }
             Element row = rows.get(i);
@@ -94,6 +96,19 @@ public class Loader {
         stringBuffer.delete(stringBuffer.length() - 2, stringBuffer.length() - 1)
                 .append("\t},\n");
         return stringBuffer;
+    }
+
+    private static void saveToJSON(){
+        Gson gson = new Gson();
+        Path filePath = Paths.get("src", "mapGson.json");
+        for (Station station : stations){
+            try {
+                gson.toJson(station.getName(), new FileWriter(String.valueOf(filePath)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private static void parseLines() {
@@ -140,8 +155,8 @@ public class Loader {
                 }
                 Station station = findStation(name, lineNumber);
                 if (!station.equals(new Station("Станция", " не", " найдена")) &&
-                        !connectStation.contains(new Station("Станция", " не", " найдена"))&&
-                !connectStation.isEmpty()) {
+                        !connectStation.contains(new Station("Станция", " не", " найдена")) &&
+                        !connectStation.isEmpty()) {
                     connections.put(station, connectStation);
                 }
             }
@@ -160,7 +175,7 @@ public class Loader {
     private static Station findStation(String string, String lineNumber) {
         String crutch = "Рижская линия"; //из-за этой строки в переходах станция Рижская
         for (Station station : stations) {
-            if (string.contains(crutch)){
+            if (string.contains(crutch)) {
                 string = string.substring(0, (string.length() - crutch.length()));
             }
             if (string.contains(station.getName()) && station.getLineNumber().equals(lineNumber)) {
@@ -179,9 +194,9 @@ public class Loader {
             connects.add(stations);
         }
         stringBuffer.append("\t\n");
-        for (ArrayList<Station> stations : connects){
+        for (ArrayList<Station> stations : connects) {
             stringBuffer.append("\t[");
-            for (Station station : stations){
+            for (Station station : stations) {
                 stringBuffer.append("\t\t\n\t\t\t{\n")
                         .append("\t\t\t\t\"line\": \"" + station.getLineNumber() + "\",\n")
                         .append("\t\t\t\t\"station\": \"" + station.getName() + "\"\n")
@@ -190,10 +205,11 @@ public class Loader {
             stringBuffer.delete(stringBuffer.length() - 1, stringBuffer.length());
             stringBuffer.append("\n\t\t],\n\t");
         }
-        stringBuffer.delete(stringBuffer.length() - 3, stringBuffer.length()-1);
+        stringBuffer.delete(stringBuffer.length() - 3, stringBuffer.length() - 1);
         stringBuffer.append("\n\t],\n");
 
     }
+
     private static void printLines() {
         stringBuffer.append("\t\"lines\" : [");
         for (HashMap.Entry<String, String> entry : lines.entrySet()) {
