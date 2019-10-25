@@ -104,6 +104,7 @@ public class Loader {
                 .create();
         Path filePath = Paths.get("src", "mapGson.json");
         builder.toJson(lines, new FileWriter(String.valueOf(filePath)));
+
         /*for (Station station : stations){
             try {
                 //String json = builder.toJson(station);
