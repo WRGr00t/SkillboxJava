@@ -1,10 +1,10 @@
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +16,7 @@ import java.util.*;
 
 public class Loader {
     private static ArrayList<Station> stations = new ArrayList<>();
+    private static ArrayList<Line> lineArrayList = new ArrayList<>();
     private static TreeMap<String, String> lines = new TreeMap<>();
     private static TreeMap<Station, ArrayList<Station>> connections = new TreeMap<>();
     private static ArrayList<ArrayList<Station>> list = new ArrayList<>();
@@ -48,12 +49,11 @@ public class Loader {
             printLines();
             Path filePath = Paths.get("src", "map.json");
             Files.writeString(filePath, stringBuffer, StandardCharsets.UTF_16, StandardOpenOption.CREATE);
+            getLines();
             saveToJSON();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private static void parseStation(Document doc, int indexOfStationsList) {
@@ -98,16 +98,20 @@ public class Loader {
         return stringBuffer;
     }
 
-    private static void saveToJSON(){
-        Gson gson = new Gson();
+    private static void saveToJSON() throws IOException {
+        Gson builder = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
         Path filePath = Paths.get("src", "mapGson.json");
-        for (Station station : stations){
+        builder.toJson(lines, new FileWriter(String.valueOf(filePath)));
+        /*for (Station station : stations){
             try {
-                gson.toJson(station.getName(), new FileWriter(String.valueOf(filePath)));
+                //String json = builder.toJson(station);
+                builder.toJson(station, new FileWriter(String.valueOf(filePath)));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
     }
 
@@ -116,6 +120,23 @@ public class Loader {
             String lineName = station.getLineName();
             String lineNumber = station.getLineNumber();
             lines.put(lineNumber, lineName);
+        }
+    }
+
+    private static void getLines(){
+        for (HashMap.Entry<String, String> entry : lines.entrySet()) {
+            String nameLine = "";
+            String numberLine = "";
+            ArrayList<Station> stationsList = new ArrayList<>();
+            for (Station station : stations){
+                if (entry.toString().contains(station.getLineNumber())){
+                    nameLine = station.getLineName();
+                    numberLine = station.getLineNumber();
+                    stationsList.add(station);
+                }
+            }
+            Line line = new Line(nameLine, numberLine, stationsList);
+            lineArrayList.add(line);
         }
     }
 
