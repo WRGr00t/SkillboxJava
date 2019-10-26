@@ -103,17 +103,8 @@ public class Loader {
                 .setPrettyPrinting()
                 .create();
         Path filePath = Paths.get("src", "mapGson.json");
-        builder.toJson(lines, new FileWriter(String.valueOf(filePath)));
-
-        /*for (Station station : stations){
-            try {
-                //String json = builder.toJson(station);
-                builder.toJson(station, new FileWriter(String.valueOf(filePath)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
-
+        String json = builder.toJson(lineArrayList);
+        Files.writeString(filePath, json, StandardCharsets.UTF_16, StandardOpenOption.CREATE);
     }
 
     private static void parseLines() {

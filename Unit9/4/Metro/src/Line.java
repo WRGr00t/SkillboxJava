@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class Line {
-    private String name;
     private String number;
-    private ArrayList<Station> stations;
+    private String name;
+    transient private ArrayList<Station> stations;
 
     public Line(String name, String number, ArrayList<Station> stations) {
         this.name = name;
