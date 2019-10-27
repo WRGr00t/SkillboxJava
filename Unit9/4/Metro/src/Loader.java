@@ -5,7 +5,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -44,11 +43,11 @@ public class Loader {
             parseStation(doc, INDEX_MOSCOW_CENTRAL_RING_LIST);
             parseLines();
             getConnections(doc);
-            printStationOnMap();
-            printConnections();
-            printLines();
-            Path filePath = Paths.get("src", "map.json");
-            Files.writeString(filePath, stringBuffer, StandardCharsets.UTF_16, StandardOpenOption.CREATE);
+            //printStationOnMap();
+            //printConnections();
+            //printLines();
+            //Path filePath = Paths.get("src", "map.json");
+            //Files.writeString(filePath, stringBuffer, StandardCharsets.UTF_16, StandardOpenOption.CREATE);
             getLines();
             saveToJSON();
         } catch (IOException e) {
@@ -99,11 +98,16 @@ public class Loader {
     }
 
     private static void saveToJSON() throws IOException {
+        TreeMap<String, ArrayList<Station>> stationsMap = new TreeMap<>();
+        for (Line line : lineArrayList){
+            stationsMap.put(line.getNumber(), line.getStations());
+        }
+        Metro metro = new Metro(stationsMap, list, lineArrayList);
         Gson builder = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
         Path filePath = Paths.get("src", "mapGson.json");
-        String json = builder.toJson(lineArrayList);
+        String json = builder.toJson(metro);
         Files.writeString(filePath, json, StandardCharsets.UTF_16, StandardOpenOption.CREATE);
     }
 
@@ -164,7 +168,7 @@ public class Loader {
                         }
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Шелепиха и Хорошево не парсятся, на итог не повлияет из-за избыточности информации");
+                    //System.out.println("Шелепиха и Хорошево не парсятся, на итог не повлияет из-за избыточности информации");
                 }
                 Station station = findStation(name, lineNumber);
                 if (!station.equals(new Station("Станция", " не", " найдена")) &&
@@ -174,9 +178,6 @@ public class Loader {
                 }
             }
         }
-        /*for (Station key : connections.keySet()) {
-            System.out.println("Станция " + key + ", переходы = " +  connections.get(key));
-        }*/
         for (Station key : connections.keySet()) {
             ArrayList<Station> connect = new ArrayList<>();
             connect.add(key);
