@@ -1,8 +1,8 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.w3c.dom.ls.LSOutput;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class Loader {
     {
         StringBuilder builder = new StringBuilder();
         try {
-            List<String> lines = Files.readAllLines(Paths.get(dataFile));
+            List<String> lines = Files.readAllLines(Paths.get(dataFile), StandardCharsets.UTF_16);
             lines.forEach(line -> builder.append(line));
         }
         catch (Exception ex) {

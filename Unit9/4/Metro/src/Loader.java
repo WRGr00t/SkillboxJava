@@ -98,11 +98,20 @@ public class Loader {
     }
 
     private static void saveToJSON() throws IOException {
-        TreeMap<String, ArrayList<Station>> stationsMap = new TreeMap<>();
+        TreeMap<String, ArrayList<String>> stationsMap = new TreeMap<>();
         for (Line line : lineArrayList){
-            stationsMap.put(line.getNumber(), line.getStations());
+            stationsMap.put(line.getNumber(), line.getNameStations());
         }
-        Metro metro = new Metro(stationsMap, list, lineArrayList);
+        ArrayList<ArrayList<ConnectStation>> connects = new ArrayList<>();
+        for (ArrayList<Station> stations : list){
+            ArrayList<ConnectStation> connectStations = new ArrayList<>();
+            for (Station station : stations){
+                ConnectStation connectStation = new ConnectStation(station.getLineNumber(), station.getName());
+                connectStations.add(connectStation);
+            }
+            connects.add(connectStations);
+        }
+        Metro metro = new Metro(stationsMap, connects, lineArrayList);
         Gson builder = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
@@ -178,6 +187,9 @@ public class Loader {
                 }
             }
         }
+        /*for (Station key : connections.keySet()) {
+            System.out.println("Станция " + key + ", переходы = " +  connections.get(key));
+        }*/
         for (Station key : connections.keySet()) {
             ArrayList<Station> connect = new ArrayList<>();
             connect.add(key);
