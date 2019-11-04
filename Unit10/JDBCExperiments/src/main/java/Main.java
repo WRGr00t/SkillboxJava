@@ -12,12 +12,10 @@ public class Main {
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT course_name, COUNT(*), MONTH(subscription_date), " +
-                    "YEAR(subscription_date), COUNT(MONTH(subscription_date)) FROM purchaselist " +
-                    "GROUP BY YEAR(subscription_date), MONTH(subscription_date), course_name");
+            ResultSet resultSet = statement.executeQuery("SELECT course_name, COUNT(*) FROM purchaselist GROUP BY course_name;");
             while (resultSet.next()) {
                 String nameCourses = resultSet.getString("course_name");
-                String count = resultSet.getString("COUNT(MONTH(subscription_date))");
+                String count = resultSet.getString("COUNT(*)");
                 System.out.print(nameCourses + "\t");
                 System.out.println(count);
             }
