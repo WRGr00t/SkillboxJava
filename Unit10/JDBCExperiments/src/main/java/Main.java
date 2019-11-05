@@ -12,11 +12,11 @@ public class Main {
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT course_name, COUNT(*)/(MAX(MONTH(subscription_date))-MIN(MONTH(subscription_date))) as subscription_per_month FROM purchaselist GROUP BY course_name");
+            ResultSet resultSet = statement.executeQuery("SELECT course_name, COUNT(*)/(MAX(MONTH(subscription_date))-MIN(MONTH(subscription_date))+1) as subscription_per_month FROM purchaselist GROUP BY course_name");
             while (resultSet.next()) {
                 String nameCourses = resultSet.getString("course_name");
                 String count = resultSet.getString("subscription_per_month");
-                System.out.print(nameCourses + "\t");
+                System.out.print(nameCourses + "\tсреднее число подписок в месяц: ");
                 System.out.println(count);
             }
             resultSet.close();
