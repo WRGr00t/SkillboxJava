@@ -5,7 +5,7 @@
     <session-factory>
         <!-- JDBC Database connection settings -->
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/skillbox?useUnicode=true?useJDBCCompliantTimezoneShift=true?useLegacyDatetimeCode=false?serverTimezone=Europe</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/skillbox?useLegacyDatetimeCode=false&amp;serverTimezone=UTC</property>
 
         <property name="connection.username">root</property>
         <property name="connection.password">Va12821393___</property>
@@ -23,5 +23,7 @@
         <mapping class="Course"></mapping>
         <mapping class="Teacher"></mapping>
         <mapping class="Student"></mapping>
+        <mapping class="Perchaselist"></mapping>
+        <mapping class="Subscription"></mapping>
     </session-factory>
 </hibernate-configuration>

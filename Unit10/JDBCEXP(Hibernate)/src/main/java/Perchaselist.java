@@ -1,18 +1,38 @@
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Perchaselist")
+@Table(name = "purchaselist")
 public class Perchaselist {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     @Column(name = "student_name")
     private String studentName;
+
     @Column(name = "course_name")
     private String courseName;
+
     private int price;
+
     @Column(name = "subscription_date")
     private Date subscriptionDate;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @JoinTable(name = "perchaselist",
+            joinColumns = {@JoinColumn(name = "student_name")},
+            inverseJoinColumns = {@JoinColumn(name = "course_name")})
+
+
 
     public String getStudentName() {
         return studentName;

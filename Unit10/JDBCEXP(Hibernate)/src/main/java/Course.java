@@ -25,7 +25,6 @@ public class Course {
     @JoinTable(name = "Subscriptions",
         joinColumns = {@JoinColumn(name = "course_id")},
         inverseJoinColumns = {@JoinColumn(name = "student_id")})
-
     private List<Student> students;
 
     public int getId() {
