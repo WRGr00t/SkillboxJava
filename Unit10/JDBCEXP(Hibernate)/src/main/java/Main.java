@@ -10,6 +10,32 @@ import java.sql.*;
 import java.util.List;
 
 public class Main {
+    //============ Предварительные манипуляции ==============
+    /*
+    Создание буферной таблицы слиянием трех таблиц:
+    CREATE TABLE purchaselist2
+        AS
+        SELECT P.student_name, S.id "student_id", P.course_name, C.id "course_id", P.subscription_date
+        FROM purchaselist P INNER JOIN students S
+        ON P.student_name = S.name
+        JOIN courses C
+        ON P.course_name = C.name;
+
+    Добавление ID
+        ALTER TABLE purchaselist2 ADD id int NOT NULL FIRST;
+        ALTER TABLE purchaselist2 ADD INDEX (id);
+        ALTER TABLE purchaselist2 CHANGE id id INT NOT NULL AUTO_INCREMENT;
+
+    Переименование таблиц:
+
+        ALTER TABLE purchaselist RENAME purchaselist_bak; //исходную в резерв
+        ALTER TABLE purchaselist2 RENAME purchaselist; //новую в работу
+
+    Связи:
+        ALTER TABLE purchaselist ADD FOREIGN KEY (student_id) REFERENCES students(id);
+        ALTER TABLE purchaselist ADD FOREIGN KEY (course_id) REFERENCES courses(id);
+
+     */
 
     static String url = "jdbc:mysql://localhost:3306/skillbox?useUnicode=true&useJDBCCompliantTimezoneShift=true&" +
             "useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -19,10 +45,10 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            Connection connection = CreateConnection();
-            Statement statement = CreateStatement(connection);
-            AddIdToTable(statement, "purchaselist");
-            AddIdToTable(statement, "subscriptions");
+            Connection connection = createConnection();
+            Statement statement = createStatement(connection);
+            addIdToTable(statement, "purchaselist");
+            addIdToTable(statement, "subscriptions");
             statement.close();
             connection.close();
         } catch (Exception ex) {
@@ -37,7 +63,6 @@ public class Main {
         Transaction transaction = session.beginTransaction();
         Perchaselist perchaselist = session.get(Perchaselist.class, 250);
         Subscription subscription = session.get(Subscription.class, 20);
-        System.out.println(perchaselist.getCourseName() + " стоит - " + perchaselist.getPrice());
         Course course = session.get(Course.class, subscription.getCourseId());
         List<Student> students = course.getStudents();
         System.out.println("На курс " + course.getName() + " подписаны:");
@@ -47,10 +72,10 @@ public class Main {
         transaction.commit();
         sessionFactory.close();
         try {
-            Connection connection = CreateConnection();
-            Statement statement = CreateStatement(connection);
-            DropIdFromTable(statement, "purchaselist");
-            DropIdFromTable(statement, "subscriptions");
+            Connection connection = createConnection();
+            Statement statement = createStatement(connection);
+            dropIdFromTable(statement, "purchaselist");
+            dropIdFromTable(statement, "subscriptions");
             statement.close();
             connection.close();
         } catch (Exception ex) {
@@ -58,22 +83,22 @@ public class Main {
         }
     }
 
-    private static void DropIdFromTable(Statement statement, String table) throws SQLException {
+    private static void dropIdFromTable(Statement statement, String table) throws SQLException {
         statement.executeUpdate("ALTER TABLE " + table + " DROP COLUMN id");
     }
 
-    private static Connection CreateConnection() throws SQLException {
+    private static Connection createConnection() throws SQLException {
         Connection connection = DriverManager.getConnection(url, user, password);
         return connection;
     }
 
-    private static void AddIdToTable(Statement statement, String table) throws SQLException {
+    private static void addIdToTable(Statement statement, String table) throws SQLException {
         statement.executeUpdate("ALTER TABLE " + table + " ADD id int NOT NULL FIRST");
         statement.executeUpdate("ALTER TABLE " + table + " ADD INDEX (id)");
         statement.executeUpdate("ALTER TABLE " + table + " CHANGE id id INT NOT NULL AUTO_INCREMENT");
     }
 
-    private static Statement CreateStatement(Connection connection) throws SQLException {
+    private static Statement createStatement(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
         return statement;
     }
