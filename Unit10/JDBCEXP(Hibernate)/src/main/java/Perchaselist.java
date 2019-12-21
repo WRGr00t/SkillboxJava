@@ -12,13 +12,33 @@ public class Perchaselist {
     @Column(name = "student_name")
     private String studentName;
 
+    @Column(name = "student_id")
+    private int studentId;
+
     @Column(name = "course_name")
     private String courseName;
 
-    private int price;
+    @Column(name = "course_id")
+    private int courseId;
 
     @Column(name = "subscription_date")
     private Date subscriptionDate;
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
+
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
 
     public int getId() {
         return id;
@@ -27,12 +47,6 @@ public class Perchaselist {
     public void setId(int id) {
         this.id = id;
     }
-
-    @JoinTable(name = "perchaselist",
-            joinColumns = {@JoinColumn(name = "student_name")},
-            inverseJoinColumns = {@JoinColumn(name = "course_name")})
-
-
 
     public String getStudentName() {
         return studentName;
@@ -48,14 +62,6 @@ public class Perchaselist {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public Date getSubscriptionDate() {
