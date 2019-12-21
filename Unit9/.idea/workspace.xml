@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="865ade3a-8018-4f64-8a3d-e1dadd2e1995" name="Default Changelist" comment="" />
+    <list default="true" id="865ade3a-8018-4f64-8a3d-e1dadd2e1995" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/4/Metro/lib/gson-2.8.6.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1/ClassFiles" beforeDir="false" afterPath="$PROJECT_DIR$/1/ClassFiles" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1/ClassFiles/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/1/ClassFiles/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +51,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
