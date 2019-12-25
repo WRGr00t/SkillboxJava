@@ -1,4 +1,7 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -27,13 +30,19 @@ public class ImageResizer implements Runnable {
                 int newHeight = (int)Math.round(
                         image.getHeight() / (image.getWidth() / (double) newWidth)
                 );
-                BufferedImage newImage = new BufferedImage(
-                        newWidth, newHeight, BufferedImage.TYPE_INT_RGB
-                );
+                /*AffineTransform transform = new AffineTransform(
+                        ((double) newWidth) / image.getWidth(), 0, 0,
+                        ((double) image.getHeight() / (image.getWidth() / (double) newWidth)), 0, 0);
+                AffineTransformOp transformer = new AffineTransformOp(transform, new RenderingHints(
+                        RenderingHints.KEY_INTERPOLATION,
+                        RenderingHints.VALUE_INTERPOLATION_BICUBIC));
+                BufferedImage newImage = null;
+                transformer.filter(image, newImage);*/
+
 
                 int widthStep = image.getWidth() / newWidth;
                 int heightStep = image.getHeight() / newHeight;
-
+                BufferedImage newImage = new BufferedImage();
                 for (int x = 0; x < newWidth; x++){
                     for (int y = 0; y < newHeight; y++) {
                         int rgb = image.getRGB(x * widthStep, y * heightStep);

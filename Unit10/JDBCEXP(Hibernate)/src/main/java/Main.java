@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -16,13 +17,12 @@ public class Main {
     static String user = "root";
     static String password = "Va12821393___";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         try {
             Connection connection = createConnection();
             Statement statement = createStatement(connection);
-            addIdToTable(statement, "purchaselist");
-            addIdToTable(statement, "subscriptions");
+
             createNewPurchaselist(statement, "purchaselist2");
             statement.close();
             connection.close();
@@ -36,9 +36,25 @@ public class Main {
         SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Perchaselist perchaselist = session.get(Perchaselist.class, 250);
-        Subscription subscription = session.get(Subscription.class, 20);
-        Course course = session.get(Course.class, subscription.getCourseId());
+        Connection con = createConnection();
+        PreparedStatement stat = con.prepareStatement("SELECT * FROM PURCHASELIST");
+        ResultSet result = stat.executeQuery();
+        System.out.println(result.getRow());
+        List<Integer> m = new ArrayList<>();
+        while (result.next()) {
+            m.add(result.getInt(2), result.getInt(4));
+
+            System.out.println(result.getInt(2) + " " + result.getInt(4));
+        }
+
+        PurchaseId purchaseId = new PurchaseId(10, 10);
+        Purchaselist2 purchaselist2 = new Purchaselist2(purchaseId);
+        Course course = session.get(Course.class, purchaselist2.getId().getCourseId());
+        System.out.println("Подписка на " + course.getName());
+        Subscription subscription = new Subscription(purchaseId);
+        Student stud = session.get(Student.class, subscription.getId().getStudentId());
+        System.out.println(stud.getName());
+        course = session.get(Course.class, subscription.getId());
         List<Student> students = course.getStudents();
         System.out.println("На курс " + course.getName() + " подписаны:");
         for (Student student : students) {
@@ -49,17 +65,11 @@ public class Main {
         try {
             Connection connection = createConnection();
             Statement statement = createStatement(connection);
-            dropIdFromTable(statement, "purchaselist");
-            dropIdFromTable(statement, "subscriptions");
             statement.close();
             connection.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-
-    private static void dropIdFromTable(Statement statement, String table) throws SQLException {
-        statement.executeUpdate("ALTER TABLE " + table + " DROP COLUMN id");
     }
 
     private static Connection createConnection() throws SQLException {
@@ -78,12 +88,6 @@ public class Main {
                 "    ON P.course_name = C.name;");
         statement.executeUpdate("ALTER TABLE " + table + " ADD FOREIGN KEY (student_id) REFERENCES students(id)");
         statement.executeUpdate("ALTER TABLE " + table + " ADD FOREIGN KEY (course_id) REFERENCES courses(id)");
-    }
-
-    private static void addIdToTable(Statement statement, String table) throws SQLException {
-        statement.executeUpdate("ALTER TABLE " + table + " ADD id int NOT NULL FIRST");
-        statement.executeUpdate("ALTER TABLE " + table + " ADD INDEX (id)");
-        statement.executeUpdate("ALTER TABLE " + table + " CHANGE id id INT NOT NULL AUTO_INCREMENT");
     }
 
     private static Statement createStatement(Connection connection) throws SQLException {

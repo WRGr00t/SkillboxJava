@@ -13,18 +13,17 @@ public class Main {
         long start = System.currentTimeMillis();
 
         File[] files = srcDir.listFiles();
-        System.out.println(files.length);
         int sizeOfPart = files.length / cpuCount;
-        System.out.println(sizeOfPart);
-        System.out.println(cpuCount);
-        for (int i = 0; i <= cpuCount; i++) {
-            int positionOnArray = (i * sizeOfPart);
-            if (i == cpuCount && !(files.length % cpuCount == 0)) {
-                sizeOfPart = files.length % cpuCount;
+
+        if(sizeOfPart > 0 && cpuCount > 1){
+            for (int i = 0; i <= cpuCount; i++) {
+                int positionOnArray = (i * sizeOfPart);
+                if (i == cpuCount && !(files.length % cpuCount == 0)) {
+                    sizeOfPart = files.length % cpuCount;
+                }
+                File[] newFiles = new File[sizeOfPart];
+                runThread(positionOnArray, files, newFiles, dstFolder, start);
             }
-            File[] newFiles = new File[sizeOfPart];
-            runThread(positionOnArray, files, newFiles, dstFolder, start);
-            System.out.println(positionOnArray);
         }
     }
 

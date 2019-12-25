@@ -4,43 +4,20 @@ import java.util.Date;
 @Entity
 @Table(name = "subscriptions")
 public class Subscription {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
-    @Column(name = "student_id")
-    private int studentId;
-
-    @Column(name = "course_id")
-    private int courseId;
+    @EmbeddedId
+    private PurchaseId id;
 
     @Column(name = "subscription_date")
     private Date subscriptionDate;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    public Subscription(PurchaseId id) {
         this.id = id;
     }
 
-    public int getStudentId() {
-        return studentId;
+    public PurchaseId getId() {
+        return id;
     }
-
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
-    }
-
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
-    }
-
     public Date getSubscriptionDate() {
         return subscriptionDate;
     }

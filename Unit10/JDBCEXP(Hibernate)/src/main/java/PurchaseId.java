@@ -11,11 +11,10 @@ public class PurchaseId implements Serializable {
     @Column(name = "course_id")
     private int courseId;
 
-    public PurchaseId(){
-
+    public PurchaseId() {
     }
 
-    public PurchaseId(int studentId, int courseId){
+    public PurchaseId(int studentId, int courseId) {
         this.studentId = studentId;
         this.courseId = courseId;
     }
