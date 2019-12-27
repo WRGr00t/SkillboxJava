@@ -24,33 +24,25 @@ public class ImageResizer implements Runnable {
             for (File file : files) {
                 BufferedImage image = ImageIO.read(file);
                 if (image == null) {
+                    System.out.println("Пусто");
                     continue;
                 }
 
                 int newHeight = (int)Math.round(
                         image.getHeight() / (image.getWidth() / (double) newWidth)
                 );
-                /*AffineTransform transform = new AffineTransform(
+                AffineTransform transform = new AffineTransform(
                         ((double) newWidth) / image.getWidth(), 0, 0,
                         ((double) image.getHeight() / (image.getWidth() / (double) newWidth)), 0, 0);
                 AffineTransformOp transformer = new AffineTransformOp(transform, new RenderingHints(
                         RenderingHints.KEY_INTERPOLATION,
                         RenderingHints.VALUE_INTERPOLATION_BICUBIC));
-                BufferedImage newImage = null;
-                transformer.filter(image, newImage);*/
+                BufferedImage newImage = new BufferedImage(newWidth, newHeight, image.getType());
+                transformer.filter(image, newImage);
 
-
-                int widthStep = image.getWidth() / newWidth;
-                int heightStep = image.getHeight() / newHeight;
-                BufferedImage newImage = new BufferedImage();
-                for (int x = 0; x < newWidth; x++){
-                    for (int y = 0; y < newHeight; y++) {
-                        int rgb = image.getRGB(x * widthStep, y * heightStep);
-                        newImage.setRGB(x, y, rgb);
-                    }
-                }
                 File newFile = new File(dstFolder + "/" + file.getName());
                 ImageIO.write(newImage, "jpg", newFile);
+                System.out.println("Успешно");
             }
         } catch (Exception ex) {
             ex.printStackTrace();

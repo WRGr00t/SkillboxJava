@@ -5,8 +5,8 @@ public class Main {
 
     public static void main(String[] args) {
         int cpuCount = Runtime.getRuntime().availableProcessors();
-        String srcFolder = "d:/src";
-        String dstFolder = "d:/dst";
+        String srcFolder = "e:/src";
+        String dstFolder = "e:/dst";
 
         File srcDir = new File(srcFolder);
 
@@ -14,16 +14,22 @@ public class Main {
 
         File[] files = srcDir.listFiles();
         int sizeOfPart = files.length / cpuCount;
+        System.out.println("Копируем " + files.length + " файлов кусками по " + sizeOfPart);
+        System.out.println("Доступно " + cpuCount + " процессоров");
 
-        if(sizeOfPart > 0 && cpuCount > 1){
-            for (int i = 0; i <= cpuCount; i++) {
+        if (sizeOfPart > cpuCount) {
+            for (int i = 0; i < cpuCount; i++) {
                 int positionOnArray = (i * sizeOfPart);
                 if (i == cpuCount && !(files.length % cpuCount == 0)) {
                     sizeOfPart = files.length % cpuCount;
                 }
                 File[] newFiles = new File[sizeOfPart];
+                System.out.println("Поток №" + i);
                 runThread(positionOnArray, files, newFiles, dstFolder, start);
             }
+        } else {
+            File[] newFiles = new File[files.length];
+            runThread(0, files, newFiles, dstFolder, start);
         }
     }
 
