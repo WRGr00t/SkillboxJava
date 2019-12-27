@@ -5,8 +5,8 @@ public class Main {
 
     public static void main(String[] args) {
         int cpuCount = Runtime.getRuntime().availableProcessors();
-        String srcFolder = "e:/src";
-        String dstFolder = "e:/dst";
+        String srcFolder = "d:/src";
+        String dstFolder = "d:/dst";
 
         File srcDir = new File(srcFolder);
 
@@ -25,17 +25,17 @@ public class Main {
                 }
                 File[] newFiles = new File[sizeOfPart];
                 System.out.println("Поток №" + i);
-                runThread(positionOnArray, files, newFiles, dstFolder, start);
+                runThread(positionOnArray, files, newFiles, dstFolder, start, i);
             }
         } else {
             File[] newFiles = new File[files.length];
-            runThread(0, files, newFiles, dstFolder, start);
+            runThread(0, files, newFiles, dstFolder, start, 0);
         }
     }
 
-    private static void runThread(int positionOnArray, File[] files, File[] newFiles, String dstFolder, long start) {
+    private static void runThread(int positionOnArray, File[] files, File[] newFiles, String dstFolder, long start, int i) {
         System.arraycopy(files, positionOnArray, newFiles, 0, newFiles.length);
-        ImageResizer resizer = new ImageResizer(newFiles, newWidth, dstFolder, start);
+        ImageResizer resizer = new ImageResizer(newFiles, newWidth, dstFolder, start, i);
         new Thread(resizer).start();
     }
 }

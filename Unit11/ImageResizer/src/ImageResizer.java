@@ -10,12 +10,14 @@ public class ImageResizer implements Runnable {
     private int newWidth;
     private String dstFolder;
     private long start;
+    private int iter;
 
-    public ImageResizer(File[] files, int newWidth, String dstFolder, long start) {
+    public ImageResizer(File[] files, int newWidth, String dstFolder, long start, int iter) {
         this.files = files;
         this.newWidth = newWidth;
         this.dstFolder = dstFolder;
         this.start = start;
+        this.iter = iter;
     }
 
     @Override
@@ -31,22 +33,35 @@ public class ImageResizer implements Runnable {
                 int newHeight = (int)Math.round(
                         image.getHeight() / (image.getWidth() / (double) newWidth)
                 );
-                AffineTransform transform = new AffineTransform(
-                        ((double) newWidth) / image.getWidth(), 0, 0,
-                        ((double) image.getHeight() / (image.getWidth() / (double) newWidth)), 0, 0);
-                AffineTransformOp transformer = new AffineTransformOp(transform, new RenderingHints(
-                        RenderingHints.KEY_INTERPOLATION,
-                        RenderingHints.VALUE_INTERPOLATION_BICUBIC));
-                BufferedImage newImage = new BufferedImage(newWidth, newHeight, image.getType());
-                transformer.filter(image, newImage);
+                BufferedImage newImage = new BufferedImage(
+                        newWidth, newHeight, BufferedImage.TYPE_INT_RGB
+                );
 
+                int widthStep = image.getWidth() / newWidth;
+                int heightStep = image.getHeight() / newHeight;
+
+                /*for (int x = 0; x < newWidth; x++)
+                {
+                    for (int y = 0; y < newHeight; y++) {
+                        int rgb = image.getRGB(x * widthStep, y * heightStep);
+                        newImage.setRGB(x, y, rgb);
+                    }
+                }*/
+                BufferedImage buffResult = image;
+                for (int x = 0; x < buffResult.getWidth(); x++){
+                    for (int y = 0; y < buffResult.getHeight(); y++){
+                        if ((buffResult.getWidth() % 4 != 0) && x == (buffResult.getWidth() - 1)){
+
+                        }
+                    }
+                }
                 File newFile = new File(dstFolder + "/" + file.getName());
                 ImageIO.write(newImage, "jpg", newFile);
-                System.out.println("Успешно");
+                System.out.println("Успешно " + iter);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        System.out.println("Finished after start: " + (System.currentTimeMillis() - start) + "ms");
+        System.out.println("Поток №" + iter + " Finished after start: " + (System.currentTimeMillis() - start) + "ms");
     }
 }
