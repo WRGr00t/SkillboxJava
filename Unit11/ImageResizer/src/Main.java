@@ -5,8 +5,8 @@ public class Main {
 
     public static void main(String[] args) {
         int cpuCount = Runtime.getRuntime().availableProcessors();
-        String srcFolder = "d:/src";
-        String dstFolder = "d:/dst";
+        String srcFolder = "e:/src";
+        String dstFolder = "e:/dst";
 
         File srcDir = new File(srcFolder);
 
