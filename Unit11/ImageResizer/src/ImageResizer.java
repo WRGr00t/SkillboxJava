@@ -1,9 +1,9 @@
+
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashSet;
 
 public class ImageResizer implements Runnable {
     private File[] files;
@@ -23,73 +23,80 @@ public class ImageResizer implements Runnable {
     @Override
     public void run() {
         try {
+            System.out.println(files.length);
             for (File file : files) {
                 BufferedImage image = ImageIO.read(file);
                 if (image == null) {
                     System.out.println("Пусто");
                     continue;
                 }
-
-                int newHeight = (int)Math.round(
-                        image.getHeight() / (image.getWidth() / (double) newWidth)
-                );
-                BufferedImage newImage = new BufferedImage(
-                        newWidth, newHeight, BufferedImage.TYPE_INT_RGB
-                );
-
-                int widthStep = image.getWidth() / newWidth;
-                int heightStep = image.getHeight() / newHeight;
-
-                /*for (int x = 0; x < newWidth; x++)
-                {
-                    for (int y = 0; y < newHeight; y++) {
-                        int rgb = image.getRGB(x * widthStep, y * heightStep);
-                        newImage.setRGB(x, y, rgb);
-                    }
-                }
-                BufferedImage buffResult = image;
-                for (int x = 0; x < buffResult.getWidth(); x++){
-                    for (int y = 0; y < buffResult.getHeight(); y++){
-                        if ((buffResult.getWidth() % 4 != 0) && x == (buffResult.getWidth() - 1)){
-
-                        }
-                    }
-                }*/
-                BufferedImage buffImage = new BufferedImage(
-                        image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB
-                );
-                while (buffImage.getWidth() > newWidth) {
-                    int width = buffImage.getWidth();
-                    int height = buffImage.getHeight();
-                    for (int i = 0; i < width; i++){
-                        for (int j = 0; j < height; j++){
-                            int x = i * 2;
-                            int y = j * 2;
-                            Color color1 = new Color(image.getRGB(x, y));
-                            Color color2 = new Color(image.getRGB(x, y + 1));
-                            Color color3 = new Color(image.getRGB(x + 1, y));
-                            Color color4 = new Color(image.getRGB(x + 1, y + 1));
-
-                            int redResult = Math.round((color1.getRed() + color2.getRed() + color3.getRed() + color4.getRed()) / 4);
-                            int greenResult = Math.round((color1.getGreen() + color2.getGreen() + color3.getGreen() + color4.getGreen()) / 4);
-                            int blueResult = Math.round((color1.getBlue() + color2.getBlue() + color3.getBlue() + color4.getBlue()) / 4);
-                            int alphaResult = Math.round((color1.getAlpha() + color2.getAlpha() + color3.getAlpha() + color4.getAlpha()) / 4);
-                            Color color = new Color(redResult, greenResult, blueResult, alphaResult);
-                            buffImage.setRGB(i, j, color.getRGB());
-                        }
-                    }
-                    width = width / 4;
-                    height = height / 4;
-                    BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-                    bufferedImage = buffImage;
-                }
+                int step = 4;
+                BufferedImage newImage = createNewImage(newWidth, image, step);
+                System.out.println(newImage);
                 File newFile = new File(dstFolder + "/" + file.getName());
-                ImageIO.write(newImage, "jpg", newFile);
-                System.out.println("Успешно сжат файл " + file.getName() + " в потоке №" + iter);
+                if (ImageIO.write(newImage, "jpg", newFile)) {
+                    System.out.println("Успешно сжат файл " + newFile.getName() + " в потоке №" + iter);
+                } else {
+                    System.out.println("Не записано");
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         System.out.println("Поток №" + iter + " Finished after start: " + (System.currentTimeMillis() - start) + "ms");
+    }
+
+    private BufferedImage createNewImage(int newWidth, BufferedImage image, int step) {
+        int newHeight = (int)Math.round(
+                image.getHeight() / (image.getWidth() / (double) newWidth)
+        );
+        BufferedImage buffImage = new BufferedImage(
+                newWidth, newHeight, BufferedImage.TYPE_INT_ARGB
+        );
+        convolution(buffImage, image, step);
+
+        return buffImage;
+    }
+
+    private void convolution(BufferedImage buffImage, BufferedImage image, int step) {
+        while (buffImage.getWidth() > newWidth) {
+            int width = buffImage.getWidth();
+            int height = buffImage.getHeight();
+            int newW = width / step;
+            int newH = height / step;
+            BufferedImage bufferedImage = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+            for (int i = 0; i < newW; i++){
+                for (int j = 0; j < newH; j++){
+                    HashSet<Color> colors = new HashSet<>();
+                    for (int x = i * step; x < (i + 1) * step; x++) {
+                        for (int y = j * step; y < (j + 1) * step; y++) {
+                            colors.add(new Color(image.getRGB(x, y)));
+                        }
+                    }
+                    int sumRed = 0;
+                    int sumGreen = 0;
+                    int sumBlue = 0;
+                    int sumAlpha = 0;
+                    for (Color color : colors) {
+                        sumRed =+ color.getRed();
+                        sumGreen =+ color.getGreen();
+                        sumBlue =+ color.getBlue();
+                        sumAlpha =+ color.getAlpha();
+                    }
+                    int redResult = sumRed / colors.size();
+                    int greenResult = sumGreen / colors.size();
+                    int blueResult = sumBlue / colors.size();
+                    int alphaResult = sumAlpha / colors.size();
+
+                    Color color = new Color(redResult, greenResult, blueResult, alphaResult);
+                    try {
+                        bufferedImage.setRGB(i, j, color.getRGB());
+                    } catch (Exception e) {
+                        System.out.println("Ошибка на i = " + i + " j = " + j);
+                    }
+                }
+            }
+            buffImage = bufferedImage;
+        }
     }
 }
