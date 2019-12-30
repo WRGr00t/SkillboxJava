@@ -5,9 +5,6 @@ import java.util.Date;
 @Table(name = "purchaselist")
 public class Purchaselist {
 
-    @EmbeddedId
-    private PurchaseId id;
-
     @Column(name = "student_name")
     private String studentName;
 
@@ -16,10 +13,6 @@ public class Purchaselist {
 
     @Column(name = "subscription_date")
     private Date subscriptionDate;
-
-    public PurchaseId getId() {
-        return id;
-    }
 
     public String getStudentName() {
         return studentName;

@@ -7,8 +7,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.Date;
 
 public class Main {
 
@@ -37,14 +37,14 @@ public class Main {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Connection con = createConnection();
-        PreparedStatement stat = con.prepareStatement("SELECT * FROM PURCHASELIST");
+        PreparedStatement stat = con.prepareStatement("SELECT * FROM PURCHASELIST2");
         ResultSet result = stat.executeQuery();
         System.out.println(result.getRow());
-        List<Integer> m = new ArrayList<>();
         while (result.next()) {
-            m.add(result.getInt(2), result.getInt(4));
-
-            System.out.println(result.getInt(2) + " " + result.getInt(4));
+            PurchaseId purchaseId = new PurchaseId(result.getInt(1), result.getInt(2));
+            Student stud = session.get(Student.class, purchaseId.getStudentId());
+            Course course = session.get(Course.class, purchaseId.getCourseId());
+            System.out.println(stud.getName() + " подписан на " + course.getName() + " с " + result.getDate(3));
         }
 
         PurchaseId purchaseId = new PurchaseId(10, 10);
@@ -54,7 +54,7 @@ public class Main {
         Subscription subscription = new Subscription(purchaseId);
         Student stud = session.get(Student.class, subscription.getId().getStudentId());
         System.out.println(stud.getName());
-        course = session.get(Course.class, subscription.getId());
+        course = session.get(Course.class, subscription.getId().getStudentId());
         List<Student> students = course.getStudents();
         System.out.println("На курс " + course.getName() + " подписаны:");
         for (Student student : students) {
