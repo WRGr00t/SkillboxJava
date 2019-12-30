@@ -15,7 +15,7 @@ public class Main {
     static String url = "jdbc:mysql://localhost:3306/skillbox?useUnicode=true&useJDBCCompliantTimezoneShift=true&" +
             "useLegacyDatetimeCode=false&serverTimezone=UTC";
     static String user = "root";
-    static String password = "Va12821393___";
+    static String password = "***";
 
     public static void main(String[] args) throws SQLException {
 
