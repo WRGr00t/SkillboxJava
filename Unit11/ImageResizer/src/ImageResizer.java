@@ -1,8 +1,11 @@
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 
 public class ImageResizer implements Runnable {
@@ -23,19 +26,23 @@ public class ImageResizer implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println(files.length);
             for (File file : files) {
                 BufferedImage image = ImageIO.read(file);
                 if (image == null) {
                     System.out.println("Пусто");
                     continue;
                 }
-                int step = 4;
-                BufferedImage newImage = createNewImage(newWidth, image, step);
-                System.out.println(newImage);
+                long newHeight = (int) Math.round(
+                        image.getHeight() / (image.getWidth() / (double) newWidth)
+                );
+                BufferedImage newImage = getScaledImage(image, newWidth, newHeight);
                 File newFile = new File(dstFolder + "/" + file.getName());
                 if (ImageIO.write(newImage, "jpg", newFile)) {
-                    System.out.println("Успешно сжат файл " + newFile.getName() + " в потоке №" + iter);
+                    if (iter != 1000){
+                        System.out.println("Успешно сжат файл " + newFile.getName() + " в потоке №" + iter);
+                    } else {
+                        System.out.println("Успешно сжат файл " + newFile.getName() + " в дополнительном потоке");
+                    }
                 } else {
                     System.out.println("Не записано");
                 }
@@ -43,60 +50,25 @@ public class ImageResizer implements Runnable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        System.out.println("Поток №" + iter + " Finished after start: " + (System.currentTimeMillis() - start) + "ms");
-    }
-
-    private BufferedImage createNewImage(int newWidth, BufferedImage image, int step) {
-        int newHeight = (int)Math.round(
-                image.getHeight() / (image.getWidth() / (double) newWidth)
-        );
-        BufferedImage buffImage = new BufferedImage(
-                newWidth, newHeight, BufferedImage.TYPE_INT_ARGB
-        );
-        convolution(buffImage, image, step);
-
-        return buffImage;
-    }
-
-    private void convolution(BufferedImage buffImage, BufferedImage image, int step) {
-        while (buffImage.getWidth() > newWidth) {
-            int width = buffImage.getWidth();
-            int height = buffImage.getHeight();
-            int newW = width / step;
-            int newH = height / step;
-            BufferedImage bufferedImage = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
-            for (int i = 0; i < newW; i++){
-                for (int j = 0; j < newH; j++){
-                    HashSet<Color> colors = new HashSet<>();
-                    for (int x = i * step; x < (i + 1) * step; x++) {
-                        for (int y = j * step; y < (j + 1) * step; y++) {
-                            colors.add(new Color(image.getRGB(x, y)));
-                        }
-                    }
-                    int sumRed = 0;
-                    int sumGreen = 0;
-                    int sumBlue = 0;
-                    int sumAlpha = 0;
-                    for (Color color : colors) {
-                        sumRed =+ color.getRed();
-                        sumGreen =+ color.getGreen();
-                        sumBlue =+ color.getBlue();
-                        sumAlpha =+ color.getAlpha();
-                    }
-                    int redResult = sumRed / colors.size();
-                    int greenResult = sumGreen / colors.size();
-                    int blueResult = sumBlue / colors.size();
-                    int alphaResult = sumAlpha / colors.size();
-
-                    Color color = new Color(redResult, greenResult, blueResult, alphaResult);
-                    try {
-                        bufferedImage.setRGB(i, j, color.getRGB());
-                    } catch (Exception e) {
-                        System.out.println("Ошибка на i = " + i + " j = " + j);
-                    }
-                }
-            }
-            buffImage = bufferedImage;
+        if (iter != 1000){
+            System.out.println("Поток №" + iter + " Finished after start: " + (System.currentTimeMillis() - start) + "ms");
+        } else {
+            System.out.println("Дополнительный поток finished after start: " + (System.currentTimeMillis() - start) + "ms");
         }
+
+    }
+
+    public static BufferedImage getScaledImage(BufferedImage image, double width, double height) throws IOException {
+        int imageWidth = image.getWidth();
+        int imageHeight = image.getHeight();
+
+        double scaleX = width / imageWidth;
+        double scaleY = height / imageHeight;
+        AffineTransform scaleTransform = AffineTransform.getScaleInstance(scaleX, scaleY);
+        AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+
+        return bilinearScaleOp.filter(
+                image,
+                new BufferedImage((int) width, (int) height, image.getType()));
     }
 }

@@ -5,15 +5,21 @@ public class Main {
 
     public static void main(String[] args) {
         int cpuCount = Runtime.getRuntime().availableProcessors();
-        String srcFolder = "c:/src";
-        String dstFolder = "c:/dst";
+        String srcFolder = "d:/src";
+        String dstFolder = "d:/dst";
 
         File srcDir = new File(srcFolder);
 
         long start = System.currentTimeMillis();
 
         File[] files = srcDir.listFiles();
-        int sizeOfPart = files.length / cpuCount;
+        int sizeOfPart = files.length;
+        if (cpuCount > 1){
+            sizeOfPart = files.length / cpuCount;
+        } else {
+            System.out.println("Нет доступных процессоров(");
+        }
+
         System.out.println("Копируем " + files.length + " файлов кусками по " + sizeOfPart);
         System.out.println("Доступно " + cpuCount + " процессоров");
 
@@ -26,9 +32,14 @@ public class Main {
                 runThread(positionOnArray, files, newFiles, dstFolder, start, i);
             }
         } else {
-
             File[] newFiles = new File[files.length];
             runThread(0, files, newFiles, dstFolder, start, 0);
+        }
+        int remains = files.length % cpuCount;
+        if ( remains > 0){
+            File[] newFiles = new File[remains];
+            System.out.println("Дополнительный поток");
+            runThread(files.length - remains, files, newFiles, dstFolder, start, 1000);
         }
     }
 
