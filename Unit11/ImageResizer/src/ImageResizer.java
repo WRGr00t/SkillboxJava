@@ -1,30 +1,27 @@
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
 
 public class ImageResizer implements Runnable {
     private File[] files;
     private int newWidth;
     private String dstFolder;
     private long start;
-    private int iter;
 
-    public ImageResizer(File[] files, int newWidth, String dstFolder, long start, int iter) {
+    public ImageResizer(File[] files, int newWidth, String dstFolder, long start) {
         this.files = files;
         this.newWidth = newWidth;
         this.dstFolder = dstFolder;
         this.start = start;
-        this.iter = iter;
     }
 
     @Override
     public void run() {
+        int middleWidth = newWidth * 2;
         try {
             for (File file : files) {
                 BufferedImage image = ImageIO.read(file);
@@ -32,17 +29,16 @@ public class ImageResizer implements Runnable {
                     System.out.println("Пусто");
                     continue;
                 }
-                long newHeight = (int) Math.round(
-                        image.getHeight() / (image.getWidth() / (double) newWidth)
-                );
-                BufferedImage newImage = getScaledImage(image, newWidth, newHeight);
+                int newHeight = (int) Math.round(image.getHeight() / (image.getWidth() / (double) newWidth));
+                int middleHeight = (int) Math.round(image.getHeight() / (image.getWidth() / (double) middleWidth));
+                BufferedImage middleImage = getScaledImage(image, middleWidth, middleHeight,
+                        AffineTransformOp.TYPE_BICUBIC);
+                BufferedImage newImage = getScaledImage(middleImage, newWidth, newHeight,
+                        AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
                 File newFile = new File(dstFolder + "/" + file.getName());
                 if (ImageIO.write(newImage, "jpg", newFile)) {
-                    if (iter != 1000){
-                        System.out.println("Успешно сжат файл " + newFile.getName() + " в потоке №" + iter);
-                    } else {
-                        System.out.println("Успешно сжат файл " + newFile.getName() + " в дополнительном потоке");
-                    }
+                    System.out.println("Успешно сжат файл " + newFile.getName() + " в потоке " +
+                            Thread.currentThread().getName());
                 } else {
                     System.out.println("Не записано");
                 }
@@ -50,22 +46,19 @@ public class ImageResizer implements Runnable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        if (iter != 1000){
-            System.out.println("Поток №" + iter + " Finished after start: " + (System.currentTimeMillis() - start) + "ms");
-        } else {
-            System.out.println("Дополнительный поток finished after start: " + (System.currentTimeMillis() - start) + "ms");
-        }
-
+        System.out.println("Thread " + Thread.currentThread().getName() + " Finished after start: " +
+                (System.currentTimeMillis() - start) + "ms");
     }
 
-    public static BufferedImage getScaledImage(BufferedImage image, double width, double height) throws IOException {
+    public static BufferedImage getScaledImage(BufferedImage image, double width, double height,
+                                               int typeAffineTransformOp) throws IOException {
         int imageWidth = image.getWidth();
         int imageHeight = image.getHeight();
 
         double scaleX = width / imageWidth;
         double scaleY = height / imageHeight;
         AffineTransform scaleTransform = AffineTransform.getScaleInstance(scaleX, scaleY);
-        AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, typeAffineTransformOp);
 
         return bilinearScaleOp.filter(
                 image,
