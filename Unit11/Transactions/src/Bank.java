@@ -85,4 +85,11 @@ public class Bank {
             accounts.put(account.getAccNumber(), account);
         }
     }
+    public long getAllMoney(){
+        long result = 0;
+        for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
+            result =+ entry.getValue().getMoney();
+        }
+        return result;
+    }
 }
