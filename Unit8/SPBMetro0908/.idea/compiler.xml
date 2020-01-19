@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="spb-metro" />
         <module name="SPBMetro" />
+        <module name="SPBMetro0908" />
       </profile>
     </annotationProcessing>
   </component>
