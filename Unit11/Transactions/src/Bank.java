@@ -1,5 +1,8 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Bank {
     public HashMap<String, Account> getAccounts() {
@@ -20,9 +23,9 @@ public class Bank {
     public Bank(int accountAmount) {
         initBank(accountAmount);
         System.out.println("Создан банк на " + accounts.size() + " счетов.");
-        for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
+        /*for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
             System.out.println("ID =  " + entry.getKey() + " значение - #" + entry.getValue().getAccNumber() + " c " + entry.getValue().getMoney());
-        }
+        }*/
     }
 
     public synchronized boolean isFraud(String fromAccountNum, String toAccountNum, long amount)
@@ -38,23 +41,27 @@ public class Bank {
      * метод isFraud. Если возвращается true, то делается блокировка
      * счетов (как – на ваше усмотрение)
      */
-    public void transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
+    public boolean transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
         Account fromAccount = getAccount(fromAccountNum);
         Account toAccount = getAccount(toAccountNum);
+        boolean isDone = false;
         if (!(fromAccount.isBlocked() || toAccount.isBlocked())) {
-            if (fromAccount.getMoney() >= amount) {
+            if (fromAccount.getMoney().longValue() >= amount) {
                 fromAccount.deductMoney(amount);
                 toAccount.addMoney(amount);
+                isDone = true;
             } else {
                 System.out.println("Недостаточно средств");
+                isDone = false;
             }
-            if (amount > 50000) {
+            if ((amount > 50000) && isDone) {
                 if (isFraud(fromAccountNum, toAccountNum, amount)) {
                     setBlocked(fromAccountNum);
                     setBlocked(toAccountNum);
                 }
             }
         }
+        return isDone;
     }
 
     /**
@@ -62,7 +69,7 @@ public class Bank {
      */
     public long getBalance(String accountNum) {
         Account account = getAccount(accountNum);
-        return account.getMoney();
+        return account.getMoney().longValue();
     }
 
     public Account getAccount(String accNumber) {
@@ -81,15 +88,26 @@ public class Bank {
 
     public void initBank(int bankSize) {
         for (int i = 0; i < bankSize; i++) {
-            Account account = new Account((long) (100000 * Math.random()), Integer.toString(i));
+            AtomicLong atomicLong = new AtomicLong((long) (100000 * Math.random()));
+
+            Account account = new Account(atomicLong, Integer.toString(i));
             accounts.put(account.getAccNumber(), account);
         }
     }
     public long getAllMoney(){
         long result = 0;
         for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
-            result =+ entry.getValue().getMoney();
+            result += entry.getValue().getMoney().longValue();
         }
         return result;
+    }
+    public List<Account> getAllBlockAcc(){
+        List<Account> resultList = new ArrayList<>();
+        for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
+            if (entry.getValue().isBlocked()){
+                resultList.add(entry.getValue());
+            }
+        }
+        return resultList;
     }
 }
