@@ -45,22 +45,25 @@ public class Bank {
         Account fromAccount = getAccount(fromAccountNum);
         Account toAccount = getAccount(toAccountNum);
         boolean isDone = false;
-        if (!(fromAccount.isBlocked() || toAccount.isBlocked())) {
-            if (fromAccount.getMoney().longValue() >= amount) {
-                fromAccount.deductMoney(amount);
-                toAccount.addMoney(amount);
-                isDone = true;
-            } else {
-                System.out.println("Недостаточно средств");
-                isDone = false;
-            }
-            if ((amount > 50000) && isDone) {
-                if (isFraud(fromAccountNum, toAccountNum, amount)) {
-                    setBlocked(fromAccountNum);
-                    setBlocked(toAccountNum);
+        synchronized (this){
+            if (!(fromAccount.isBlocked() || toAccount.isBlocked())) {
+                if (fromAccount.getMoney().longValue() >= amount) {
+                    fromAccount.deductMoney(amount);
+                    toAccount.addMoney(amount);
+                    isDone = true;
+                } else {
+                    System.out.println("Недостаточно средств");
+                    isDone = false;
+                }
+                if ((amount > 50000) && isDone) {
+                    if (isFraud(fromAccountNum, toAccountNum, amount)) {
+                        setBlocked(fromAccountNum);
+                        setBlocked(toAccountNum);
+                    }
                 }
             }
         }
+
         return isDone;
     }
 
@@ -82,7 +85,7 @@ public class Bank {
         return result;
     }
 
-    public void setBlocked(String accountNum) {
+    public synchronized void setBlocked(String accountNum) {
         getAccount(accountNum).setBlocked(true);
     }
 

@@ -30,7 +30,7 @@ public class Account {
         return isBlocked;
     }
 
-    public void setBlocked(boolean blocked) {
+    public synchronized void setBlocked(boolean blocked) {
         isBlocked = blocked;
     }
 
