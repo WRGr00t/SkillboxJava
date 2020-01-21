@@ -1,22 +1,24 @@
+import java.util.concurrent.atomic.AtomicLong;
+
 public class Account {
-    private long money;
+    private AtomicLong money;
     private String accNumber;
     private boolean isBlocked;
 
-    public Account(long money, String accNumber, boolean isBlocked) {
+    public Account(AtomicLong money, String accNumber, boolean isBlocked) {
         this.money = money;
         this.accNumber = accNumber;
         this.isBlocked = isBlocked;
     }
 
-    public Account(long money, String accNumber) {
+    public Account(AtomicLong money, String accNumber) {
         this(money, accNumber, false);
     }
 
     public Account() {
     }
 
-    public long getMoney() {
+    public AtomicLong getMoney() {
         return money;
     }
 
@@ -33,12 +35,14 @@ public class Account {
     }
 
     public synchronized void addMoney(long money){
-        this.money = this.money+ money;
+        this.money.addAndGet(money);
     }
 
-    public synchronized void deductMoney(long money){
-        if (money <= this.getMoney()){
-            this.money = this.money - money;
+    public void deductMoney(long money){
+        if (money <= this.getMoney().longValue()){
+            synchronized (this){
+                this.money.addAndGet(-money);
+            }
         }
         else {
             System.out.println("Недостаточно средств");
