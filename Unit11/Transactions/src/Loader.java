@@ -27,7 +27,7 @@ public class Loader {
             long newSummFrom = 0;
             long newSummTo = 0;
             boolean successfully = false;
-            for (int i = 0; i < 30; i++) {
+            for (int i = 40; i < 60; i++) {
                 Account account1 = bank.getAccount(Integer.toString(i));
                 oldSummFrom = account1.getMoney().longValue();
                 System.out.println("Источник - " + account1.getAccNumber() + " с суммой = " + oldSummFrom);
@@ -65,6 +65,6 @@ public class Loader {
         long newSumBank = bank.getAllMoney();
         System.out.println("Контрольная сумма денег в банке после манипуляций = " + newSumBank);
         System.out.println("Разница = " + (oldSumBank - newSumBank));
-        System.out.println(bank.getAllBlockAcc().size() + " заблокировано счетов");
+        System.out.println("Счетов заблокировано - " + bank.getAllBlockAcc().size());
     }
 }
