@@ -34,18 +34,11 @@ public class Account {
         isBlocked = blocked;
     }
 
-    public synchronized void addMoney(long money){
+    public synchronized void addMoney(long money) {
         this.money.addAndGet(money);
     }
 
-    public void deductMoney(long money){
-        if (money <= this.getMoney().longValue()){
-            synchronized (this){
-                this.money.addAndGet(-money);
-            }
-        }
-        else {
-            System.out.println("Недостаточно средств");
-        }
+    public synchronized void deductMoney(long money) {
+        this.money.addAndGet(-money);
     }
 }

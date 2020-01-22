@@ -12,7 +12,7 @@ public class Bank {
     private HashMap<String, Account> accounts = new HashMap<>();
     private final Random random = new Random();
 
-    public Bank(HashMap<String, Account> accounts){
+    public Bank(HashMap<String, Account> accounts) {
         this.accounts = accounts;
         System.out.println("Создан банк на " + accounts.size() + " счетов.");
         for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
@@ -45,15 +45,15 @@ public class Bank {
         Account fromAccount = getAccount(fromAccountNum);
         Account toAccount = getAccount(toAccountNum);
         boolean isDone = false;
-        if (fromAccount.getAccNumber().compareTo(toAccount.getAccNumber()) > 0){
-            synchronized (fromAccount){
-                synchronized (toAccount){
+        if (fromAccount.getAccNumber().compareTo(toAccount.getAccNumber()) > 0) {
+            synchronized (fromAccount) {
+                synchronized (toAccount) {
                     isDone = doTransfer(fromAccount, toAccount, amount);
                 }
             }
         } else {
-            synchronized (toAccount){
-                synchronized (fromAccount){
+            synchronized (toAccount) {
+                synchronized (fromAccount) {
                     isDone = doTransfer(fromAccount, toAccount, amount);
                 }
             }
@@ -99,24 +99,26 @@ public class Bank {
             accounts.put(account.getAccNumber(), account);
         }
     }
-    public long getAllMoney(){
+
+    public long getAllMoney() {
         long result = 0;
         for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
             result += entry.getValue().getMoney().longValue();
         }
         return result;
     }
-    public List<Account> getAllBlockAcc(){
+
+    public List<Account> getAllBlockAcc() {
         List<Account> resultList = new ArrayList<>();
         for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
-            if (entry.getValue().isBlocked()){
+            if (entry.getValue().isBlocked()) {
                 resultList.add(entry.getValue());
             }
         }
         return resultList;
     }
 
-    public boolean doTransfer(Account fromAccount, Account toAccount, long amount){
+    public boolean doTransfer(Account fromAccount, Account toAccount, long amount) {
         boolean isDoneResult = false;
         if (!(fromAccount.isBlocked() || toAccount.isBlocked())) {
             if (fromAccount.getMoney().longValue() >= amount) {

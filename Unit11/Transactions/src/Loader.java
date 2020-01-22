@@ -30,10 +30,10 @@ public class Loader {
             for (int i = 40; i < 60; i++) {
                 Account account1 = bank.getAccount(Integer.toString(i));
                 oldSummFrom = account1.getMoney().longValue();
-                System.out.println("Источник - " + account1.getAccNumber() + " с суммой = " + oldSummFrom);
+                System.out.println("Источник - " + account1.getAccNumber() + " с суммой = " + oldSummFrom + " " + Thread.currentThread().getName());
                 Account account2 = bank.getAccount(Integer.toString(bankSize - i - 1));
                 oldSummTo = account2.getMoney().longValue();
-                System.out.println("Получатель - " + account2.getAccNumber() + " с суммой = " + oldSummTo);
+                System.out.println("Получатель - " + account2.getAccNumber() + " с суммой = " + oldSummTo + " " + Thread.currentThread().getName());
                 long amountMoney = i * 1000;
                 try {
                     successfully = bank.transfer(account1.getAccNumber(), account2.getAccNumber(), amountMoney);
@@ -42,15 +42,15 @@ public class Loader {
                 }
                 newSummFrom = account1.getMoney().longValue();
                 newSummTo = account2.getMoney().longValue();
-                if (successfully){
-                    System.out.println("Источник - " + account1.getAccNumber() + ", было снято " + amountMoney + " остаток  = " + account1.getMoney());
-                    System.out.println("Получатель - " + account2.getAccNumber() + " с новой суммой = " + account2.getMoney());
-                    System.out.println("Контрольные цифры - " + oldSummFrom + " - " + amountMoney + " = " + newSummFrom);
-                    System.out.println("Контрольные цифры - " + oldSummTo + " + " + amountMoney + " = " + newSummTo);
+                if (successfully) {
+                    System.out.println("Источник - " + account1.getAccNumber() + ", было снято " + amountMoney + " остаток  = " + account1.getMoney() + " " + Thread.currentThread().getName());
+                    System.out.println("Получатель - " + account2.getAccNumber() + " с новой суммой = " + account2.getMoney() + " " + Thread.currentThread().getName());
+                    System.out.println("Контрольные цифры - " + oldSummFrom + " - " + amountMoney + " = " + newSummFrom + " " + Thread.currentThread().getName());
+                    System.out.println("Контрольные цифры - " + oldSummTo + " + " + amountMoney + " = " + newSummTo + " " + Thread.currentThread().getName());
                 } else {
-                    System.out.println("Перевод не проведен, состояние счетов:");
-                    System.out.println("Источник - " + account1.getAccNumber() + ", остаток  = " + account1.getMoney());
-                    System.out.println("Получатель - " + account2.getAccNumber() + ", остаток = " + account2.getMoney());
+                    System.out.println("Перевод не проведен, состояние счетов:" + " " + Thread.currentThread().getName());
+                    System.out.println("Источник - " + account1.getAccNumber() + ", остаток  = " + account1.getMoney() + " " + Thread.currentThread().getName());
+                    System.out.println("Получатель - " + account2.getAccNumber() + ", остаток = " + account2.getMoney() + " " + Thread.currentThread().getName());
                 }
             }
         };
@@ -63,8 +63,8 @@ public class Loader {
             thread.join();
         }
         long newSumBank = bank.getAllMoney();
-        System.out.println("Контрольная сумма денег в банке после манипуляций = " + newSumBank);
-        System.out.println("Разница = " + (oldSumBank - newSumBank));
-        System.out.println("Счетов заблокировано - " + bank.getAllBlockAcc().size());
+        System.out.println("Контрольная сумма денег в банке после манипуляций = " + newSumBank + " " + Thread.currentThread().getName());
+        System.out.println("Разница = " + (oldSumBank - newSumBank) + " " + Thread.currentThread().getName());
+        System.out.println("Счетов заблокировано - " + bank.getAllBlockAcc().size() + " " + Thread.currentThread().getName());
     }
 }
