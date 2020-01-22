@@ -45,26 +45,25 @@ public class Bank {
         Account fromAccount = getAccount(fromAccountNum);
         Account toAccount = getAccount(toAccountNum);
         boolean isDone = false;
-        synchronized (fromAccount){
-            synchronized (toAccount){
-                if (!(fromAccount.isBlocked() || toAccount.isBlocked())) {
-                    if (fromAccount.getMoney().longValue() >= amount) {
-                        fromAccount.deductMoney(amount);
-                        toAccount.addMoney(amount);
-                        isDone = true;
-                    } else {
-                        System.out.println("Недостаточно средств");
-                        isDone = false;
-                    }
-                    if ((amount > 50000) && isDone) {
-                        if (isFraud(fromAccountNum, toAccountNum, amount)) {
-                            setBlocked(fromAccountNum);
-                            setBlocked(toAccountNum);
-                        }
-                    }
+        if (fromAccount.getAccNumber().compareTo(toAccount.getAccNumber()) > 0){
+            synchronized (fromAccount){
+                synchronized (toAccount){
+                    isDone = doTransfer(fromAccount, toAccount, amount);
                 }
             }
+        } else {
+            synchronized (toAccount){
+                synchronized (fromAccount){
+                    isDone = doTransfer(fromAccount, toAccount, amount);
+                }
+            }
+        }
 
+        if ((amount > 50000) && isDone) {
+            if (isFraud(fromAccountNum, toAccountNum, amount)) {
+                setBlocked(fromAccountNum);
+                setBlocked(toAccountNum);
+            }
         }
 
         return isDone;
@@ -115,5 +114,20 @@ public class Bank {
             }
         }
         return resultList;
+    }
+
+    public boolean doTransfer(Account fromAccount, Account toAccount, long amount){
+        boolean isDoneResult = false;
+        if (!(fromAccount.isBlocked() || toAccount.isBlocked())) {
+            if (fromAccount.getMoney().longValue() >= amount) {
+                fromAccount.deductMoney(amount);
+                toAccount.addMoney(amount);
+                isDoneResult = true;
+            } else {
+                System.out.println("Недостаточно средств");
+                isDoneResult = false;
+            }
+        }
+        return isDoneResult;
     }
 }
