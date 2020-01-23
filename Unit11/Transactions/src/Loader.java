@@ -4,7 +4,7 @@ import java.util.List;
 public class Loader {
     public static void main(String[] args) throws InterruptedException {
         int bankSize = 100000;
-        Bank bank = new Bank(bankSize);
+        ReentrantLockBank bank = new ReentrantLockBank(bankSize);
         int threadCount = 3;
         long oldSumBank = bank.getAllMoney();
         System.out.println("Контрольная сумма денег в банке = " + oldSumBank);
@@ -30,10 +30,16 @@ public class Loader {
             for (int i = 40; i < 60; i++) {
                 Account account1 = bank.getAccount(Integer.toString(i));
                 oldSummFrom = account1.getMoney().longValue();
-                System.out.println("Источник - " + account1.getAccNumber() + " с суммой = " + oldSummFrom + " " + Thread.currentThread().getName());
+                System.out.printf("Поток - %s Источник - %s с суммой = %d%n",
+                        Thread.currentThread().getName(),
+                        account1.getAccNumber(),
+                        oldSummFrom);
                 Account account2 = bank.getAccount(Integer.toString(bankSize - i - 1));
                 oldSummTo = account2.getMoney().longValue();
-                System.out.println("Получатель - " + account2.getAccNumber() + " с суммой = " + oldSummTo + " " + Thread.currentThread().getName());
+                System.out.printf("Поток - %s Получатель - %s с суммой = %d%n",
+                        Thread.currentThread().getName(),
+                        account2.getAccNumber(),
+                        oldSummTo);
                 long amountMoney = i * 1000;
                 try {
                     successfully = bank.transfer(account1.getAccNumber(), account2.getAccNumber(), amountMoney);
@@ -43,14 +49,36 @@ public class Loader {
                 newSummFrom = account1.getMoney().longValue();
                 newSummTo = account2.getMoney().longValue();
                 if (successfully) {
-                    System.out.println("Источник - " + account1.getAccNumber() + ", было снято " + amountMoney + " остаток  = " + account1.getMoney() + " " + Thread.currentThread().getName());
-                    System.out.println("Получатель - " + account2.getAccNumber() + " с новой суммой = " + account2.getMoney() + " " + Thread.currentThread().getName());
-                    System.out.println("Контрольные цифры - " + oldSummFrom + " - " + amountMoney + " = " + newSummFrom + " " + Thread.currentThread().getName());
-                    System.out.println("Контрольные цифры - " + oldSummTo + " + " + amountMoney + " = " + newSummTo + " " + Thread.currentThread().getName());
+                    System.out.printf("Поток - %s Источник - %s, было снято %s остаток = %d%n",
+                            Thread.currentThread().getName(),
+                            account1.getAccNumber(),
+                            amountMoney,
+                            account1.getMoney().longValue());
+                    System.out.printf("Поток - %s Получатель - %s, с новой суммой = %d%n",
+                            Thread.currentThread().getName(),
+                            account2.getAccNumber(),
+                            account2.getMoney().longValue());
+                    System.out.printf("Поток - %s Контрольные цифры - %d - %d = %d%n",
+                            Thread.currentThread().getName(),
+                            oldSummFrom,
+                            amountMoney,
+                            newSummFrom);
+                    System.out.printf("Поток - %s Контрольные цифры - %d + %d = %d%n",
+                            Thread.currentThread().getName(),
+                            oldSummTo,
+                            amountMoney,
+                            newSummTo);
                 } else {
-                    System.out.println("Перевод не проведен, состояние счетов:" + " " + Thread.currentThread().getName());
-                    System.out.println("Источник - " + account1.getAccNumber() + ", остаток  = " + account1.getMoney() + " " + Thread.currentThread().getName());
-                    System.out.println("Получатель - " + account2.getAccNumber() + ", остаток = " + account2.getMoney() + " " + Thread.currentThread().getName());
+                    System.out.printf("Поток - %s Перевод не проведен, состояние счетов:%n",
+                            Thread.currentThread().getName());
+                    System.out.printf("Поток - %s Источник - %s, остаток  = %s%n",
+                            Thread.currentThread().getName(),
+                            account1.getAccNumber(),
+                            account1.getMoney());
+                    System.out.printf("Поток - %s Получатель - %s, остаток = %s%n",
+                            Thread.currentThread().getName(),
+                            account2.getAccNumber(),
+                            account2.getMoney());
                 }
             }
         };
@@ -63,8 +91,14 @@ public class Loader {
             thread.join();
         }
         long newSumBank = bank.getAllMoney();
-        System.out.println("Контрольная сумма денег в банке после манипуляций = " + newSumBank + " " + Thread.currentThread().getName());
-        System.out.println("Разница = " + (oldSumBank - newSumBank) + " " + Thread.currentThread().getName());
-        System.out.println("Счетов заблокировано - " + bank.getAllBlockAcc().size() + " " + Thread.currentThread().getName());
+        System.out.printf("Поток - %s Контрольная сумма денег в банке после манипуляций = %d%n",
+                Thread.currentThread().getName(),
+                newSumBank);
+        System.out.printf("Поток - %s Разница = %d%n",
+                Thread.currentThread().getName(),
+                oldSumBank - newSumBank);
+        System.out.printf("Поток - %s Счетов заблокировано - %d%n",
+                Thread.currentThread().getName(),
+                bank.getAllBlockAcc().size());
     }
 }

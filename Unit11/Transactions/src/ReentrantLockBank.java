@@ -2,18 +2,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Bank {
-
-
+public class ReentrantLockBank {
     private HashMap<String, Account> accounts = new HashMap<>();
     private final Random random = new Random();
     private Lock lock;
 
-    public Bank(HashMap<String, Account> accounts) {
+    public ReentrantLockBank(HashMap<String, Account> accounts) {
         this.accounts = accounts;
         lock = new ReentrantLock();
         System.out.println("Создан банк на " + accounts.size() + " счетов.");
@@ -22,7 +21,7 @@ public class Bank {
         }
     }
 
-    public Bank(int accountAmount) {
+    public ReentrantLockBank(int accountAmount) {
         initBank(accountAmount);
         System.out.println("Создан банк на " + accounts.size() + " счетов.");
         /*for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
@@ -46,19 +45,15 @@ public class Bank {
     public boolean transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
         Account fromAccount = getAccount(fromAccountNum);
         Account toAccount = getAccount(toAccountNum);
-        boolean isDone;
-        if (fromAccount.getAccNumber().compareTo(toAccount.getAccNumber()) > 0) {
-            synchronized (fromAccount) {
-                synchronized (toAccount) {
-                    isDone = doTransfer(fromAccount, toAccount, amount);
-                }
+        boolean isDone = false;
+        try {
+            if (lock.tryLock(2, TimeUnit.SECONDS)) {
+                isDone = doTransfer(fromAccount, toAccount, amount);
             }
-        } else {
-            synchronized (toAccount) {
-                synchronized (fromAccount) {
-                    isDone = doTransfer(fromAccount, toAccount, amount);
-                }
-            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
         }
 
         if ((amount > 50000) && isDone) {
