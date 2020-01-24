@@ -2,20 +2,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Bank {
-
-
     private HashMap<String, Account> accounts = new HashMap<>();
     private final Random random = new Random();
-    private Lock lock;
 
     public Bank(HashMap<String, Account> accounts) {
         this.accounts = accounts;
-        lock = new ReentrantLock();
+
         System.out.println("Создан банк на " + accounts.size() + " счетов.");
         for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
             System.out.println("ID =  " + entry.getKey() + " значение - #" + entry.getValue().getAccNumber() + " c " + entry.getValue().getMoney());
@@ -46,28 +43,24 @@ public class Bank {
     public boolean transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
         Account fromAccount = getAccount(fromAccountNum);
         Account toAccount = getAccount(toAccountNum);
-        boolean isDone;
-        if (fromAccount.getAccNumber().compareTo(toAccount.getAccNumber()) > 0) {
-            synchronized (fromAccount) {
-                synchronized (toAccount) {
-                    isDone = doTransfer(fromAccount, toAccount, amount);
-                }
+        boolean isDone = false;
+        try {
+            if (fromAccount.getLock().tryLock(1, TimeUnit.SECONDS) && toAccount.getLock().tryLock(1, TimeUnit.SECONDS)) {
+                isDone = doTransfer(fromAccount, toAccount, amount);
             }
-        } else {
-            synchronized (toAccount) {
-                synchronized (fromAccount) {
-                    isDone = doTransfer(fromAccount, toAccount, amount);
-                }
-            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            fromAccount.getLock().unlock();
+            toAccount.getLock().unlock();
         }
 
-        if ((amount > 50000) && isDone) {
+        if ((amount > 50_000) && isDone) {
             if (isFraud(fromAccountNum, toAccountNum, amount)) {
                 setBlocked(fromAccountNum);
                 setBlocked(toAccountNum);
             }
         }
-
         return isDone;
     }
 
@@ -99,12 +92,11 @@ public class Bank {
 
     public void initBank(int bankSize) {
         for (int i = 0; i < bankSize; i++) {
-            AtomicLong atomicLong = new AtomicLong((long) (100000 * Math.random()));
+            AtomicLong atomicLong = new AtomicLong((long) (100_000 * Math.random()));
 
             Account account = new Account(atomicLong, Integer.toString(i));
             accounts.put(account.getAccNumber(), account);
         }
-        lock = new ReentrantLock();
     }
 
     public long getAllMoney() {

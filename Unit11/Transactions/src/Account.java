@@ -1,14 +1,18 @@
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Account {
     private AtomicLong money;
     private String accNumber;
     private boolean isBlocked;
+    private Lock lock;
 
     public Account(AtomicLong money, String accNumber, boolean isBlocked) {
         this.money = money;
         this.accNumber = accNumber;
         this.isBlocked = isBlocked;
+        lock = new ReentrantLock();
     }
 
     public Account(AtomicLong money, String accNumber) {
@@ -24,6 +28,10 @@ public class Account {
 
     public String getAccNumber() {
         return accNumber;
+    }
+
+    public Lock getLock() {
+        return lock;
     }
 
     public boolean isBlocked() {

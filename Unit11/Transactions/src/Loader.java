@@ -4,7 +4,7 @@ import java.util.List;
 public class Loader {
     public static void main(String[] args) throws InterruptedException {
         int bankSize = 100000;
-        ReentrantLockBank bank = new ReentrantLockBank(bankSize);
+        Bank bank = new Bank(bankSize);
         int threadCount = 3;
         long oldSumBank = bank.getAllMoney();
         System.out.println("Контрольная сумма денег в банке = " + oldSumBank);
