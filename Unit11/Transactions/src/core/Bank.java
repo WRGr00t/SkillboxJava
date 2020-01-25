@@ -1,10 +1,11 @@
+package core;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Bank {
     private HashMap<String, Account> accounts = new HashMap<>();
@@ -22,7 +23,7 @@ public class Bank {
     public Bank(int accountAmount) {
         initBank(accountAmount);
         System.out.println("Создан банк на " + accounts.size() + " счетов.");
-        /*for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
+        /*for (HashMap.Entry<String, Core.Account> entry : accounts.entrySet()) {
             System.out.println("ID =  " + entry.getKey() + " значение - #" + entry.getValue().getAccNumber() + " c " + entry.getValue().getMoney());
         }*/
     }
