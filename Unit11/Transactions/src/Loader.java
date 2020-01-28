@@ -8,7 +8,7 @@ public class Loader {
     public static void main(String[] args) throws InterruptedException {
         final int BANK_SIZE = 3;
         Bank bank = new Bank(BANK_SIZE);
-        final int THREADS_COUNT = 10_000;
+        final int THREADS_COUNT = 100_000;
         long oldSumBank = bank.getAllMoney();
 
         List<Thread> threads = new ArrayList<>();

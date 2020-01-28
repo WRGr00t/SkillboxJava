@@ -46,8 +46,8 @@ public class Bank {
         Account toAccount = getAccount(toAccountNum);
         boolean isDone = false;
         if (fromAccountNum.compareTo(toAccountNum) > 0){
-            if (fromAccount.getLock().tryLock(1, TimeUnit.SECONDS)){
-                if (toAccount.getLock().tryLock(1, TimeUnit.SECONDS)){
+            if (fromAccount.getLock().tryLock(100, TimeUnit.SECONDS)){
+                if (toAccount.getLock().tryLock(100, TimeUnit.SECONDS)){
                     try {
                         isDone = doTransfer(fromAccount, toAccount, amount).equals("Платеж проведен");
                     }
