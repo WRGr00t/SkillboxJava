@@ -14,7 +14,7 @@ public class Bank {
     public Bank(HashMap<String, Account> accounts) {
         this.accounts = accounts;
 
-        System.out.println("Создан банк на " + accounts.size() + " счетов.");
+        System.out.printf("Создан банк с размером %d%n", accounts.size());
         for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
             System.out.println("ID =  " + entry.getKey() + " значение - #" + entry.getValue().getAccNumber() + " c " + entry.getValue().getMoney());
         }
@@ -22,7 +22,7 @@ public class Bank {
 
     public Bank(int accountAmount) {
         initBank(accountAmount);
-        System.out.println("Создан банк на " + accounts.size() + " счетов.");
+        System.out.printf("Создан банк с размером %d%n", accounts.size());
         /*for (HashMap.Entry<String, Core.Account> entry : accounts.entrySet()) {
             System.out.println("ID =  " + entry.getKey() + " значение - #" + entry.getValue().getAccNumber() + " c " + entry.getValue().getMoney());
         }*/
@@ -45,17 +45,22 @@ public class Bank {
         Account fromAccount = getAccount(fromAccountNum);
         Account toAccount = getAccount(toAccountNum);
         boolean isDone = false;
-        try {
-            if (fromAccount.getLock().tryLock(1, TimeUnit.SECONDS) && toAccount.getLock().tryLock(1, TimeUnit.SECONDS)) {
-                isDone = doTransfer(fromAccount, toAccount, amount);
+        if (fromAccountNum.compareTo(toAccountNum) > 0){
+            if (fromAccount.getLock().tryLock(1, TimeUnit.SECONDS)){
+                if (toAccount.getLock().tryLock(1, TimeUnit.SECONDS)){
+                    try {
+                        isDone = doTransfer(fromAccount, toAccount, amount).equals("Платеж проведен");
+                    }
+                    finally {
+                        fromAccount.getLock().unlock();
+                        toAccount.getLock().unlock();
+                    }
+                } else {
+                    fromAccount.getLock().unlock();
+                    isDone = false;
+                }
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            fromAccount.getLock().unlock();
-            toAccount.getLock().unlock();
         }
-
         if ((amount > 50_000) && isDone) {
             if (isFraud(fromAccountNum, toAccountNum, amount)) {
                 setBlocked(fromAccountNum);
@@ -118,16 +123,15 @@ public class Bank {
         return resultList;
     }
 
-    public boolean doTransfer(Account fromAccount, Account toAccount, long amount) {
-        boolean isDoneResult = false;
+    public String doTransfer(Account fromAccount, Account toAccount, long amount) {
+        String isDoneResult = "Платеж не проведен";
         if (!(fromAccount.isBlocked() || toAccount.isBlocked())) {
             if (fromAccount.getMoney().longValue() >= amount) {
                 fromAccount.deductMoney(amount);
                 toAccount.addMoney(amount);
-                isDoneResult = true;
+                isDoneResult = "Платеж проведен";
             } else {
-                System.out.println("Недостаточно средств");
-                isDoneResult = false;
+                isDoneResult = "Недостаточно средств";
             }
         }
         return isDoneResult;

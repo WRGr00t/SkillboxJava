@@ -6,50 +6,45 @@ import java.util.List;
 
 public class Loader {
     public static void main(String[] args) throws InterruptedException {
-        int bankSize = 100000;
-        Bank bank = new Bank(bankSize);
-        int threadCount = 3;
+        final int BANK_SIZE = 3;
+        Bank bank = new Bank(BANK_SIZE);
+        final int THREADS_COUNT = 10_000;
         long oldSumBank = bank.getAllMoney();
-        System.out.println("Контрольная сумма денег в банке = " + oldSumBank);
 
-        System.out.println(bank.getAccount("1").getMoney());
-        System.out.println(bank.getBalance("10"));
-        boolean isDone = bank.transfer("1", "10", 100);
-        if (isDone) {
-            System.out.println("Перевод проведен успешно");
-        }
-        System.out.println(bank.getBalance("1"));
-        System.out.println(bank.getBalance("10"));
         List<Thread> threads = new ArrayList<>();
 
         //============ тестовые манипуляции со счетами ===========
 
         Runnable task = () -> {
-            long oldSumFrom = 0;
-            long oldSumTo = 0;
-            long newSumFrom = 0;
-            long newSumTo = 0;
-            boolean successfully = false;
+
             for (int i = 40; i < 60; i++) {
-                Account account1 = bank.getAccount(Integer.toString(i));
-                oldSumFrom = account1.getMoney().longValue();
+                Account account1 = bank.getAccount(String.valueOf((int)Math.round(Math.random() * BANK_SIZE)));
+                /*oldSumFrom = account1.getMoney().longValue();
                 System.out.printf("Поток - %s Источник - %s с суммой = %d%n",
                         Thread.currentThread().getName(),
                         account1.getAccNumber(),
-                        oldSumFrom);
-                Account account2 = bank.getAccount(Integer.toString(bankSize - i - 1));
-                oldSumTo = account2.getMoney().longValue();
+                        oldSumFrom);*/
+                Account account2 = bank.getAccount(String.valueOf((int)Math.round(Math.random() * BANK_SIZE)));
+                /*oldSumTo = account2.getMoney().longValue();
                 System.out.printf("Поток - %s Получатель - %s с суммой = %d%n",
                         Thread.currentThread().getName(),
                         account2.getAccNumber(),
-                        oldSumTo);
+                        oldSumTo);*/
                 long amountMoney = i * 1000;
                 try {
-                    successfully = bank.transfer(account1.getAccNumber(), account2.getAccNumber(), amountMoney);
+                    if ((account1.getAccNumber() != null) && (account2.getAccNumber() != null)){
+                        bank.transfer(account1.getAccNumber(), account2.getAccNumber(), amountMoney);
+                    System.out.printf("Поток - %s Перевод с %s на %s в размере %s%n",
+                            Thread.currentThread().getName(),
+                            account1.getAccNumber(),
+                            account2.getAccNumber(),
+                            amountMoney);
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+
                 }
-                newSumFrom = account1.getMoney().longValue();
+                /*newSumFrom = account1.getMoney().longValue();
                 newSumTo = account2.getMoney().longValue();
                 if (successfully) {
                     System.out.printf("Поток - %s Источник - %s, было снято %s остаток = %d%n",
@@ -82,10 +77,10 @@ public class Loader {
                             Thread.currentThread().getName(),
                             account2.getAccNumber(),
                             account2.getMoney());
-                }
+                }*/
             }
         };
-        for (int i = 0; i < threadCount; i++) {
+        for (int i = 0; i < THREADS_COUNT; i++) {
             Thread thread = new Thread(task);
             thread.start();
             threads.add(thread);
@@ -93,7 +88,7 @@ public class Loader {
         for (Thread thread : threads) {
             thread.join();
         }
-        long newSumBank = bank.getAllMoney();
+        /*long newSumBank = bank.getAllMoney();
         System.out.printf("Поток - %s Контрольная сумма денег в банке после манипуляций = %d%n",
                 Thread.currentThread().getName(),
                 newSumBank);
@@ -102,6 +97,6 @@ public class Loader {
                 oldSumBank - newSumBank);
         System.out.printf("Поток - %s Счетов заблокировано - %d%n",
                 Thread.currentThread().getName(),
-                bank.getAllBlockAcc().size());
+                bank.getAllBlockAcc().size());*/
     }
 }
