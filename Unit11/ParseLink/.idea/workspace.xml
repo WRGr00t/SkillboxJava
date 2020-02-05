@@ -204,13 +204,6 @@
       <change afterPath="$PROJECT_DIR$/../Java. Introduction/.idea/modules/util/util.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Java. Introduction/.idea/modules/util/util_main.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Java. Introduction/.idea/modules/util/util_test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/jsoup_1_12_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ParseLink.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Loader.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Unit12/BookLibrary/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Unit12/BookLibrary/.idea/BookLibrary.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Unit12/BookLibrary/.idea/compiler.xml" afterDir="false" />
@@ -219,6 +212,8 @@
       <change afterPath="$PROJECT_DIR$/../../Unit12/BookLibrary/.idea/uiDesigner.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Unit12/BookLibrary/.idea/vcs.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Unit12/BookLibrary/BookLibrary.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Loader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Loader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Transactions/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Transactions/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Unit8/SPBMetro0908/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Unit8/SPBMetro0908/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../streams-assignments" beforeDir="false" afterPath="$PROJECT_DIR$/../../streams-assignments" afterDir="false" />
@@ -282,29 +277,49 @@
       <option name="presentableId" value="Default" />
       <updated>1580305619124</updated>
     </task>
+    <task id="LOCAL-00001" summary="Стартовый коммит">
+      <created>1580307252541</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1580307252541</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Стартовый коммит" />
+    <option name="LAST_COMMIT_MESSAGE" value="Стартовый коммит" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="605" y="140" key="#com.intellij.ide.util.MemberChooser" timestamp="1580567090973">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="605" y="140" key="#com.intellij.ide.util.MemberChooser/0.0.1600.860@0.0.1600.860" timestamp="1580567090973" />
+    <state x="399" y="25" key="CommitChangelistDialog2" timestamp="1580307250563">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="399" y="25" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1580307250563" />
     <state x="506" y="172" key="FileChooserDialogImpl" timestamp="1580305900025">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="506" y="172" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1580305900025" />
-    <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1580307083715">
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1580914635244">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1580307083715" />
-    <state width="1557" height="222" key="GridCell.Tab.0.center" timestamp="1580307083714">
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1580914635244" />
+    <state width="1557" height="222" key="GridCell.Tab.0.center" timestamp="1580914635244">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1580307083714" />
-    <state width="1557" height="222" key="GridCell.Tab.0.left" timestamp="1580307083714">
+    <state width="1557" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1580914635244" />
+    <state width="1557" height="222" key="GridCell.Tab.0.left" timestamp="1580914635244">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1580307083714" />
-    <state width="1557" height="222" key="GridCell.Tab.0.right" timestamp="1580307083714">
+    <state width="1557" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1580914635244" />
+    <state width="1557" height="222" key="GridCell.Tab.0.right" timestamp="1580914635244">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1580307083714" />
+    <state width="1557" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1580914635244" />
     <state x="280" y="5" key="SettingsEditor" timestamp="1580305905675">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
