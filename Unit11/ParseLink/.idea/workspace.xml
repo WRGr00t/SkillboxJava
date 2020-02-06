@@ -247,7 +247,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Unit9/4/lib/jsoup-1.12.1.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -284,7 +284,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580307252541</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Стартовый коммит">
+      <created>1580914909932</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1580914909932</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -296,30 +303,30 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="605" y="140" key="#com.intellij.ide.util.MemberChooser/0.0.1600.860@0.0.1600.860" timestamp="1580567090973" />
-    <state x="399" y="25" key="CommitChangelistDialog2" timestamp="1580307250563">
+    <state x="399" y="25" key="CommitChangelistDialog2" timestamp="1580914904188">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="399" y="25" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1580307250563" />
+    <state x="399" y="25" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1580914904188" />
     <state x="506" y="172" key="FileChooserDialogImpl" timestamp="1580305900025">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="506" y="172" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1580305900025" />
-    <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1580914635244">
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1581002504923">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1580914635244" />
-    <state width="1557" height="222" key="GridCell.Tab.0.center" timestamp="1580914635244">
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1581002504923" />
+    <state width="1557" height="222" key="GridCell.Tab.0.center" timestamp="1581002504923">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1580914635244" />
-    <state width="1557" height="222" key="GridCell.Tab.0.left" timestamp="1580914635244">
+    <state width="1557" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1581002504923" />
+    <state width="1557" height="222" key="GridCell.Tab.0.left" timestamp="1581002504923">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1580914635244" />
-    <state width="1557" height="222" key="GridCell.Tab.0.right" timestamp="1580914635244">
+    <state width="1557" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1581002504923" />
+    <state width="1557" height="222" key="GridCell.Tab.0.right" timestamp="1581002504923">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1580914635244" />
+    <state width="1557" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1581002504923" />
     <state x="280" y="5" key="SettingsEditor" timestamp="1580305905675">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
