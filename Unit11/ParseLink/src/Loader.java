@@ -3,26 +3,50 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashSet;
 
 public class Loader {
 
     public static void main(String[] args) {
-        final String link = "https://lenta.ru";
+        final String link = "https://skillbox.ru";
         String path = "tree.txt";
-        HashSet<String> linkList = new HashSet<>();
-        linkList = getSublink(link);
-        linkList = filterSet(linkList, link);
-        for (String string : linkList) {
-            HashSet<String> newResultSet;
-            getSublink(string);
-            newResultSet = filterSet(linkList, string);
-            writeFromSet(newResultSet, path);
-            //System.out.println(newResultSet.size());
+        HashSet<String> linkSet;
+        linkSet = startParse(link);
+        if (linkSet.size() != 0){
+            writeFromSet(linkSet, path);
         }
-        //System.out.println(linkList.size());
+        linkSet = readFromFile(path);
+    }
+
+    private static HashSet<String> readFromFile(String path){
+        HashSet<String> set = new HashSet<>();
+        try {
+            File file = new File("tree.txt");
+            FileReader fr = new FileReader(file);
+            BufferedReader reader = new BufferedReader(fr);
+            String line = reader.readLine();
+            set.add(line);
+            while (line != null) {
+                line = reader.readLine();
+                set.add(line);
+            }
+            for (String string : set){
+                System.out.println( string);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return set;
+    }
+
+    private static HashSet<String> startParse(String startLink){
+        HashSet<String> set;
+        set = getSublink(startLink);
+        set = filterSet(set, startLink);
+        return set;
     }
 
     private static HashSet<String> getSublink(String link) {
@@ -56,7 +80,10 @@ public class Loader {
                     if (string.lastIndexOf("/") == string.length() - 1) {
                         str = string.replaceFirst(".$", "");
                     }
-                    result.add(link.concat(str));
+                    String s = link.concat(str);
+                    if (!s.equals(link)){
+                        result.add(s);
+                    }
                 }
             }
         }
