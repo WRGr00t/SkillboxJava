@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="bb862722-a623-4e91-b04f-3d048f4486b4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../1/ClassFiles" beforeDir="false" afterPath="$PROJECT_DIR$/../../1/ClassFiles" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../4/MoscowMetro/src/Loader.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../4/MoscowMetro/src/Loader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,6 +22,11 @@
   </component>
   <component name="ProjectId" id="1QfkE0MGWwjYIgcBELEgULzRyDv" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.Annotations" value="false" />
@@ -33,18 +37,6 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.14965986" />
     <property name="project.structure.side.proportion" value="0.34712642" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager">
     <configuration name="Loader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -61,6 +53,18 @@
         <item itemvalue="Application.Loader" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -107,5 +111,15 @@
     <MESSAGE value="remove magic numbers" />
     <MESSAGE value="попытка обработки описаний операций" />
     <option name="LAST_COMMIT_MESSAGE" value="попытка обработки описаний операций" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2360" y="98" key="SettingsEditor" timestamp="1582087667626">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2360" y="98" key="SettingsEditor/-1920.0.1920.1040/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1582087667626" />
+    <state x="342" y="147" key="new project wizard" timestamp="1582086959476">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="342" y="147" key="new project wizard/-1920.0.1920.1040/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1582086959476" />
   </component>
 </project>
