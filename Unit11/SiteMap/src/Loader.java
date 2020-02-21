@@ -9,6 +9,13 @@ public class Loader {
         HashSet<String> links = link.getSublink(path);
         for (String string : links) {
             System.out.println(string);
+            HashSet<String> linkDownLevel= Link.getSublink(string);
+            HashSet<URL> downLinks = new HashSet<>();
+            for (String downlink : linkDownLevel){
+                System.out.println("\t" + downlink);
+                downLinks.add(new URL(downlink));
+            }
+            Link downLink = new Link(new URL(string), link);
         }
     }
 }
