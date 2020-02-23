@@ -71,7 +71,7 @@ public class Link {
                 doc = Jsoup.connect(link).maxBodySize(0).get();
                 links = doc.select("a");
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
             for (Element category : links) {
                 String string = category.absUrl("href").trim();
@@ -80,7 +80,7 @@ public class Link {
                 }
             }
         } catch (Exception exception){
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         return resultSet;
     }
