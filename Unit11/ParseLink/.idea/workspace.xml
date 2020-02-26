@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d417893-b254-476d-9513-8196959f25e0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../SiteMap/src/Link.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SiteMap/src/Link.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SiteMap/src/Loader.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SiteMap/src/Loader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Unit9/1/ClassFiles" beforeDir="false" afterPath="$PROJECT_DIR$/../../Unit9/1/ClassFiles" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../getSiteMap" beforeDir="false" afterPath="$PROJECT_DIR$/../getSiteMap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../streams-assignments" beforeDir="false" afterPath="$PROJECT_DIR$/../../streams-assignments" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
