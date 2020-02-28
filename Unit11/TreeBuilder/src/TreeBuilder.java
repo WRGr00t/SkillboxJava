@@ -1,10 +1,14 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.RecursiveTask;
 
-public class TreeBuilder extends RecursiveTask<ConcurrentSkipListSet<String>> implements Comparable<Link>{
+public class TreeBuilder extends RecursiveTask<TreeSet<String>> implements Comparable<Link>{
     private final Link link;
 
     public TreeBuilder(Link link) {
@@ -12,20 +16,20 @@ public class TreeBuilder extends RecursiveTask<ConcurrentSkipListSet<String>> im
     }
 
     @Override
-    protected ConcurrentSkipListSet<String> compute() {
-        ConcurrentSkipListSet subLinks = link.getSubLinks();
+    protected TreeSet<String> compute() {
+        TreeSet<String> subLinks = link.getSubLinks();
         List<TreeBuilder> subTasks = new LinkedList<>();
 
-        for (String sublink : link.getSubLinks()){
-            System.out.println(sublink);
-            TreeBuilder task = new TreeBuilder(new Link(sublink, Link.getSublink(sublink), link.getLevel() + 1));
+        for (String sublink : subLinks){
+            Link nextLink = new Link(sublink, Link.getSublink(sublink), link.getLevel() + 1);
+            TreeBuilder task = new TreeBuilder(nextLink);
             task.fork();
-            System.out.println(Thread.currentThread().getName());
-            subLinks.add(task);
+            subTasks.add(task);
+            System.out.println(sublink + " " + Thread.currentThread().getName());
         }
 
         for (TreeBuilder task : subTasks) {
-            subLinks.add(task.join());
+            subLinks.addAll(task.join());
         }
         return subLinks;
     }
@@ -51,6 +55,20 @@ public class TreeBuilder extends RecursiveTask<ConcurrentSkipListSet<String>> im
     @Override
     public String toString() {
         return "\t".repeat(link.getLevel()) + link.toString();
+    }
+
+    public static void saveToFile(Path path, TreeSet<String> strings){
+        try {
+            FileWriter file = new FileWriter(path.toString());
+            for (String string : strings){
+                file.write(string + "\n");
+            }
+            file.flush();
+            file.close();
+            System.out.println("File " + path + " saved successfully");
+        } catch (IOException e) {
+            System.err.println("Some problems with file " + e.getMessage());
+        }
     }
 
 }

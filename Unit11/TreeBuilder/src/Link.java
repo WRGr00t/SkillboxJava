@@ -5,15 +5,16 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.TreeSet;
 import java.util.concurrent.*;
 
 
 public class Link {
     private String link;
-    private ConcurrentSkipListSet<String> subLinks;
+    private TreeSet<String> subLinks;
     private int level;
 
-    public Link(String link, ConcurrentSkipListSet<String> subLinks, int level) {
+    public Link(String link, TreeSet<String> subLinks, int level) {
         this.link = link;
         this.subLinks = subLinks;
         this.level = level;
@@ -27,11 +28,11 @@ public class Link {
         this.link = link;
     }
 
-    public ConcurrentSkipListSet<String> getSubLinks() {
+    public TreeSet<String> getSubLinks() {
         return subLinks;
     }
 
-    public void setSubLinks(ConcurrentSkipListSet<String> subLinks) {
+    public void setSubLinks(TreeSet<String> subLinks) {
         this.subLinks = subLinks;
     }
 
@@ -43,24 +44,22 @@ public class Link {
         this.level = level;
     }
 
-    public static ConcurrentSkipListSet<String> getSublink(String link) {
-        ConcurrentSkipListSet<String> resultSet = new ConcurrentSkipListSet<>();
+    public static TreeSet<String> getSublink(String link) {
+        TreeSet<String> resultSet = new TreeSet<>();
         try {
             Document doc;
-            Elements links = new Elements();
-            try {
-                doc = Jsoup.connect(link).maxBodySize(0).get();
-                links = doc.select("a");
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            Elements links;
+
+            doc = Jsoup.connect(link).maxBodySize(0).get();
+            links = doc.select("a");
+
             for (Element category : links) {
                 String string = category.absUrl("href").trim();
                 if (string.contains(link) && string.length() != link.length()) {
                     resultSet.add(string);
                 }
             }
-        } catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
         return resultSet;
@@ -72,7 +71,7 @@ public class Link {
         stringBuffer.append("\t".repeat(this.level))
                 .append(this)
                 .append("\n");
-        for (String url : this.subLinks){
+        for (String url : this.subLinks) {
             System.out.println(url);
             stringBuffer.append(new Link(url, getSublink(url), this.getLevel() + 1).buildMap());
         }
