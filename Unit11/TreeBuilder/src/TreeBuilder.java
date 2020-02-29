@@ -1,4 +1,7 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
@@ -18,11 +21,11 @@ public class TreeBuilder extends RecursiveTask<TreeSet<String>> implements Compa
         List<TreeBuilder> subTasks = new LinkedList<>();
 
         for (String sublink : subLinks){
-            //System.out.println(sublink);
-            TreeBuilder task = new TreeBuilder(new Link(sublink, Link.getSublink(sublink), link.getLevel() + 1));
+            Link nextLink = new Link(sublink, Link.getSublink(sublink), link.getLevel() + 1);
+            TreeBuilder task = new TreeBuilder(nextLink);
             task.fork();
-            System.out.println(Thread.currentThread().getName());
             subTasks.add(task);
+            System.out.println(sublink + " " + Thread.currentThread().getName());
         }
 
         for (TreeBuilder task : subTasks) {
@@ -52,6 +55,20 @@ public class TreeBuilder extends RecursiveTask<TreeSet<String>> implements Compa
     @Override
     public String toString() {
         return "\t".repeat(link.getLevel()) + link.toString();
+    }
+
+    public static void saveToFile(Path path, TreeSet<String> strings){
+        try {
+            FileWriter file = new FileWriter(path.toString());
+            for (String string : strings){
+                file.write(string + "\n");
+            }
+            file.flush();
+            file.close();
+            System.out.println("File " + path + " saved successfully");
+        } catch (IOException e) {
+            System.err.println("Some problems with file " + e.getMessage());
+        }
     }
 
 }

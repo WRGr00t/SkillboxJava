@@ -48,20 +48,18 @@ public class Link {
         TreeSet<String> resultSet = new TreeSet<>();
         try {
             Document doc;
-            Elements links = new Elements();
-            try {
-                doc = Jsoup.connect(link).maxBodySize(0).get();
-                links = doc.select("a");
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            Elements links;
+
+            doc = Jsoup.connect(link).maxBodySize(0).get();
+            links = doc.select("a");
+
             for (Element category : links) {
                 String string = category.absUrl("href").trim();
                 if (string.contains(link) && string.length() != link.length()) {
                     resultSet.add(string);
                 }
             }
-        } catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
         return resultSet;
@@ -73,7 +71,7 @@ public class Link {
         stringBuffer.append("\t".repeat(this.level))
                 .append(this)
                 .append("\n");
-        for (String url : this.subLinks){
+        for (String url : this.subLinks) {
             System.out.println(url);
             stringBuffer.append(new Link(url, getSublink(url), this.getLevel() + 1).buildMap());
         }
