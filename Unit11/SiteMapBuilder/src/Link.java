@@ -2,14 +2,16 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.Set;
 import java.util.TreeSet;
 
-public class Link {
+public class Link implements SiteNode, Comparable<Link>{
     private String link;
-    private TreeSet<String> subLinks;
+    private Set<String> subLinks;
     private int level;
 
-    public Link(String link, TreeSet<String> subLinks, int level) {
+    public Link(String link, Set<String> subLinks, int level) {
         this.link = link;
         this.subLinks = subLinks;
         this.level = level;
@@ -23,7 +25,7 @@ public class Link {
         this.link = link;
     }
 
-    public TreeSet<String> getSubLinks() {
+    public Set<String> getSubLinks() {
         return subLinks;
     }
 
@@ -39,7 +41,27 @@ public class Link {
         this.level = level;
     }
 
-    public static TreeSet<String> getSublink(String link) {
+    public static Set<String> getChildrenFromString(String str){
+        Set<String> resultSet = new TreeSet<>();
+        try {
+            Document doc;
+            Elements links;
+
+            doc = Jsoup.connect(str).maxBodySize(0).get();
+            links = doc.select("a");
+
+            for (Element category : links) {
+                String string = category.absUrl("href").trim();
+                    resultSet.add(string);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return resultSet;
+    }
+
+    @Override
+    public Set<String> getChildren() {
         TreeSet<String> resultSet = new TreeSet<>();
         try {
             Document doc;
@@ -60,21 +82,14 @@ public class Link {
         return resultSet;
     }
 
-    public String buildMap() {
-        System.out.println("build...");
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("\t".repeat(this.level))
-                .append(this)
-                .append("\n");
-        for (String url : this.subLinks) {
-            System.out.println(url);
-            stringBuffer.append(new Link(url, getSublink(url), this.getLevel() + 1).buildMap());
-        }
-        return stringBuffer.toString();
+    @Override
+    public Link getNode(String string) {
+        return null;
     }
 
+
     @Override
-    public String toString() {
-        return "\t".repeat(level) + link.toString();
+    public int compareTo(Link link) {
+        return this.getLink().compareTo(link.getLink());
     }
 }
