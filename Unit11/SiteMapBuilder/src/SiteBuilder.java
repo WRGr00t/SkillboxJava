@@ -2,6 +2,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.RecursiveTask;
 
 public class SiteBuilder extends RecursiveTask<Set<Link>> {
@@ -11,17 +12,10 @@ public class SiteBuilder extends RecursiveTask<Set<Link>> {
         this.siteNode = siteNode;
     }
 
-    Set<Link> tree = new TreeSet<>();
-
     @Override
     protected Set<Link> compute() {
-        if (!tree.contains(siteNode)){
+        if (SiteTree.alreadyParsedLinks.add(siteNode)){
             System.out.println(siteNode.getLink() + " " + Thread.currentThread().getName());
-            try {
-                tree.add(siteNode);
-            } catch (Exception e){
-                System.out.println("Error " + e.getMessage());
-            }
             List<SiteBuilder> subtask = new LinkedList<>();
             for (String child : siteNode.getChildren()) {
                 Link childLink = new Link(child, Link.getChildrenFromString(child), siteNode.getLevel() + 1);
@@ -30,12 +24,12 @@ public class SiteBuilder extends RecursiveTask<Set<Link>> {
                 subtask.add(task);
             }
             for (SiteBuilder task : subtask){
-                tree.addAll(task.join());
+                SiteTree.alreadyParsedLinks.addAll(task.join());
             }
         } else {
             System.out.println("This link is visited!");
         }
-        return tree;
+        return SiteTree.alreadyParsedLinks;
     }
 
     public static void saveToFile(Path path, Set<Link> strings){

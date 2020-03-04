@@ -41,6 +41,12 @@ public class Link implements SiteNode, Comparable<Link>{
         this.level = level;
     }
 
+    public static Link getRootLink(String rootURL){
+        Set<String> linkSet = Link.getChildrenFromString(rootURL);
+        Link rootLink = new Link(rootURL, linkSet, 0);
+        return rootLink;
+    }
+
     public static Set<String> getChildrenFromString(String str){
         Set<String> resultSet = new TreeSet<>();
         try {

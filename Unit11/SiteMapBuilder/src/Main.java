@@ -5,10 +5,9 @@ import java.util.concurrent.ForkJoinPool;
 
 public class Main {
     public static void main(String[] args) {
-        String path = "https://skillbox.ru/";
+        String url = "https://skillbox.ru/";
         Path pathForWriteFile = Paths.get("src/map.txt");
-        Set<String> linkSet = Link.getChildrenFromString(path);
-        Link rootLink = new Link(path, linkSet, 0);
+        Link rootLink = Link.getRootLink(url);
         ForkJoinPool pool = new ForkJoinPool();
         Set<Link> links = pool.invoke(new SiteBuilder(rootLink));
         SiteBuilder.saveToFile(pathForWriteFile, links);
