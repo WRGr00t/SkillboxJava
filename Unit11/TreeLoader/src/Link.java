@@ -7,7 +7,7 @@ import org.jsoup.select.Elements;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Link implements SiteNode, Comparable<Link>{
+public class Link implements Comparable<Link>{
     private String link;
     private Set<String> subLinks;
     private int level;
@@ -22,30 +22,20 @@ public class Link implements SiteNode, Comparable<Link>{
         return link;
     }
 
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public Set<String> getSubLinks() {
-        return subLinks;
-    }
-
-    public void setSubLinks(TreeSet<String> subLinks) {
-        this.subLinks = subLinks;
-    }
-
     public int getLevel() {
         return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     public static Link getRootLink(String rootURL){
         Set<String> linkSet = Link.getChildrenFromString(rootURL);
         Link rootLink = new Link(rootURL, linkSet, 0);
         return rootLink;
+    }
+
+    public static Link getLinkFromURL(String url, int level){
+        Set<String> linkSet = Link.getChildrenFromString(url);
+        Link link = new Link(url, linkSet, level);
+        return link;
     }
 
     public static Set<String> getChildrenFromString(String str){
@@ -59,7 +49,12 @@ public class Link implements SiteNode, Comparable<Link>{
 
             for (Element category : links) {
                 String string = category.absUrl("href").trim();
-                    resultSet.add(string);
+                Connection.Response response = Jsoup.connect(string).timeout(10 * 1000).execute();
+                System.out.println(string + " filter");
+                String contentType = response.contentType();
+                if (contentType.equals("text/html; charset=utf-8")){
+                        resultSet.add(string);
+                }
             }
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -67,7 +62,6 @@ public class Link implements SiteNode, Comparable<Link>{
         return resultSet;
     }
 
-    @Override
     public Set<String> getChildren() {
         TreeSet<String> resultSet = new TreeSet<>();
         try {
@@ -88,12 +82,6 @@ public class Link implements SiteNode, Comparable<Link>{
         }
         return resultSet;
     }
-
-    @Override
-    public Link getNode(String string) {
-        return null;
-    }
-
 
     @Override
     public int compareTo(Link link) {
