@@ -45,6 +45,7 @@ public class ReaderLinks {
             });
 
         } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
