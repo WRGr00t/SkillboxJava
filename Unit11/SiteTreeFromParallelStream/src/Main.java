@@ -10,6 +10,6 @@ public class Main {
         ConcurrentSkipListSet<String> uniqueURL = new ConcurrentSkipListSet<>();
         ReaderLinks reader = new ReaderLinks(uniqueURL, url);
         reader.get_links(url);
-        ReaderLinks.saveToFile(pathForWriteFile, ReaderLinks.getUniqueURL());
+        ReaderLinks.saveToFile(pathForWriteFile, ReaderLinks.getSetForTree(ReaderLinks.getUniqueURL()));
     }
 }

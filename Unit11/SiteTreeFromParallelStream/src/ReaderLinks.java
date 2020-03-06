@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 public class ReaderLinks {
@@ -68,5 +69,14 @@ public class ReaderLinks {
             file.close();
         }
 
+    }
+
+    public static TreeSet<String> getSetForTree(ConcurrentSkipListSet<String> uniqueURL){
+        TreeSet<String> resultSet = new TreeSet<>();
+        for (String string : uniqueURL){
+            long level = string.codePoints().filter(ch -> ch == '/').count();
+            resultSet.add("\t".repeat((int)level) + string + "\n");
+        }
+        return resultSet;
     }
 }
