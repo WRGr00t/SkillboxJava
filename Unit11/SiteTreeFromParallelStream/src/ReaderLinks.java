@@ -29,7 +29,10 @@ public class ReaderLinks {
                     .parallel()
                     .unordered()
                     .map((link) -> link.absUrl("href")).forEach((this_url) -> {
-                boolean add = uniqueURL.add(this_url);
+                boolean add = false;
+                if (this_url.contains(site)) {
+                    add = uniqueURL.add(this_url);
+                }
                 if (add && this_url.contains(site)) {
                     System.out.println(this_url + " " + Thread.currentThread().getName() + " size = " + uniqueURL.size());
                     try {
@@ -49,17 +52,20 @@ public class ReaderLinks {
         return uniqueURL;
     }
 
-    public static void saveToFile(Path path, Set<String> strings){
+    public static void saveToFile(Path path, Set<String> strings) throws IOException {
+        FileWriter file = null;
         try {
-            FileWriter file = new FileWriter(path.toString());
-            for (String string : strings){
+            file = new FileWriter(path.toString());
+            for (String string : strings) {
                 file.write(string + "\n");
             }
             file.flush();
-            file.close();
             System.out.println("File " + path + " saved successfully");
         } catch (IOException e) {
             System.err.println("Some problems with file " + e.getMessage());
+        } finally {
+            file.close();
         }
+
     }
 }
