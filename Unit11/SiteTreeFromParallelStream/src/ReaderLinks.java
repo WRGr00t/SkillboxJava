@@ -30,7 +30,7 @@ public class ReaderLinks {
                     .unordered()
                     .map((link) -> link.absUrl("href")).forEach((this_url) -> {
                 boolean add = false;
-                if (this_url.contains(site)) {
+                if (this_url.contains(site) && !this_url.contains(".pdf")) {
                     add = uniqueURL.add(this_url);
                 }
                 if (add && this_url.contains(site)) {
