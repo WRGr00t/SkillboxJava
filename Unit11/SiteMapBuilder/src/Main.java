@@ -7,10 +7,10 @@ public class Main {
     public static void main(String[] args) {
         String url = "https://skillbox.ru/";
         Path pathForWriteFile = Paths.get("src/map.txt");
-        Link rootLink = Link.getRootLink(url);
+        //Link rootLink = Link.getRootLink(url);
         ForkJoinPool pool = new ForkJoinPool();
-        Set<Link> links = pool.invoke(new SiteBuilder(rootLink));
-        SiteBuilder.saveToFile(pathForWriteFile, links);
+        Set<String> links = pool.invoke(new SiteBuilder(url));
+        SiteBuilder.saveToFile(pathForWriteFile, SiteTree.getSiteMapTree());
         pool.shutdown();
     }
 

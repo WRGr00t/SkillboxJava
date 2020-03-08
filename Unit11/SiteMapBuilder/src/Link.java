@@ -42,13 +42,21 @@ public class Link implements SiteNode, Comparable<Link>{
         this.level = level;
     }
 
-    public static Link getRootLink(String rootURL){
+    public static Link getLink(String rootURL, int level){
         Set<String> linkSet = Link.getChildrenFromString(rootURL);
-        Link rootLink = new Link(rootURL, linkSet, 0);
+        Link rootLink = new Link(rootURL, linkSet, level);
+        return rootLink;
+    }
+
+    public static Link getRootLink(String rootURL){
+        Link rootLink = getLink(rootURL, 0);
         return rootLink;
     }
 
     public static Set<String> getChildrenFromString(String str){
+        if (str.contains("?")){
+            str = str.substring(0, str.indexOf("?") - 1);
+        }
         Set<String> resultSet = new TreeSet<>();
         try {
             Document doc;
@@ -59,6 +67,9 @@ public class Link implements SiteNode, Comparable<Link>{
 
             for (Element category : links) {
                 String string = category.absUrl("href").trim();
+                if (string.contains("?")){
+                    string = string.substring(0, string.indexOf("?") - 1);
+                }
                     resultSet.add(string);
             }
         } catch (Exception exception) {
@@ -79,7 +90,10 @@ public class Link implements SiteNode, Comparable<Link>{
 
             for (Element category : links) {
                 String string = category.absUrl("href").trim();
-                if (string.contains(link) && string.length() != link.length()) {
+                if (string.contains("?")){
+                    string = string.substring(0, string.indexOf("?") - 1);
+                }
+                if (string.startsWith(link) && !string.contains(".pdf")) {
                     resultSet.add(string);
                 }
             }

@@ -2,24 +2,31 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.RecursiveTask;
 
-public class SiteBuilder extends RecursiveTask<Set<Link>> {
-    private Link siteNode;
+public class SiteBuilder extends RecursiveTask<Set<String>> {
+    private String siteURL;
 
-    public SiteBuilder(Link siteNode) {
-        this.siteNode = siteNode;
+    public SiteBuilder(String siteURL) {
+        this.siteURL = siteURL;
     }
 
     @Override
-    protected Set<Link> compute() {
-        if (SiteTree.alreadyParsedLinks.add(siteNode)){
-            System.out.println(siteNode.getLink() + " " + Thread.currentThread().getName());
+    protected Set<String> compute() {
+        if (SiteTree.alreadyParsedLinks.add(siteURL)){
+            System.out.println(siteURL + " " + Thread.currentThread().getName());
             List<SiteBuilder> subtask = new LinkedList<>();
+            int level = (int) siteURL.codePoints().filter(ch -> ch == '/').count() - 3;
+            Link siteNode = Link.getLink(siteURL, level);
             for (String child : siteNode.getChildren()) {
-                Link childLink = new Link(child, Link.getChildrenFromString(child), siteNode.getLevel() + 1);
-                SiteBuilder task = new SiteBuilder(childLink);
+                Link childLink;
+                if (child.equals("https://skillbox.ru/")){
+                    childLink = new Link(child, Link.getChildrenFromString(child), 0);
+                } else {
+                    childLink = new Link(child, Link.getChildrenFromString(child), siteNode.getLevel() + 1);
+                }
+                SiteTree.siteMapTree.add(childLink);
+                SiteBuilder task = new SiteBuilder(child);
                 task.fork();
                 subtask.add(task);
             }
