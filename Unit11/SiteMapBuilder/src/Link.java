@@ -1,4 +1,3 @@
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,34 +21,13 @@ public class Link implements SiteNode, Comparable<Link>{
         return link;
     }
 
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public Set<String> getSubLinks() {
-        return subLinks;
-    }
-
-    public void setSubLinks(TreeSet<String> subLinks) {
-        this.subLinks = subLinks;
-    }
-
     public int getLevel() {
         return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     public static Link getLink(String rootURL, int level){
         Set<String> linkSet = Link.getChildrenFromString(rootURL);
         Link rootLink = new Link(rootURL, linkSet, level);
-        return rootLink;
-    }
-
-    public static Link getRootLink(String rootURL){
-        Link rootLink = getLink(rootURL, 0);
         return rootLink;
     }
 
@@ -90,6 +68,7 @@ public class Link implements SiteNode, Comparable<Link>{
 
             for (Element category : links) {
                 String string = category.absUrl("href").trim();
+                System.out.println(Thread.currentThread().getName() + ": waiting for: " + string + "in getChildren");
                 if (string.contains("?")){
                     string = string.substring(0, string.indexOf("?") - 1);
                 }

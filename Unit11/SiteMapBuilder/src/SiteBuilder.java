@@ -14,13 +14,13 @@ public class SiteBuilder extends RecursiveTask<Set<String>> {
     @Override
     protected Set<String> compute() {
         if (SiteTree.alreadyParsedLinks.add(siteURL)){
-            System.out.println(siteURL + " " + Thread.currentThread().getName());
+            //System.out.println(siteURL + " " + Thread.currentThread().getName());
             List<SiteBuilder> subtask = new LinkedList<>();
             int level = (int) siteURL.codePoints().filter(ch -> ch == '/').count() - 3;
             Link siteNode = Link.getLink(siteURL, level);
             for (String child : siteNode.getChildren()) {
                 Link childLink;
-                if (child.equals("https://skillbox.ru/")){
+                if (child.equals(Main.url)){
                     childLink = new Link(child, Link.getChildrenFromString(child), 0);
                 } else {
                     childLink = new Link(child, Link.getChildrenFromString(child), siteNode.getLevel() + 1);
