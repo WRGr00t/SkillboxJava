@@ -32,9 +32,7 @@ public class Link implements SiteNode, Comparable<Link>{
     }
 
     public static Set<String> getChildrenFromString(String str){
-        if (str.contains("?")){
-            str = str.substring(0, str.indexOf("?") - 1);
-        }
+        clearLink(str);
         Set<String> resultSet = new TreeSet<>();
         try {
             Document doc;
@@ -45,15 +43,28 @@ public class Link implements SiteNode, Comparable<Link>{
 
             for (Element category : links) {
                 String string = category.absUrl("href").trim();
-                if (string.contains("?")){
-                    string = string.substring(0, string.indexOf("?") - 1);
-                }
+                if (string.startsWith(Main.url)){
+                    clearLink(string);
                     resultSet.add(string);
+                }
             }
         } catch (Exception exception) {
             exception.printStackTrace();
         }
         return resultSet;
+    }
+
+    public static String clearLinkWithChar(String string, CharSequence c){
+        if (string.contains(c)){
+            string = string.substring(0, string.indexOf((String) c));
+        }
+        return string;
+    }
+
+    public static String clearLink(String string){
+        string = clearLinkWithChar(string, "?");
+        string = clearLinkWithChar(string, "#");
+        return string;
     }
 
     @Override
@@ -68,11 +79,9 @@ public class Link implements SiteNode, Comparable<Link>{
 
             for (Element category : links) {
                 String string = category.absUrl("href").trim();
-                System.out.println(Thread.currentThread().getName() + ": waiting for: " + string + "in getChildren");
-                if (string.contains("?")){
-                    string = string.substring(0, string.indexOf("?") - 1);
-                }
-                if (string.startsWith(link) && !string.contains(".pdf")) {
+                //System.out.println(Thread.currentThread().getName() + ": waiting for: " + string + " in getChildren");
+                clearLink(string);
+                if (string.startsWith(link.trim()) && !string.contains(".pdf")) {
                     resultSet.add(string);
                 }
             }

@@ -14,9 +14,9 @@ public class Main {
         //Link rootLink = Link.getRootLink(url);
         ForkJoinPool pool = new ForkJoinPool();
         Set<String> links = pool.invoke(new SiteBuilder(url));
+        //links = SiteBuilder.prepareStrings();
         Files.write(pathForWriteFile, links);
         //SiteBuilder.saveToFile(pathForWriteFile, SiteTree.getSiteMapTree());
         pool.shutdown();
     }
-
 }
