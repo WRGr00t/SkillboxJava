@@ -19,9 +19,9 @@ public class SiteBuilder extends RecursiveTask<Set<String>> {
             for (String child : siteNode.getChildren()) {
                 Link childLink;
                 if (child.equals(Main.url)) {
-                    childLink = new Link(child, Link.getChildrenFromString(child), 0);
+                    childLink = new Link(child, Link.getChildren(child), 0);
                 } else {
-                    childLink = new Link(child, Link.getChildrenFromString(child), siteNode.getLevel() + 1);
+                    childLink = new Link(child, Link.getChildren(child), siteNode.getLevel() + 1);
                 }
                 SiteTree.siteMapTree.add(childLink);
                 SiteBuilder task = new SiteBuilder(child);

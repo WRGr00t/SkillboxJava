@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Link implements SiteNode, Comparable<Link>{
-    private String link;
+    private static String link;
     private Set<String> subLinks;
     private int level;
 
@@ -26,12 +26,16 @@ public class Link implements SiteNode, Comparable<Link>{
     }
 
     public static Link getLink(String rootURL, int level){
-        Set<String> linkSet = Link.getChildrenFromString(rootURL);
+        Set<String> linkSet = getChildren(rootURL);
         Link rootLink = new Link(rootURL, linkSet, level);
         return rootLink;
     }
 
-    public static Set<String> getChildrenFromString(String str){
+    @Override
+    public Set<String> getChildren(String str){
+        if (str.isEmpty()){
+            str = link;
+        }
         clearLink(str);
         Set<String> resultSet = new TreeSet<>();
         try {
@@ -67,7 +71,7 @@ public class Link implements SiteNode, Comparable<Link>{
         return string;
     }
 
-    @Override
+
     public Set<String> getChildren() {
         TreeSet<String> resultSet = new TreeSet<>();
         try {

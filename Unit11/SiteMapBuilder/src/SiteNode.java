@@ -1,6 +1,7 @@
 import java.util.Collection;
+import java.util.Set;
 
 public interface SiteNode {
-    Collection<String> getChildren();
+    Set<String> getChildren(String url);
     Link getNode(String string);
 }
