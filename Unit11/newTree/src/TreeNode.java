@@ -12,10 +12,17 @@ public class TreeNode implements Comparable<TreeNode>, SiteNode {
     private int level;
 
     public TreeNode(String url){
-        System.out.println(url);
+        TreeSet<String> children = new TreeSet<>();
+        int level = 0;
         if (!url.isEmpty()){
-            getNode(url);
+            if (url.startsWith(Main.url)){
+                children = getChildren(url);
+                level = (int) url.codePoints().filter(ch -> ch == '/').count() - 3;
+            }
         }
+        this.link = url;
+        this.subLinks = children;
+        this.level = level;
     }
 
     public TreeNode(String link, Set<String> subLinks, int level) {
@@ -62,16 +69,15 @@ public class TreeNode implements Comparable<TreeNode>, SiteNode {
         try {
             Document doc;
             Elements links;
-            System.out.println(url + " из начала");
             doc = Jsoup.connect(url).maxBodySize(0).get();
             links = doc.select("a");
 
             for (Element category : links) {
                 String string = category.absUrl("href").trim();
-                System.out.println(string);
-                string = clearLink(string);
                 if (string.startsWith(Main.url.trim()) && !string.contains(".pdf")) {
+                    string = clearLink(string);
                     resultSet.add(string);
+                    //System.out.println(string);
                 }
             }
         } catch (Exception exception) {

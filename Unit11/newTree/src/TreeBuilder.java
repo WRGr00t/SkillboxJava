@@ -13,6 +13,7 @@ public class TreeBuilder extends RecursiveTask<Set<TreeNode>> {
     @Override
     protected Set<TreeNode> compute() {
         if (SiteTree.siteMapTree.add(linkURL)){
+            System.out.println(linkURL.getLink() + " in thread " + Thread.currentThread().getName());
             List<TreeBuilder> subtask = new LinkedList<>();
             for (String child : linkURL.getChildren(linkURL.getLink())){
                 TreeBuilder task = new TreeBuilder(new TreeNode(child));
@@ -25,7 +26,7 @@ public class TreeBuilder extends RecursiveTask<Set<TreeNode>> {
         } else {
             System.out.println("This link is visited!");
         }
-        System.out.println("Спарсилось - " + SiteTree.getAlreadyParsedLinks().size());
+        System.out.println("Спарсилось - " + SiteTree.getSiteMapTree().size());
         return SiteTree.siteMapTree;
     }
 }
