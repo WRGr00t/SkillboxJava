@@ -44,6 +44,7 @@ public class Bank {
     public boolean transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
         Account fromAccount = getAccount(fromAccountNum);
         Account toAccount = getAccount(toAccountNum);
+
         boolean isDone = false;
         if (fromAccountNum.compareTo(toAccountNum) > 0){
             if (fromAccount.getLock().tryLock(100, TimeUnit.SECONDS)){
@@ -98,7 +99,7 @@ public class Bank {
 
     public void initBank(int bankSize) {
         for (int i = 0; i < bankSize; i++) {
-            AtomicLong atomicLong = new AtomicLong((long) (100_000 * Math.random()));
+            AtomicLong atomicLong = new AtomicLong((long) (1_000));// * Math.random()));
 
             Account account = new Account(atomicLong, Integer.toString(i));
             accounts.put(account.getAccNumber(), account);
