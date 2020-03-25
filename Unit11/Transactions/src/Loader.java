@@ -14,7 +14,7 @@ public class Loader {
         List<Thread> threads = new ArrayList<>();
 
         Runnable task = () -> {
-            int numTransaction = 50 + (int) Math.round(Math.random()) * 450;
+            int numTransaction = (int) (50f + Math.random() * 450f);
 
             for (int i = 0; i < numTransaction; i++) {
                 Account account1 = bank.getAccount(String.valueOf((int) Math.round(Math.random() * BANK_SIZE)));
