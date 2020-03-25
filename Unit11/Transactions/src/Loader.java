@@ -29,7 +29,7 @@ public class Loader {
                         Thread.currentThread().getName(),
                         account2.getAccNumber(),
                         oldSumTo);*/
-                long amountMoney = Math.round(Math.random() * 10_000);
+                long amountMoney = Math.round(Math.random() * 1_000);
                 try {
                     if ((account1.getAccNumber() != null) && (account2.getAccNumber() != null)) {
                         bank.transfer(account1.getAccNumber(), account2.getAccNumber(), amountMoney);
@@ -41,7 +41,6 @@ public class Loader {
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-
                 }
                 /*newSumFrom = account1.getMoney().longValue();
                 newSumTo = account2.getMoney().longValue();
@@ -77,6 +76,7 @@ public class Loader {
                             account2.getAccNumber(),
                             account2.getMoney());
                 }*/
+                System.out.println("i = " + i + "/"+ numTransaction + " Thread - " + Thread.currentThread().getName());
             }
         };
         for (int i = 0; i < THREADS_COUNT; i++) {

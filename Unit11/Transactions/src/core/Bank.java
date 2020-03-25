@@ -50,7 +50,10 @@ public class Bank {
             if (fromAccount.getLock().tryLock(100, TimeUnit.SECONDS)){
                 if (toAccount.getLock().tryLock(100, TimeUnit.SECONDS)){
                     try {
-                        isDone = doTransfer(fromAccount, toAccount, amount).equals("Платеж проведен");
+                        String string = doTransfer(fromAccount, toAccount, amount);
+                        isDone = string.equals("Платеж проведен");
+                        System.out.println(string);
+                        Thread.sleep(10);
                     }
                     finally {
                         fromAccount.getLock().unlock();
