@@ -115,7 +115,8 @@ public class Bank {
      * TODO: реализовать метод. Возвращает остаток на счёте.
      */
     public long getBalance(String accountNum) {
-        return 0;
+        Account account = getAccount(accountNum);
+        return account.getMoney().longValue();
     }
 
     public long getAllMoney() {
