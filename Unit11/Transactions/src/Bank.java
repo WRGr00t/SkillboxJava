@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Bank {
     private HashMap<String, Account> accounts = new HashMap<>();
@@ -172,11 +171,9 @@ public class Bank {
     }
 
     public long getAllMoney() {
-        long result = 0;
-        for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
-            result += entry.getValue().getMoney();
-        }
-        return result;
+        return accounts.values().stream()
+                .mapToLong(Account::getMoney)
+                .sum();
     }
 
     public Account getAccount(String accNumber) throws AccountNotExistsException {
