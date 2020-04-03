@@ -1,9 +1,12 @@
+import Exceptions.AccountNotExistsException;
+import Exceptions.BlockedAccountException;
+import Exceptions.InsufficientFundsException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class Bank {
     private HashMap<String, Account> accounts = new HashMap<>();
@@ -18,8 +21,8 @@ public class Bank {
 
     public Bank(int bankSize) {
         for (int i = 0; i < bankSize; i++) {
-            AtomicLong atomicLong = new AtomicLong(1_000);// * Math.random()));
-            Account account = new Account(atomicLong, String.valueOf(i));
+            long sum = 1_000;// * Math.random()));
+            Account account = new Account(sum, String.valueOf(i));
             accounts.put(String.valueOf(i), account);
         }
         System.out.printf("Сгенерирован банк с размером %d%n", accounts.size());
@@ -39,7 +42,7 @@ public class Bank {
      * метод isFraud. Если возвращается true, то делается блокировка
      * счетов (как – на ваше усмотрение)
      */
-    public boolean transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
+    /*public boolean transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException, AccountNotExistsException {
         Account fromAccount = getAccount(fromAccountNum);
         Account toAccount = getAccount(toAccountNum);
 
@@ -54,7 +57,7 @@ public class Bank {
                     try {
                         String isDoneResult = "Платеж не проведен";
                         if (!(fromAccount.isBlocked() || toAccount.isBlocked())) {
-                            if (fromAccount.getMoney().longValue() >= amount) {
+                            if (fromAccount.getMoney() >= amount) {
                                 fromAccount.deductMoney(amount);
                                 toAccount.addMoney(amount);
                                 isDoneResult = "Платеж проведен";
@@ -80,7 +83,7 @@ public class Bank {
                     try {
                         String isDoneResult = "Платеж не проведен";
                         if (!(fromAccount.isBlocked() || toAccount.isBlocked())) {
-                            if (fromAccount.getMoney().longValue() >= amount) {
+                            if (fromAccount.getMoney() >= amount) {
                                 fromAccount.deductMoney(amount);
                                 toAccount.addMoney(amount);
                                 isDoneResult = "Платеж проведен";
@@ -109,32 +112,87 @@ public class Bank {
             }
         }
         return isDone;
+    }*/
+
+    private void doTransfer(final Account fromAcct, final Account toAcct, final long amount) throws InsufficientFundsException {
+        if (fromAcct.getMoney() < amount){
+            throw new InsufficientFundsException(fromAcct.getAccNumber());
+        } else {
+            fromAcct.deductMoney(amount);
+            fromAcct.addOperition(toAcct, -amount);
+            toAcct.addMoney(amount);
+            toAcct.addOperition(fromAcct, amount);
+        }
+    }
+
+    public boolean transferMoney(final Account fromAcct, final Account toAcct, final long amount) {
+        boolean isDone = false;
+        int fromId = Integer.parseInt(fromAcct.getAccNumber());
+        int toId = Integer.parseInt(toAcct.getAccNumber());
+        if (fromAcct.equals(toAcct)){
+            return false;
+        }
+        try {
+            if (fromId < toId) {
+                synchronized (fromAcct) {
+                    synchronized (toAcct) {
+                        if (fromAcct.isBlocked() || (toAcct.isBlocked())){
+                            throw new BlockedAccountException();
+                        } else {
+                            doTransfer(fromAcct, toAcct, amount);
+                            isDone = true;
+                        }
+                    }
+                }
+            } else {
+                synchronized (toAcct) {
+                    synchronized (fromAcct) {
+                        if (fromAcct.isBlocked() || (toAcct.isBlocked())){
+                            throw new BlockedAccountException();
+                        } else {
+                            doTransfer(fromAcct, toAcct, amount);
+                            isDone = true;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return isDone;
     }
 
     /**
      * TODO: реализовать метод. Возвращает остаток на счёте.
      */
-    public long getBalance(String accountNum) {
+    public long getBalance(String accountNum) throws AccountNotExistsException {
         Account account = getAccount(accountNum);
-        return account.getMoney().longValue();
+        return account.getMoney();
     }
 
     public long getAllMoney() {
         long result = 0;
         for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
-            result += entry.getValue().getMoney().longValue();
+            result += entry.getValue().getMoney();
         }
         return result;
     }
 
-    public Account getAccount(String accNumber) {
+    public Account getAccount(String accNumber) throws AccountNotExistsException {
         Account result = new Account();
+        boolean isFound = false;
         for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
             if (entry.getValue().getAccNumber().equals(accNumber)) {
                 result = entry.getValue();
+                isFound = true;
             }
         }
-        return result;
+        if (isFound){
+            return result;
+        } else {
+            throw new AccountNotExistsException(accNumber);
+        }
     }
 
     public HashMap<String, Account> getAccounts() {
@@ -151,7 +209,7 @@ public class Bank {
         return resultList;
     }
 
-    public synchronized void setBlocked(String accountNum) {
+    public synchronized void setBlocked(String accountNum) throws AccountNotExistsException {
         getAccount(accountNum).setBlocked(true);
     }
 }

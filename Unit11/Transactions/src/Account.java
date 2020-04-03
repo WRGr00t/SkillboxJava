@@ -1,29 +1,31 @@
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Account
 {
-    private AtomicLong money;
+    private long money;
     private String accNumber;
     private boolean isBlocked;
     private Lock lock;
+    private ArrayList<String> history;
 
-    public Account(AtomicLong money, String accNumber, boolean isBlocked) {
+    public Account(long money, String accNumber, boolean isBlocked) {
         this.money = money;
         this.accNumber = accNumber;
         this.isBlocked = isBlocked;
         lock = new ReentrantLock();
+        history = new ArrayList<>();
     }
 
-    public Account(AtomicLong money, String accNumber) {
+    public Account(long money, String accNumber) {
         this(money, accNumber, false);
     }
 
     public Account() {
     }
 
-    public AtomicLong getMoney() {
+    public long getMoney() {
         return money;
     }
 
@@ -35,6 +37,10 @@ public class Account
         return lock;
     }
 
+    public ArrayList<String> getHistory() {
+        return history;
+    }
+
     public boolean isBlocked() {
         return isBlocked;
     }
@@ -44,11 +50,16 @@ public class Account
     }
 
     public synchronized void addMoney(long money) {
-        this.money.addAndGet(money);
+        this.money += money;
     }
 
     public synchronized void deductMoney(long money) {
-        this.money.addAndGet(-money);
+        this.money -= money;
+    }
+
+    public synchronized void addOperition(Account account, long amount){
+        String string = String.format("# %d account=%s sum=%d remains=%d", history.size(), account.accNumber, amount, getMoney());
+        history.add(string);
     }
 
 }

@@ -1,10 +1,12 @@
+import Exceptions.AccountNotExistsException;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AccountNotExistsException {
         final int BANK_SIZE = 10;
         Bank bank = new Bank(BANK_SIZE);
         final int THREADS_COUNT = 100;
@@ -20,6 +22,7 @@ public class Main {
             executor.submit(task);
         }
         executor.shutdown();
+
         try {
             executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (InterruptedException e) {
@@ -36,5 +39,9 @@ public class Main {
         System.out.printf("Поток - %s Счетов заблокировано - %d%n",
                 Thread.currentThread().getName(),
                 bank.getAllBlockAcc().size());
+        Account account = bank.getAccount("1");
+        for (String string : account.getHistory()){
+            System.out.println(string);
+        }
     }
 }
