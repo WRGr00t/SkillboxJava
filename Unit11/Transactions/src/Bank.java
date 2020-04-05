@@ -6,28 +6,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Bank {
     private HashMap<String, Account> accounts = new HashMap<>();
     private final Random random = new Random();
 
-    //===== конструкторы =========
-    public Bank(HashMap<String, Account> accounts) {
-        this.accounts = accounts;
-
-        System.out.printf("Создан банк с размером %d%n на основе Map", accounts.size());
-    }
-
     public Bank(int bankSize) {
         for (int i = 0; i < bankSize; i++) {
-            long sum = 1_000;// * Math.random()));
+            AtomicLong sum = new AtomicLong(1_000);// * Math.random()));
             Account account = new Account(sum, String.valueOf(i));
             accounts.put(String.valueOf(i), account);
         }
         System.out.printf("Сгенерирован банк с размером %d%n", accounts.size());
     }
 
-    //====== методы банка ==========
     public synchronized boolean isFraud(String fromAccountNum, String toAccountNum, long amount)
             throws InterruptedException {
         Thread.sleep(1000);
@@ -112,15 +105,14 @@ public class Bank {
         }
         return isDone;
     }*/
-
     private void doTransfer(final Account fromAcct, final Account toAcct, final long amount) throws InsufficientFundsException {
-        if (fromAcct.getMoney() < amount){
+        if (fromAcct.getMoney().longValue() < amount) {
             throw new InsufficientFundsException(fromAcct.getAccNumber());
         } else {
             fromAcct.deductMoney(amount);
-            fromAcct.addOperition(toAcct, -amount);
+            fromAcct.addOperation(toAcct, -amount);
             toAcct.addMoney(amount);
-            toAcct.addOperition(fromAcct, amount);
+            toAcct.addOperation(fromAcct, amount);
         }
     }
 
@@ -128,51 +120,39 @@ public class Bank {
         boolean isDone = false;
         int fromId = Integer.parseInt(fromAcct.getAccNumber());
         int toId = Integer.parseInt(toAcct.getAccNumber());
-        if (fromAcct.equals(toAcct)){
+        if (fromAcct.equals(toAcct)) {
             return false;
         }
+        Object lock1 = fromId < toId ? fromAcct : toAcct;
+        Object lock2 = fromId < toId ? toAcct : fromId;
         try {
-            if (fromId < toId) {
-                synchronized (fromAcct) {
-                    synchronized (toAcct) {
-                        if (fromAcct.isBlocked() || (toAcct.isBlocked())){
-                            throw new BlockedAccountException();
-                        } else {
-                            doTransfer(fromAcct, toAcct, amount);
-                            isDone = true;
-                        }
-                    }
-                }
-            } else {
-                synchronized (toAcct) {
-                    synchronized (fromAcct) {
-                        if (fromAcct.isBlocked() || (toAcct.isBlocked())){
-                            throw new BlockedAccountException();
-                        } else {
-                            doTransfer(fromAcct, toAcct, amount);
-                            isDone = true;
-                        }
+            synchronized (lock1) {
+                synchronized (lock2) {
+                    if (fromAcct.isBlocked() || (toAcct.isBlocked())) {
+                        throw new BlockedAccountException();
+                    } else {
+                        doTransfer(fromAcct, toAcct, amount);
+                        isDone = true;
                     }
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         return isDone;
     }
 
     /**
      * TODO: реализовать метод. Возвращает остаток на счёте.
      */
-    public long getBalance(String accountNum) throws AccountNotExistsException {
+    public AtomicLong getBalance(String accountNum) throws AccountNotExistsException {
         Account account = getAccount(accountNum);
         return account.getMoney();
     }
 
     public long getAllMoney() {
         return accounts.values().stream()
-                .mapToLong(Account::getMoney)
+                .mapToLong(acc -> acc.getMoney().get())
                 .sum();
     }
 
@@ -185,7 +165,7 @@ public class Bank {
                 isFound = true;
             }
         }
-        if (isFound){
+        if (isFound) {
             return result;
         } else {
             throw new AccountNotExistsException(accNumber);
@@ -204,9 +184,5 @@ public class Bank {
             }
         }
         return resultList;
-    }
-
-    public synchronized void setBlocked(String accountNum) throws AccountNotExistsException {
-        getAccount(accountNum).setBlocked(true);
     }
 }

@@ -39,7 +39,7 @@ public class Main {
         System.out.printf("Поток - %s Счетов заблокировано - %d%n",
                 Thread.currentThread().getName(),
                 bank.getAllBlockAcc().size());
-        Account account = bank.getAccount("1");
+        Account account = bank.getAccount("2");
         for (String string : account.getHistory()){
             System.out.println(string);
         }
