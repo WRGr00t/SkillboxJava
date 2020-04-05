@@ -38,19 +38,19 @@ public class Account
         return isBlocked;
     }
 
-    public synchronized void setBlocked(boolean blocked) {
+    public void setBlocked(boolean blocked) {
         isBlocked = blocked;
     }
 
-    public synchronized void addMoney(long amount) {
+    public void addMoney(long amount) {
         this.money.addAndGet(amount);
     }
 
-    public synchronized void deductMoney(long amount) {
+    public void deductMoney(long amount) {
         this.money.addAndGet(-amount);
     }
 
-    public synchronized void addOperation(Account account, long amount){
+    public void addOperation(Account account, long amount){
         String string = String.format("# %d account=%s sum=%d remains=%d", history.size(), account.accNumber, amount, getMoney().longValue());
         history.add(string);
     }
