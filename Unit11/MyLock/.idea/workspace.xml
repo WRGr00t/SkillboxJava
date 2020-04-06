@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e61f1b08-97b0-4674-a50d-666f97dc5dc6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MyLock.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Bank.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MyLock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Transactions/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Transactions/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../streams-assignments" beforeDir="false" afterPath="$PROJECT_DIR$/../../streams-assignments" afterDir="false" />
     </list>
@@ -54,6 +47,14 @@
       <option name="presentableId" value="Default" />
       <updated>1586157836848</updated>
     </task>
+    <task id="LOCAL-00001" summary="new lock">
+      <created>1586184656611</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586184656611</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -73,10 +74,11 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="648" y="319" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1600.860@0.0.1600.860" timestamp="1586183794936" />
-    <state x="593" y="117" key="CommitChangelistDialog2" timestamp="1586160791673">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="494" y="49" key="CommitChangelistDialog2" timestamp="1586184654677">
+      <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="593" y="117" key="CommitChangelistDialog2/-1920.0.1920.1040/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1586160791673" />
+    <state x="494" y="49" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1586184654677" />
     <state x="280" y="4" key="SettingsEditor" timestamp="1586184604975">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
