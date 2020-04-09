@@ -61,4 +61,9 @@ public class Account
         history.add(string);
     }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 7e8e9bc74191d9160b56329f42c167c5aa75d0a7
 }

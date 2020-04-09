@@ -12,6 +12,31 @@ public class Main {
             accounts.add(account);
         }
 
+<<<<<<< HEAD
+=======
+        final int THREADS_COUNT = 100;
+        long oldSumBank = accounts.stream()
+                .mapToLong(acc -> acc.getMoney().get())
+                .sum();
+
+        long amountMoney = Math.round(Math.random() * 1_000);
+
+        try {
+            if ((account1 != null) && (account2 != null)) {
+                if (bank.transferMoney(account1, account2, amountMoney)) {
+                    System.out.printf("Поток - %s Перевод с %s на %s в размере %s%n",
+                            Thread.currentThread().getName(),
+                            account1.getAccNumber(),
+                            account2.getAccNumber(),
+                            amountMoney);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("i = " + i + "/" + numTransaction + " Thread - " + Thread.currentThread().getName());
+
+>>>>>>> 7e8e9bc74191d9160b56329f42c167c5aa75d0a7
     }
 }
 

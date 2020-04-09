@@ -11,6 +11,7 @@
       <change afterPath="$PROJECT_DIR$/../MyLock/src/Bank.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../MyLock/src/Main.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../MyLock/src/MyLock.java" afterDir="false" />
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/../NewLock/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../NewLock/.idea/misc.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../NewLock/.idea/modules.xml" afterDir="false" />
@@ -21,6 +22,10 @@
       <change afterPath="$PROJECT_DIR$/../ParseMapSite/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Unit9/1/ClassFiles" beforeDir="false" afterPath="$PROJECT_DIR$/../../Unit9/1/ClassFiles" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../streams-assignments" beforeDir="false" afterPath="$PROJECT_DIR$/../../streams-assignments" afterDir="false" />
+>>>>>>> 7e8e9bc74191d9160b56329f42c167c5aa75d0a7
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +60,10 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="FullScreen" value="false" />
+<<<<<<< HEAD
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+=======
+>>>>>>> 7e8e9bc74191d9160b56329f42c167c5aa75d0a7
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../MyLock" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -202,7 +210,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586073789248</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Новый переработанный вариант">
+      <created>1586074053704</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1586074053704</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -224,14 +239,22 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="605" y="146" key="#com.intellij.ide.util.MemberChooser/0.0.1600.860@0.0.1600.860" timestamp="1585927218147" />
-    <state x="423" y="24" key="CommitChangelistDialog2" timestamp="1586073788105">
+    <state x="423" y="24" key="CommitChangelistDialog2" timestamp="1586074052629">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
+    <state x="423" y="24" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1586074052629" />
+    <state x="580" y="185" key="FileChooserDialogImpl" timestamp="1586183779939">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+<<<<<<< HEAD
     <state x="423" y="24" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1586073788105" />
     <state x="740" y="278" key="FileChooserDialogImpl" timestamp="1586160747387">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="278" key="FileChooserDialogImpl/-1920.0.1920.1040/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1586160747387" />
+=======
+    <state x="580" y="185" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1586183779939" />
+>>>>>>> 7e8e9bc74191d9160b56329f42c167c5aa75d0a7
     <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1586073993444">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
