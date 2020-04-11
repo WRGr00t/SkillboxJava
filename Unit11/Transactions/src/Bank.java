@@ -157,19 +157,10 @@ public class Bank {
     }
 
     public Account getAccount(String accNumber) throws AccountNotExistsException {
-        Account result = new Account();
-        boolean isFound = false;
-        for (HashMap.Entry<String, Account> entry : accounts.entrySet()) {
-            if (entry.getValue().getAccNumber().equals(accNumber)) {
-                result = entry.getValue();
-                isFound = true;
-            }
-        }
-        if (isFound) {
-            return result;
-        } else {
-            throw new AccountNotExistsException(accNumber);
-        }
+        return accounts.values().stream()
+                .filter(a -> a.getAccNumber().equals(accNumber))
+                .findAny()
+                .orElseThrow(() -> new AccountNotExistsException(accNumber));
     }
 
     public HashMap<String, Account> getAccounts() {

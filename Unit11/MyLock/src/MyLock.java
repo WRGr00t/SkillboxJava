@@ -1,41 +1,44 @@
-class MyLock {
-    private boolean isLock = false;
-    private Thread curThread = new Thread();
+import java.util.concurrent.locks.ReentrantLock;
 
-    public MyLock(boolean isLock, Thread curThread) {
-        this.isLock = isLock;
-        this.curThread = curThread;
+public class MyLock {
+
+    private volatile Thread owner;
+    private Object object;
+    //private int depth = 0;
+
+    public MyLock(Thread owner, Object object) {
+        this.owner = owner;
+        this.object = object;
+        //this.depth = 0;
     }
 
-    public MyLock() {
+
+    public void lock() throws InterruptedException {
+        if (owner != Thread.currentThread()) {
+            synchronized (this) {
+                object.wait();
+            }
+        } else {
+            //depth++;
+        }
     }
 
-    public synchronized void updateMoney(Account account, long money) {
-        while (!isLock && curThread != Thread.currentThread()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+    public void unlock() {
+        try{
+            if (owner != Thread.currentThread()){
+                synchronized (object) {
+                    object.notify();
+                }
+            } else {
+                synchronized (object) {
+                    //depth = 0;
+                    object.notify();
+                }
+            }
+        } finally {
+            synchronized (object){
+                object.notifyAll();
             }
         }
-        if (money > 0) {
-            account.addMoney(money);
-            System.out.printf("Произведено зачисление %d на счет№ %d", money, account);
-        } else if (money < 0) {
-            account.deductMoney(money);
-            System.out.printf("Произведено зачисление %d на счет№ %d", money, account);
-        }
-        else {
-            System.out.println("Сумма нулевая");
-        }
-        notify();
-    }
-
-    public synchronized void lock(Account account) {
-        account.setLock(new MyLock(true, Thread.currentThread()));
-    }
-
-    public synchronized void unLock(Account account){
-        account.setLock(new MyLock(false, Thread.currentThread()));
     }
 }
