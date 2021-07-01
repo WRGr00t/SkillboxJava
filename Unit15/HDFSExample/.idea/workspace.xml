@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="eb3068d8-10fd-4c9f-a811-17d26034f0f1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SparkExample/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SparkExample/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1dWrxdSlYeHko29OdLNio29zw35" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1575357028024" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/projects/TwoForm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="HDFSExample" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="docker-compose.yaml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yaml.hdfs: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="hdfs" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Docker.docker-compose.yaml.hdfs: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yaml: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eb3068d8-10fd-4c9f-a811-17d26034f0f1" name="Default Changelist" comment="" />
+      <created>1575180275138</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1575180275138</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Домашние запасы">
+      <created>1592752284931</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1592752284931</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Домашние запасы">
+      <created>1593618970316</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1593618970317</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Стартовый коммит по HDFS">
+      <created>1594538251471</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1594538251471</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Стартовый коммит по HDFS">
+      <created>1594566166909</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1594566166909</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Легкие домашние доработки по стилю.">
+      <created>1594907815186</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1594907815186</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Домашние доработки по рекомендациям.">
+      <created>1595124959203</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1595124959203</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Доработка смысла текста.">
+      <created>1595346332078</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1595346332078</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Домашние запасы" />
+    <MESSAGE value="Стартовый коммит по HDFS" />
+    <MESSAGE value="Легкие домашние доработки по стилю." />
+    <MESSAGE value="Домашние доработки по рекомендациям." />
+    <MESSAGE value="Доработка смысла текста." />
+    <option name="LAST_COMMIT_MESSAGE" value="Доработка смысла текста." />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="152" y="0" key="#Project_Structure" timestamp="1595079807898">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="152" y="0" key="#Project_Structure/0.0.1600.860@0.0.1600.860" timestamp="1595079807898" />
+    <state x="250" y="76" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592552020546">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="250" y="76" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1600.860@0.0.1600.860" timestamp="1592552020546" />
+    <state x="558" y="73" key="#com.intellij.ide.util.MemberChooser" timestamp="1592553028192">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="558" y="73" key="#com.intellij.ide.util.MemberChooser/0.0.1600.860@0.0.1600.860" timestamp="1592553028192" />
+    <state x="463" y="170" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1592552017402">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="463" y="170" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1600.860@0.0.1600.860" timestamp="1592552017402" />
+    <state x="472" y="73" key="#docker-compose.yaml.hdfs:_Compose_Deployment" timestamp="1595339548444">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="472" y="73" key="#docker-compose.yaml.hdfs:_Compose_Deployment/0.0.1600.860@0.0.1600.860" timestamp="1595339548444" />
+    <state x="472" y="73" key="#docker-compose.yaml:_Compose_Deployment" timestamp="1595339537864">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="472" y="73" key="#docker-compose.yaml:_Compose_Deployment/0.0.1600.860@0.0.1600.860" timestamp="1595339537864" />
+    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1595346330878">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1595346330878" />
+    <state x="527" y="126" key="FileChooserDialogImpl" timestamp="1595414385427">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="527" y="126" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1595414385427" />
+    <state width="1547" height="224" key="GridCell.Tab.0.bottom" timestamp="1595345952884">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="224" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1595345952884" />
+    <state width="1547" height="224" key="GridCell.Tab.0.center" timestamp="1595345952883">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="224" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1595345952883" />
+    <state width="1547" height="224" key="GridCell.Tab.0.left" timestamp="1595345952883">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="224" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1595345952883" />
+    <state width="1547" height="224" key="GridCell.Tab.0.right" timestamp="1595345952884">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="224" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1595345952884" />
+    <state x="59" y="12" key="new project wizard" timestamp="1595174092444">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="59" y="12" key="new project wizard/0.0.1600.860@0.0.1600.860" timestamp="1595174092444" />
+  </component>
+</project>

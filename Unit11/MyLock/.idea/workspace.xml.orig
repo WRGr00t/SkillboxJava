@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e61f1b08-97b0-4674-a50d-666f97dc5dc6" name="Default Changelist" comment="">
+<<<<<<< HEAD
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MyLock.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Bank.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/MyLock.java" afterDir="false" />
+<<<<<<< HEAD
+      <change afterPath="$PROJECT_DIR$/../ParseMapSite/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Transactions/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Transactions/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Unit9/1/ClassFiles" beforeDir="false" afterPath="$PROJECT_DIR$/../../Unit9/1/ClassFiles" afterDir="false" />
+=======
+=======
+      <change afterPath="$PROJECT_DIR$/src/Loader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Account.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Bank.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MyLock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MyLock.java" afterDir="false" />
+>>>>>>> 4b29116aec99be79315c5be48db3d9457787ab0a
+      <change beforePath="$PROJECT_DIR$/../Transactions/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Transactions/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Transactions/src/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Transactions/src/Bank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../streams-assignments" beforeDir="false" afterPath="$PROJECT_DIR$/../../streams-assignments" afterDir="false" />
+>>>>>>> 7e8e9bc74191d9160b56329f42c167c5aa75d0a7
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1a9poDgn1lw7fRHgt4cN2ShnD17" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+<<<<<<< HEAD
+=======
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+>>>>>>> 7e8e9bc74191d9160b56329f42c167c5aa75d0a7
+  </component>
+  <component name="RunManager">
+    <configuration name="Loader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Loader" />
+      <module name="MyLock" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Loader" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e61f1b08-97b0-4674-a50d-666f97dc5dc6" name="Default Changelist" comment="" />
+      <created>1586157836848</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586157836848</updated>
+    </task>
+    <task id="LOCAL-00001" summary="new lock">
+      <created>1586184656611</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586184656611</updated>
+    </task>
+    <task id="LOCAL-00002" summary="new lock (неверное решение)">
+      <created>1586185431380</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1586185431380</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="new lock" />
+    <MESSAGE value="new lock (неверное решение)" />
+    <option name="LAST_COMMIT_MESSAGE" value="new lock (неверное решение)" />
+  </component>
+  <component name="WindowStateProjectService">
+<<<<<<< HEAD
+=======
+    <state x="254" y="85" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586184626927">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="254" y="85" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1600.860@0.0.1600.860" timestamp="1586184626927" />
+<<<<<<< HEAD
+>>>>>>> 7e8e9bc74191d9160b56329f42c167c5aa75d0a7
+    <state x="765" y="239" key="#com.intellij.ide.util.MemberChooser" timestamp="1586160042311">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="239" key="#com.intellij.ide.util.MemberChooser/-1920.0.1920.1040/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1586160042311" />
+<<<<<<< HEAD
+=======
+=======
+    <state x="638" y="198" key="#com.intellij.ide.util.MemberChooser" timestamp="1586589047241">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="765" y="239" key="#com.intellij.ide.util.MemberChooser/-1920.0.1920.1040/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1586160042311" />
+    <state x="638" y="198" key="#com.intellij.ide.util.MemberChooser/0.0.1600.860@0.0.1600.860" timestamp="1586589047241" />
+>>>>>>> 4b29116aec99be79315c5be48db3d9457787ab0a
+    <state x="648" y="319" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1586183794936">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="648" y="319" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1600.860@0.0.1600.860" timestamp="1586183794936" />
+<<<<<<< HEAD
+>>>>>>> 7e8e9bc74191d9160b56329f42c167c5aa75d0a7
+    <state x="593" y="117" key="CommitChangelistDialog2" timestamp="1586160791673">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="593" y="117" key="CommitChangelistDialog2/-1920.0.1920.1040/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1586160791673" />
+<<<<<<< HEAD
+=======
+=======
+    <state x="530" y="177" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586277140943">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="530" y="177" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1600.860@0.0.1600.860" timestamp="1586277140943" />
+    <state x="494" y="49" key="CommitChangelistDialog2" timestamp="1586185429956">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="593" y="117" key="CommitChangelistDialog2/-1920.0.1920.1040/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1586160791673" />
+    <state x="494" y="49" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1586185429956" />
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1586591209439">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1586591209439" />
+    <state width="1557" height="222" key="GridCell.Tab.0.center" timestamp="1586591209439">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1586591209439" />
+    <state width="1557" height="222" key="GridCell.Tab.0.left" timestamp="1586591209438">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1586591209438" />
+    <state width="1557" height="222" key="GridCell.Tab.0.right" timestamp="1586591209439">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1586591209439" />
+    <state width="1557" height="222" key="GridCell.Tab.1.bottom" timestamp="1586587110249">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="222" key="GridCell.Tab.1.bottom/0.0.1600.860@0.0.1600.860" timestamp="1586587110249" />
+    <state width="1557" height="222" key="GridCell.Tab.1.center" timestamp="1586587110249">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="222" key="GridCell.Tab.1.center/0.0.1600.860@0.0.1600.860" timestamp="1586587110249" />
+    <state width="1557" height="222" key="GridCell.Tab.1.left" timestamp="1586587110249">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="222" key="GridCell.Tab.1.left/0.0.1600.860@0.0.1600.860" timestamp="1586587110249" />
+    <state width="1557" height="222" key="GridCell.Tab.1.right" timestamp="1586587110249">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="222" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1586587110249" />
+>>>>>>> 4b29116aec99be79315c5be48db3d9457787ab0a
+    <state x="280" y="4" key="SettingsEditor" timestamp="1586184604975">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="280" y="4" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1586184604975" />
+<<<<<<< HEAD
+>>>>>>> 7e8e9bc74191d9160b56329f42c167c5aa75d0a7
+=======
+    <state x="542" y="49" key="refactoring.ChangeSignatureDialog" timestamp="1586517729026">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="542" y="49" key="refactoring.ChangeSignatureDialog/0.0.1600.860@0.0.1600.860" timestamp="1586517729026" />
+>>>>>>> 4b29116aec99be79315c5be48db3d9457787ab0a
+  </component>
+</project>
