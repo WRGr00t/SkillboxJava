@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="dc9b9c81-4490-4706-bd79-31420047e9e7" name="Default" comment="Генерация номеров c ByteBuffer.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1ccLzzQtRee1nPgRRRAZPC1BBZP" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571378817833" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="recentsLimit" value="5" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Danya\Documents\Development\Idea Projects\CarNumberGenerator\res" />
+      <recent name="C:\Users\Danya\Documents\Development\Idea Projects\CarNumberGenerator\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Danya\Documents\Development\Idea Projects\CarNumberGenerator\src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Loader">
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Loader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Loader" />
+      <module name="CarNumberGenerator" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StringOptimizeTask" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="StringOptimizeTask" />
+      <module name="CarNumberGenerator" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="OriginalTask" />
+      <module name="CarNumberGenerator" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.Loader" />
+      <item itemvalue="Application.StringOptimizeTask" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Loader" />
+        <item itemvalue="Application.StringOptimizeTask" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dc9b9c81-4490-4706-bd79-31420047e9e7" name="Default" comment="" />
+      <created>1455953172085</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1455953172085</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Генерация номеров в многопоточке.">
+      <created>1590942187469</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1590942187469</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Генерация номеров в многопоточке с буфером.">
+      <created>1591197703225</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1591197703225</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Генерация номеров.">
+      <created>1591687415548</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1591687415548</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Генерация номеров.">
+      <created>1591716653996</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1591716653996</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Генерация номеров.">
+      <created>1591773907599</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1591773907599</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Генерация номеров c ByteBuffer.">
+      <created>1591806407493</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1591806407493</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Генерация номеров в многопоточке." />
+    <MESSAGE value="Генерация номеров в многопоточке с буфером." />
+    <MESSAGE value="Генерация номеров." />
+    <MESSAGE value="Генерация номеров c ByteBuffer." />
+    <option name="LAST_COMMIT_MESSAGE" value="Генерация номеров c ByteBuffer." />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="422" y="93" key="#Inspections" timestamp="1591804540556">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="422" y="93" key="#Inspections/0.0.1600.860@0.0.1600.860" timestamp="1591804540556" />
+    <state x="250" y="76" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1591083075149">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="250" y="76" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1600.860@0.0.1600.860" timestamp="1591083075149" />
+    <state x="558" y="69" key="#com.intellij.ide.util.MemberChooser" timestamp="1591681459467">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="558" y="69" key="#com.intellij.ide.util.MemberChooser/0.0.1600.860@0.0.1600.860" timestamp="1591681459467" />
+    <state x="463" y="170" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1591083073317">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="463" y="170" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1600.860@0.0.1600.860" timestamp="1591083073317" />
+    <state x="255" y="0" key="CommitChangelistDialog2" timestamp="1591806406142">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="255" y="0" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1591806406142" />
+    <state x="527" y="110" key="FileChooserDialogImpl" timestamp="1591111432119">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="527" y="110" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1591111432119" />
+    <state width="1547" height="260" key="GridCell.Tab.0.bottom" timestamp="1591888205240">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="260" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1591888205240" />
+    <state width="1547" height="260" key="GridCell.Tab.0.center" timestamp="1591888205240">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="260" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1591888205240" />
+    <state width="1547" height="260" key="GridCell.Tab.0.left" timestamp="1591888205240">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="260" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1591888205240" />
+    <state width="1547" height="260" key="GridCell.Tab.0.right" timestamp="1591888205240">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="260" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1591888205240" />
+    <state width="1547" height="260" key="GridCell.Tab.1.bottom" timestamp="1591888205241">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="260" key="GridCell.Tab.1.bottom/0.0.1600.860@0.0.1600.860" timestamp="1591888205241" />
+    <state width="1547" height="260" key="GridCell.Tab.1.center" timestamp="1591888205240">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="260" key="GridCell.Tab.1.center/0.0.1600.860@0.0.1600.860" timestamp="1591888205240" />
+    <state width="1547" height="260" key="GridCell.Tab.1.left" timestamp="1591888205240">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="260" key="GridCell.Tab.1.left/0.0.1600.860@0.0.1600.860" timestamp="1591888205240" />
+    <state width="1547" height="260" key="GridCell.Tab.1.right" timestamp="1591888205240">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1547" height="260" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1591888205240" />
+    <state x="569" y="324" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1591773901098">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="569" y="324" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1600.860@0.0.1600.860" timestamp="1591773901098" />
+    <state x="59" y="13" key="new project wizard" timestamp="1591111470687">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="59" y="13" key="new project wizard/0.0.1600.860@0.0.1600.860" timestamp="1591111470687" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="tasks.get(0)" />
+        <watch expression="tasks.get(7)" />
+        <watch expression="task" />
+        <watch expression="tasks" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+</project>
