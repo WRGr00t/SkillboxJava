@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/dev_blog?serverTimezone=UTC
+    username: SkillboxUser
+    password: 123456789
+  flyway:
+    enabled: false
+
+blog.title: DevPub
+blog.subtitle: "Рассказы разработчиков"
+blog.phone: +7 903 666-44-77
+blog.email: mail@skillbox.ru
+blog.copyright: Skillbox
+blog.copyrightFrom: 2005
+
+captcha.age: 1

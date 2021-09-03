@@ -1,0 +1,86 @@
+
+drop table if exists global_settings;
+drop table if exists captcha_codes;
+drop table if exists hibernate_sequence;
+drop table if exists post_comments;
+drop table if exists post_votes;
+drop table if exists posts;
+drop table if exists tag2post;
+drop table if exists tags;
+drop table if exists users;
+
+create table captcha_codes (
+    id INT NOT NULL AUTO_INCREMENT,
+    time DATETIME NOT NULL,
+    code TINYTEXT NOT NULL,
+    secret_code TINYTEXT NOT NULL,
+    primary key (id)) engine=InnoDB;
+
+create table global_settings (
+    id INT NOT NULL AUTO_INCREMENT,
+    code VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    value VARCHAR(255) NOT NULL,
+    primary key (id)) engine=InnoDB;
+
+create table hibernate_sequence (next_val bigint) engine=InnoDB;
+
+insert into hibernate_sequence values ( 1 );
+insert into hibernate_sequence values ( 1 );
+insert into hibernate_sequence values ( 1 );
+insert into hibernate_sequence values ( 1 );
+insert into hibernate_sequence values ( 1 );
+insert into hibernate_sequence values ( 1 );
+
+create table post_comments (
+    id INT NOT NULL AUTO_INCREMENT,
+    parent_id INT,
+    post_id INT NOT NULL,
+    user_id INT NOT NULL,
+    time DATETIME NOT NULL,
+    text TEXT NOT NULL,
+    primary key (id)) engine=InnoDB;
+
+create table post_votes (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    time DATETIME NOT NULL,
+    value TINYINT NOT NULL,
+    primary key (id)) engine=InnoDB;
+
+create table posts (
+    id INT NOT NULL AUTO_INCREMENT,
+    is_active TINYINT NOT NULL,
+    moderation_status ENUM('NEW', 'ACCEPTED', 'DECLINED') DEFAULT 'NEW' NOT NULL,
+    moderator_id INT,
+    user_id INT NOT NULL,
+    time DATETIME NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    text TEXT NOT NULL,
+    view_count INT NOT NULL,
+    primary key (id)) engine=InnoDB;
+
+create table tags (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    primary key (id)) engine=InnoDB;
+
+create table users (
+    id INT NOT NULL AUTO_INCREMENT,
+    is_moderator TINYINT NOT NULL,
+    reg_time DATETIME NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    code VARCHAR(255),
+    photo TEXT,
+    primary key (id)) engine=InnoDB;
+
+alter table captcha_codes add constraint UK_83mmu42md6s7q4farjo2c6vrg unique (code);
+alter table post_comments add constraint post_comments_fk foreign key (post_id) references posts (id) on delete cascade;
+alter table post_comments add constraint post_comments_user_fk foreign key (user_id) references users (id) on delete cascade;
+alter table post_votes add constraint post_votes_fk foreign key (post_id) references posts (id) on delete cascade;
+alter table post_votes add constraint post_votes_user_fk foreign key (user_id) references users (id) on delete cascade;
+alter table posts add constraint post_users_fk foreign key (user_id) references users (id) on delete cascade;
+alter table users add constraint users_captcha_fk foreign key (code) references captcha_codes (code);
